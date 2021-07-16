@@ -7,7 +7,7 @@ The CCDK-Unity is a Toolkit that simplifies development of any kind of game by a
 
 While I will be adding a lot to this toolkit for my own use with my game Byte Sized Heroes, this may not be the best backend for your game's development. I will be created some Documentation on using it after I feel like it's at a solid enough point for total game creation.
 
-Most of it's design is inspired by the Unreal Development Kit.
+Most of it's design is inspired by the Unreal Development Kit. It is intended to be a free alternative to paid tools like Game Creator.
 
 # Current Features
 - Runtime State Machine easily separates global data and code
