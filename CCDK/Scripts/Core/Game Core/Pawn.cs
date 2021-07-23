@@ -97,7 +97,6 @@ namespace CCDKGame
             }
         }
 
-
         /** Override this function for Pawn classes to set their own default classes when spawned into the game **/
         public virtual StringsDictionary GetDefaultClasses()
         {
@@ -107,6 +106,11 @@ namespace CCDKGame
         public void Reset()
         {
             RemovePreviousClasses();
+        }
+
+        public void Move()
+        {
+            
         }
     }
 }

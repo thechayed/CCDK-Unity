@@ -9,8 +9,12 @@ namespace CCDKGame
     {
         public override void Start()
         {
-
             base.Start();
+        }
+
+        void OnInput()
+        {
+            controller.MoveInput();
         }
     }
 }

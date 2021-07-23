@@ -24,6 +24,11 @@ namespace CCDKEngine
         [HideInInspector]
         public ControllerInput input;
 
+        /** Controller Called Delegates :: The Controller calls the events, and the unique Pawn decides what to do with it. **/
+        public delegate void Move();
+        public event Move MovePawn;
+
+
         public void PCConstructor()
         {
             if (Type.GetType(data.classes.Get("inputClass")) == null)
@@ -42,11 +47,22 @@ namespace CCDKEngine
         {
             if (possessedPawn == null)
             {
+                /** Possess the Pawn **/
                 possessedPawn = pawn;
                 pawn.controller = this;
+
+                /** Add Pawn's methods to Controller events **/
+                MovePawn += pawn.Move;
+
+                /** Return true when Pawn is possessed **/
                 return true;
             }
             return false;
+        }
+
+        public void MoveInput()
+        {
+            MovePawn();
         }
     }
 }
