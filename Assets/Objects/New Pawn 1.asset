@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb477c777f039f4428ad9eaedfc9229d, type: 3}
+  m_Name: New Pawn 1
+  m_EditorClassIdentifier: 
+  pawnClass: Pawn
+  pawnName: NoName
+  classes:
+    dictionary:
+    - lockKey: 0
+      key: PawnMovement
+      value: CCDKGame.PawnMovement
+    - lockKey: 0
+      key: PawnLife
+      value: CCDKGame.PawnLife
+    - lockKey: 0
+      key: PawnAudio
+      value: CCDKGame.PawnAudio
+    - lockKey: 0
+      key: PawnInventoryManager
+      value: CCDKGame.PawnInventoryManager
+    - lockKey: 0
+      key: PawnCostume
+      value: CCDKGame.PawnCostume
+    length: 0
+    lockKey: 0
+  audioInfo:
+    audioClips:
+      dictionary: []
+  costumeInfo:
+    costumeType: 0
+    mesh: {fileID: 0}
+    sprite: {fileID: 0}
+    costumeObject: {fileID: 0}
+  inventoryInfo:
+    inventory: []
+    inventoryTags: []
