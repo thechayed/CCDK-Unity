@@ -1,0 +1,3 @@
+[submodule "Scripts/SubModules/UnityNEAT"]
+	path = Scripts/SubModules/UnityNEAT
+	url = https://github.com/lordjesus/UnityNEAT.git
