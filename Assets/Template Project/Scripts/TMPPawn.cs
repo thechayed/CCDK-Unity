@@ -4,22 +4,25 @@ using CCDKEngine;
 using CCDKGame;
 using System.Collections.Generic;
 
-public class TMPPawn : Pawn
+namespace TemplateGame
 {
-    public override StringsDictionary GetDefaultClasses()
+    public class TMPPawn : Pawn
     {
-        StringsDictionary defaultDic =
-            new StringsDictionary
-            (
-                    new List<StringsDictionaryItem>
-                    {
-                    new StringsDictionaryItem("PawnMovement", "TMPPawnMovement"),
-                    new StringsDictionaryItem("PawnLife", "CCDKGame.PawnLife"),
-                    new StringsDictionaryItem("PawnAudio", "CCDKGame.PawnAudio"),
-                    new StringsDictionaryItem("PawnInventoryManager", "CCDKGame.PawnInventoryManager")
-                    }
-            );
+        public override Dictionary<string> GetDefaultClasses()
+        {
+            Dictionary<string> defaultDic =
+                new Dictionary<string>
+                (
+                        new List<DictionaryItem<string>>
+                        {
+                            new DictionaryItem<string>("PawnMovement", "TMPPawnMovement"),
+                            new DictionaryItem<string>("PawnLife", "CCDKGame.PawnLife"),
+                            new DictionaryItem<string>("PawnAudio", "CCDKGame.PawnAudio"),
+                            new DictionaryItem<string>("PawnInventoryManager", "CCDKGame.PawnInventoryManager")
+                        }
+                );
 
-        return defaultDic;
+            return defaultDic;
+        }
     }
 }

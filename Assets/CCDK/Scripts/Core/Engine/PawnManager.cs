@@ -8,15 +8,15 @@ namespace CCDKEngine
     {
 
         /** A dictionary that stores the defaults for Pawn Classes. The Key is the original class, and Value is the new one (Which are always the same in this context) **/
-        public static StringsDictionary classDefaults =
-            new StringsDictionary
+        public static Dictionary<string> classDefaults =
+            new Dictionary<string>
             (
-                new List<StringsDictionaryItem>
+                new List<DictionaryItem<string>>
                 {
-                    new StringsDictionaryItem("PawnMovement", "CCDKGame.PawnMovement"),
-                    new StringsDictionaryItem("PawnInput", "CCDKGame.PawnLife"),
-                    new StringsDictionaryItem("PawnAudio", "CCDKGame.PawnAudio"),
-                    new StringsDictionaryItem("PawnInventoryManager", "CCDKGame.PawnInventoryManager")
+                    new DictionaryItem<string>("Movement", "CCDKGame.PawnMovement"),
+                    new DictionaryItem<string>("Life", "CCDKGame.PawnLife"),
+                    new DictionaryItem<string>("Audio", "CCDKGame.PawnAudio"),
+                    new DictionaryItem<string>("InventoryManager", "CCDKGame.PawnInventoryManager")
                 }
             );
     }

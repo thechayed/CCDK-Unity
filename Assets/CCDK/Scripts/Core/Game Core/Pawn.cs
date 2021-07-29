@@ -38,7 +38,7 @@ namespace CCDKGame
         //}
 
         /** Create children Functionality Classes that enable the Pawn's behavior in the game **/
-        public void PawnConstructer(StringsDictionary newClasses = null)
+        public void PawnConstructer(Dictionary<string> newClasses = null)
         {
             /** Make sure that the Classes exist **/
             ValidateClasses();
@@ -55,7 +55,7 @@ namespace CCDKGame
         {
             if (data.baseInfo.classes.length > 0)
             {
-                foreach (StringsDictionaryItem item in data.baseInfo.classes.dictionary)
+                foreach (DictionaryItem<string> item in data.baseInfo.classes.dictionary)
                 {                
                     /** Check if any of the classes can't be found, alert the user and change the Class name to default **/
                     if (Type.GetType(item.value) == null)
@@ -76,7 +76,7 @@ namespace CCDKGame
         /** Called by the Constructer to remove previously added components **/
         public void RemovePreviousClasses()
         {
-            foreach(StringsDictionaryItem item in PawnManager.classDefaults.dictionary)
+            foreach(DictionaryItem<string> item in PawnManager.classDefaults.dictionary)
             {
                 if (Type.GetType(item.key) != null)
                 {
@@ -88,7 +88,7 @@ namespace CCDKGame
         /** Called by the Constructor to Add Component classes and set their PawnClass values **/
         public void AddClassComponents()
         {
-            foreach(StringsDictionaryItem item in data.baseInfo.classes.dictionary)
+            foreach(DictionaryItem<string> item in data.baseInfo.classes.dictionary)
             {
                 gameObject.AddComponent(Type.GetType(item.value));
                 PawnClass pawnClass = (PawnClass) gameObject.GetComponent(Type.GetType(item.value));
@@ -99,7 +99,7 @@ namespace CCDKGame
 
 
         /** Override this function for Pawn classes to set their own default classes when spawned into the game **/
-        public virtual StringsDictionary GetDefaultClasses()
+        public virtual Dictionary<string> GetDefaultClasses()
         {
             return null;
         }

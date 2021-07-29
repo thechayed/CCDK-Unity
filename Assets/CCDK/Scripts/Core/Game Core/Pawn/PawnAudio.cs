@@ -6,7 +6,7 @@ namespace CCDKGame
 {
     public class PawnAudio : PawnClass
     {
-        public AudioClipDictionary audioClips;
+        public Dictionary<AudioClip> audioClips;
 
         public override  void Start()
         {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-
+using System;
 
 namespace CCDKObjects
 {
@@ -19,16 +19,17 @@ namespace CCDKObjects
 
             /** A dictionary storing all the Class names to add to the pawn on Construction **/
             /** The Key stores the name of the original class, and the Value stores the new class **/
-            public StringsDictionary classes =
-                new StringsDictionary
+            public Dictionary<string> classes =
+                new Dictionary<string>
                 (
-                        new List<StringsDictionaryItem>
+                        new List<DictionaryItem<string>>
                         {
-                    new StringsDictionaryItem("PawnMovement", "CCDKGame.PawnMovement"),
-                    new StringsDictionaryItem("PawnLife", "CCDKGame.PawnLife"),
-                    new StringsDictionaryItem("PawnAudio", "CCDKGame.PawnAudio"),
-                    new StringsDictionaryItem("PawnInventoryManager", "CCDKGame.PawnInventoryManager"),
-                    new StringsDictionaryItem("PawnCostume", "CCDKGame.PawnCostume")
+                    new DictionaryItem<string>("Input Handler", "CCDKGame.PawnInputHandler"),
+                    new DictionaryItem<string>("Movement", "CCDKGame.PawnMovement"),
+                    new DictionaryItem<string>("Life", "CCDKGame.PawnLife"),
+                    new DictionaryItem<string>("Audio", "CCDKGame.PawnAudio"),
+                    new DictionaryItem<string>("Inventory Manager", "CCDKGame.PawnInventoryManager"),
+                    new DictionaryItem<string>("Costume", "CCDKGame.PawnCostume")
                         }
                 );
 
@@ -50,7 +51,7 @@ namespace CCDKObjects
         [System.Serializable]
         public class Audio : StateEnabledObject
         {
-            public AudioClipDictionary audioClips;
+            public Dictionary<AudioClip> audioClips;
         }
         public Audio audioInfo;
     

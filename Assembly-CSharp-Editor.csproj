@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CCDK\Scripts\Editor\Conditionals.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Compile Include="Assets\CCDK\Scripts\Editor\PCEditor.cs" />
     <Compile Include="Assets\CCDK\Scripts\Editor\PawnEditor.cs" />
   </ItemGroup>

@@ -14,6 +14,9 @@ namespace CCDKEngine
     {
         /** The Pawn that the controller has possessed **/
         public Pawn possessedPawn;
+        /** Call this when the Pawn has been possessed **/
+        public delegate void OnPossess();
+        public OnPossess Possessed;
         /** The ID of this Controller **/
         public int IID;
 
@@ -48,6 +51,7 @@ namespace CCDKEngine
             {
                 possessedPawn = pawn;
                 pawn.controller = this;
+                Possessed();
                 return true;
             }
             return false;

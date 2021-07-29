@@ -11,7 +11,7 @@ namespace CCDKGame
     public class AudioNode : CCDKEngine.Object
     {
         public AudioSource audioSource;
-        public AudioClipDictionary audioClips;
+        public Dictionary<AudioClip> audioClips;
         [SerializeField]
         public MonoScript soundCue;
 

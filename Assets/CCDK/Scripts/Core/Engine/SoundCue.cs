@@ -7,9 +7,9 @@ namespace CCDKEngine
     public class SoundCue : MonoBehaviour
     {
         /** All the Audio Clips that this Sound Cue can play **/
-        public AudioClipDictionary AudioClipDictionary;
+        public Dictionary<AudioClip> AudioClipDictionary;
 
-        public SoundCue(AudioClipDictionary clips)
+        public SoundCue(Dictionary<AudioClip> clips)
         {
             AudioClipDictionary = clips;
         }

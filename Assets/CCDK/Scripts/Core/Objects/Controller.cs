@@ -2,12 +2,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using CCDKEngine;
+using UnityEngine.InputSystem;
 
 namespace CCDKObjects
 {
     [CreateAssetMenu(menuName = "Engine/Controller")]
     public class Controller : ScriptableObject
     {
+
         [System.Serializable]
         public class States : StateEnabledObject
         {
@@ -16,20 +18,22 @@ namespace CCDKObjects
         public States stateInfo;
 
         /** A dictionary storing all the Class names to add to the pawn on Construction **/
-        public StringsDictionary classes =
-            new StringsDictionary
+        public Dictionary<string> classes =
+            new Dictionary<string>
             (
-                    new List<StringsDictionaryItem>
+                    new List<DictionaryItem<string>>
                     {
-                    new StringsDictionaryItem("cameraClass", "Camera"),
-                    new StringsDictionaryItem("inputClass", "PlayerInput"),
-                    new StringsDictionaryItem("unitClass","AINEATUnit")
+                    new DictionaryItem<string>("cameraClass", "Camera"),
+                    new DictionaryItem<string>("inputClass", "PlayerInput"),
+                    new DictionaryItem<string>("unitClass","AINEATUnit")
                     }
             );
 
         [System.Serializable]
         public class Input : StateEnabledObject
         {
+            /** Key = Input Name, Value = Method Name **/
+            public Dictionary<string> InputOutput = new Dictionary<string>();
         }
         public Input inputInfo;
     }
