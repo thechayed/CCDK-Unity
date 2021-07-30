@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CCDKEngine
 {
-    public class ControllerInput : PossessableObject
+    public class ControllerInput : ControllerClass
     {
         public override void Start()
         {

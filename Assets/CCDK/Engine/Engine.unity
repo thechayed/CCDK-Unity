@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 448129475}
   - component: {fileID: 448129474}
   - component: {fileID: 448129477}
+  - component: {fileID: 448129478}
   m_Layer: 0
   m_Name: Runtime
   m_TagString: Untagged
@@ -208,6 +209,36 @@ MonoBehaviour:
   ready: 0
   readyOnStart: 1
   visible: 1
+--- !u!114 &448129478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448129473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &784030447
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +273,7 @@ MonoBehaviour:
   runtimeGraph: {fileID: 11400000, guid: 593c5bf0db42e944d85dbdaaaaf79c03, type: 2}
   gameModeObject: {fileID: 407847195160945371, guid: 86a1f0d45163b364a9f59d3ed4d2a6dc, type: 3}
   dropLevelOnLoad: 0
-  defaultPlayerControllerData: {fileID: 0}
+  defaultPlayerControllerData: {fileID: 11400000, guid: 23e95ab1b951acf4d8b9f6702e8031d3, type: 2}
 --- !u!4 &784030449
 Transform:
   m_ObjectHideFlags: 0

@@ -8,22 +8,32 @@ using System;
 public class Dictionary<T>
 {
     [SerializeField]
-    public List<DictionaryItem<T>> dictionary;
+    public List<DictionaryItem<T>> dictionary = new List<DictionaryItem<T>>();
     //[HideInInspector]
     public int length = 0;
 
     [HideInInspector]
     public bool lockKey = false;
 
-    public Dictionary(List<DictionaryItem<T>> newDictionary = null)
+    public Dictionary(List<DictionaryItem<T>> newDictionary = default(List<DictionaryItem<T>>))
     {
-        dictionary = newDictionary;
+        if (newDictionary != null)
+        {
+            dictionary = newDictionary;
+        }
     }
 
     public void Load(Dictionary<T> from)
     {
-        dictionary = from.dictionary;
-        length = dictionary.Count;
+        if(from != null)
+        {
+            dictionary = from.dictionary;
+            length = dictionary.Count;
+        }
+        else
+        {
+            Debug.Log("Attempt to load Dictionary from a Null value has been blocked.");
+        }
     }
 
     public T Get(string name)

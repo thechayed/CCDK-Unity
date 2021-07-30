@@ -16,7 +16,9 @@ namespace CCDKEngine
                     new DictionaryItem<string>("Movement", "CCDKGame.PawnMovement"),
                     new DictionaryItem<string>("Life", "CCDKGame.PawnLife"),
                     new DictionaryItem<string>("Audio", "CCDKGame.PawnAudio"),
-                    new DictionaryItem<string>("InventoryManager", "CCDKGame.PawnInventoryManager")
+                    new DictionaryItem<string>("InventoryManager", "CCDKGame.PawnInventoryManager"),
+                    new DictionaryItem<string>("Costume", "CCDKGame.PawnCosume"),
+                    new DictionaryItem<string>("InputHandler", "CCDKGame.PawnInputHandler")
                 }
             );
     }

@@ -34,7 +34,7 @@ namespace CCDKEngine
                 };
             playerController.AddComponent(Type.GetType(className));
             PlayerController pc = playerController.GetComponent<PlayerController>();
-            
+
             /** If the method was given custom Player Controller data, set the PC's data to that, otherwise use defaults **/
             if (PCObject != null)
             {
@@ -44,6 +44,7 @@ namespace CCDKEngine
             {
                 pc.data = defaultPlayerControllerSO;
             }
+            pc.PCConstructor();
         }
     }
 

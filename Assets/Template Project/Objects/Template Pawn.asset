@@ -23,7 +23,7 @@ MonoBehaviour:
       dictionary:
       - lockKey: 0
         key: PawnMovement
-        value: TMPPawnMovement
+        value: TemplateGame.TMPPawnMovement
       - lockKey: 0
         key: PawnLife
         value: CCDKGame.PawnLife
@@ -35,7 +35,10 @@ MonoBehaviour:
         value: CCDKGame.PawnInventoryManager
       - lockKey: 0
         key: PawnCostume
-        value: CCDKGame.PawnCostume
+        value: TemplateGame.TMPPawnCostume
+      - lockKey: 0
+        key: PawnCostume
+        value: TemplateGame.TMPPawnInputHandler
       length: 5
       lockKey: 0
   lifeInfo:
@@ -50,7 +53,12 @@ MonoBehaviour:
       curState: 
       prevState: 
     audioClips:
-      dictionary: []
+      dictionary:
+      - lockKey: 0
+        key: 
+        value: {fileID: 0}
+      length: 0
+      lockKey: 0
   costumeInfo:
     state:
       States: []

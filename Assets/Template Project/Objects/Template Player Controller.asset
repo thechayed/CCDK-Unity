@@ -21,11 +21,8 @@ MonoBehaviour:
   classes:
     dictionary:
     - lockKey: 0
-      key: cameraClass
-      value: Camera
-    - lockKey: 0
       key: inputClass
-      value: PlayerInput
+      value: TemplateGame.TMPPlayerInput
     length: 0
     lockKey: 0
   inputInfo:
@@ -33,3 +30,13 @@ MonoBehaviour:
       States: []
       curState: 
       prevState: 
+    InputOutput:
+      dictionary:
+      - lockKey: 0
+        key: Left
+        value: MoveLeft
+      - lockKey: 0
+        key: Right
+        value: MoveRight
+      length: 0
+      lockKey: 0

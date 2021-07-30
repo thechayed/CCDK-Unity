@@ -15,6 +15,8 @@ namespace CCDKGame
 
         public CCDKObjects.Pawn data;
 
+        public ComponentConstructor componentConstructor;
+
         /** Override this function as a replacement for Start **/
         public override void Start()
         {
@@ -40,63 +42,20 @@ namespace CCDKGame
         /** Create children Functionality Classes that enable the Pawn's behavior in the game **/
         public void PawnConstructer(Dictionary<string> newClasses = null)
         {
-            /** Make sure that the Classes exist **/
-            ValidateClasses();
-            /** Remove components that have been previously added **/
-            RemovePreviousClasses();
-            /** Add the Component Classes **/
-            AddClassComponents();
+            /** Initialize the Component Constructor **/ 
+            componentConstructor = new ComponentConstructor(gameObject, data.baseInfo.classes, PawnManager.classDefaults);
+
+            /** Loop through all the Pawn's SubComponents to set the Controller and Pawn values. **/
+            foreach (DictionaryItem<string> item in componentConstructor.classNames.dictionary)
+            {
+                PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value));
+                pawnClass.controller = controller;
+                pawnClass.pawn = this;
+            }
+
             /** Set State info **/
             state = data.baseInfo.state;
         }
-
-        /** Called by the Constructer to make sure that all the classes are valid **/
-        public void ValidateClasses()
-        {
-            if (data.baseInfo.classes.length > 0)
-            {
-                foreach (DictionaryItem<string> item in data.baseInfo.classes.dictionary)
-                {                
-                    /** Check if any of the classes can't be found, alert the user and change the Class name to default **/
-                    if (Type.GetType(item.value) == null)
-                    {
-                        Debug.LogWarning("Pawn " + data.baseInfo.pawnName + ": User defined "+item.key+" couldn't be found, rolling back to default "+PawnManager.classDefaults.Get(item.key)+"!");
-                        data.baseInfo.classes.Set(item.key, PawnManager.classDefaults.Get(item.key));
-                    }
-                }
-            }
-            else
-            {
-                /** If there are no classes added, load Classes from Defaults **/
-                Debug.LogWarning("Pawn's classes do not exist, filling with defaults!");
-                data.baseInfo.classes.Load(PawnManager.classDefaults);
-            }
-        }
-
-        /** Called by the Constructer to remove previously added components **/
-        public void RemovePreviousClasses()
-        {
-            foreach(DictionaryItem<string> item in PawnManager.classDefaults.dictionary)
-            {
-                if (Type.GetType(item.key) != null)
-                {
-                    DestroyImmediate(GetComponent(Type.GetType(item.key)));
-                }
-            }
-        }
-
-        /** Called by the Constructor to Add Component classes and set their PawnClass values **/
-        public void AddClassComponents()
-        {
-            foreach(DictionaryItem<string> item in data.baseInfo.classes.dictionary)
-            {
-                gameObject.AddComponent(Type.GetType(item.value));
-                PawnClass pawnClass = (PawnClass) gameObject.GetComponent(Type.GetType(item.value));
-                pawnClass.controller = controller;
-                pawnClass.pawn = gameObject.GetComponent<Pawn>();
-            }
-        }
-
 
         /** Override this function for Pawn classes to set their own default classes when spawned into the game **/
         public virtual Dictionary<string> GetDefaultClasses()
@@ -106,7 +65,7 @@ namespace CCDKGame
 
         public void Reset()
         {
-            RemovePreviousClasses();
+            componentConstructor.RemovePreviousClasses();
         }
     }
 }

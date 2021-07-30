@@ -7,7 +7,7 @@ namespace TemplateGame
     public class TMPPlayerInput : PlayerInput
     {
         /** The Script of actions we're using **/
-        TemplatePCControls inputActions;
+        TemplatePCControls inputActions = new TemplatePCControls();
         
         /** Whether we've translated Pawn methods to input methods yet **/
         bool hasCommandedPawn;
@@ -21,7 +21,7 @@ namespace TemplateGame
         /** When a Pawn has been possessed, loop through all the Items in the Controller's
          * IO Dictionary to find what methods should be called for each Input, 
          * and assign the Inputs accordingly within the Pawn's Input Handler **/
-        private void OnPossess()
+        public void OnPossess()
         {
             int index = 0;
             foreach(DictionaryItem<string> item in controller.data.inputInfo.InputOutput.dictionary)
