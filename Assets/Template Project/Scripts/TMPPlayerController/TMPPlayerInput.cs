@@ -7,13 +7,14 @@ namespace TemplateGame
     public class TMPPlayerInput : PlayerInput
     {
         /** The Script of actions we're using **/
-        TemplatePCControls inputActions = new TemplatePCControls();
+        TemplatePCControls inputActions;
         
         /** Whether we've translated Pawn methods to input methods yet **/
         bool hasCommandedPawn;
 
         public override void Start()
         {
+            inputActions = new TemplatePCControls();
             controller.Possessed += OnPossess;
             base.Start();
         }

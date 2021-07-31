@@ -52,10 +52,13 @@ namespace CCDKEngine
         {
             if (possessedPawn == null)
             {
-                possessedPawn = pawn;
-                pawn.controller = this;
-                CommandChildren();
-                Possessed();
+                /** If the Pawn can set this Controller as it's Controller, update this Controller's Pawn value **/
+                if (pawn.SetController(this))
+                {
+                    possessedPawn = pawn;
+                    CommandChildren();
+                    Possessed();
+                }
                 return true;
             }
             CommandChildren();

@@ -17,6 +17,8 @@ namespace CCDKGame
 
         public ComponentConstructor componentConstructor;
 
+        public bool possessable = true;
+
         /** Override this function as a replacement for Start **/
         public override void Start()
         {
@@ -66,6 +68,25 @@ namespace CCDKGame
         public void Reset()
         {
             componentConstructor.RemovePreviousClasses();
+        }
+
+        public bool SetController(Controller controller)
+        {
+            if (possessable)
+            {
+                if(this.controller == null)
+                {
+                    this.controller = controller;
+
+                    /** Loop through all the Pawn's SubComponents to set the Controller values. **/
+                    foreach (DictionaryItem<string> item in componentConstructor.classNames.dictionary)
+                    {
+                        PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value));
+                        pawnClass.controller = controller;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
