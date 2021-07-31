@@ -240,7 +240,6 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\AudioNode.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\UnityListEvaluator.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Utility\BoxMullerGaussianSampler.cs" />
-    <Compile Include="Assets\Template Project\Objects\Template PC Controls.cs" />
     <Compile Include="Assets\Template Project\Scripts\TMPPawn\TMPPawnCostume.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Decoders\FastCyclicNetworkFactory.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\EdExtend\ReadOnly.cs" />
@@ -321,6 +320,9 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\PlayerController.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\NetworkDefinition.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\GameMode.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\MonoScriptAttribute.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\MonoScriptString.cs" />
+    <Compile Include="Assets\Template Project\Objects\TemplateControls.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\Resources\experiment.config.xml" />

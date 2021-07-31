@@ -1,13 +1,14 @@
 ﻿/** The Component Constructor adds a Dictionary of Components to
  * an object and stores the classes. **/
 
+using B83.Unity.Attributes;
 using System;
 using System.Collections;
 using UnityEngine;
 
 namespace CCDKEngine
 {
-    public class ComponentConstructor
+    public class ComponentConstructor<T>
     {
         /** The object that is using this Component Constructor **/
         GameObject gameObject;
@@ -15,15 +16,15 @@ namespace CCDKEngine
         /** The Component Classes created for the object **/
         public Dictionary<Type> classes = new Dictionary<Type>();
         /** The list of class names and their types **/
-        public Dictionary<string> classNames = new Dictionary<string>();
+        public Dictionary<T> classNames = new Dictionary<T>();
         /** The list of defaults from a static class **/
-        public Dictionary<string> defaults = new Dictionary<string>();
+        public Dictionary<T> defaults = new Dictionary<T>();
         /** Has default Components **/
         bool hasDefaults;
 
 
         /** Initialize the Component Constructor with this Constructor in order to add classes to the Game Object **/
-        public ComponentConstructor(GameObject gameObject, Dictionary<string> classNames, Dictionary<string> defaults = null) 
+        public ComponentConstructor(GameObject gameObject, Dictionary<T> classNames, Dictionary<T> defaults = null) 
         {
             this.gameObject = gameObject;
             this.classNames.Load(classNames);
@@ -53,10 +54,12 @@ namespace CCDKEngine
         {
             if (classNames.length > 0)
             {
-                foreach (DictionaryItem<string> item in classNames.dictionary)
+                foreach (DictionaryItem<T> item in classNames.dictionary)
                 {
+                    string script = item.value.ToString();
+
                     /** Check if any of the classes can't be found, alert the user and change the Class name to default **/
-                    if (Type.GetType(item.value) == null)
+                    if (Type.GetType(script) == null)
                     {
                         classNames.Set(item.key, defaults.Get(item.key));
                     }
@@ -89,10 +92,11 @@ namespace CCDKEngine
         /** Called by the Constructor to Add Component classes and set their PawnClass values **/
         public void AddClassComponents()
         {
-            foreach (DictionaryItem<string> item in classNames.dictionary)
+            foreach (DictionaryItem<T> item in classNames.dictionary)
             {
-                gameObject.AddComponent(Type.GetType(item.value));
-                classes.Set(item.value, Type.GetType(item.value));
+                string name = item.value.ToString();
+                gameObject.AddComponent(Type.GetType(name));
+                classes.Set(name, Type.GetType(name));
             }
         }
     }

@@ -12,34 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb477c777f039f4428ad9eaedfc9229d, type: 3}
   m_Name: Template Pawn
   m_EditorClassIdentifier: 
-  pawnClass: TMPPawn
+  pawnClass: CCDKGame.Pawn
   baseInfo:
     state:
-      States: []
+      States:
+      - Default
       curState: 
       prevState: 
     pawnName: NoName
     classes:
       dictionary:
       - lockKey: 0
-        key: PawnMovement
-        value: TemplateGame.TMPPawnMovement
+        key: Input Handler
+        value:
+          script: TemplateGame.TMPPawnInputHandler
       - lockKey: 0
-        key: PawnLife
-        value: CCDKGame.PawnLife
+        key: Movement
+        value:
+          script: TemplateGame.TMPPawnMovement
       - lockKey: 0
-        key: PawnAudio
-        value: CCDKGame.PawnAudio
+        key: Life
+        value:
+          script: CCDKGame.PawnLife
       - lockKey: 0
-        key: PawnInventoryManager
-        value: CCDKGame.PawnInventoryManager
+        key: Audio
+        value:
+          script: CCDKGame.PawnAudio
       - lockKey: 0
-        key: PawnCostume
-        value: TemplateGame.TMPPawnCostume
+        key: Inventory Manager
+        value:
+          script: CCDKGame.PawnInventoryManager
       - lockKey: 0
-        key: PawnCostume
-        value: TemplateGame.TMPPawnInputHandler
-      length: 5
+        key: Costume
+        value:
+          script: TemplateGame.TMPPawnCostume
+      length: 0
       lockKey: 0
   lifeInfo:
     state:
@@ -53,10 +60,7 @@ MonoBehaviour:
       curState: 
       prevState: 
     audioClips:
-      dictionary:
-      - lockKey: 0
-        key: 
-        value: {fileID: 0}
+      dictionary: []
       length: 0
       lockKey: 0
   costumeInfo:
@@ -67,7 +71,7 @@ MonoBehaviour:
     costumeType: 0
     mesh: {fileID: 0}
     sprite: {fileID: 0}
-    costumeObject: {fileID: 8568910303525964735, guid: 0763a4c2e476c2c4d9ccfdc871964fe0, type: 3}
+    costumeObject: {fileID: 0}
   inventoryInfo:
     state:
       States: []
@@ -77,10 +81,9 @@ MonoBehaviour:
     inventoryTags: []
   movementInfo:
     state:
-      States:
-      - Default
-      curState: Default
-      prevState: Default
+      States: []
+      curState: 
+      prevState: 
     MaxStepHeight: 0
     MaxJumpHeight: 0
     WalkableFloorZ: 0
@@ -91,7 +94,7 @@ MonoBehaviour:
     AirSpeed: 0
     LadderSpeed: 0
     AccelRate: 0
-    fallAccelRate: 0.1
+    fallAccelRate: 1
     JumpZ: 0
     OutofWaterZ: 0
     MaxOutOfWaterStepHeight: 0

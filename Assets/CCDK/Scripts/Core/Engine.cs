@@ -2,6 +2,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using CCDKGame;
+using B83.Unity.Attributes;
 
 namespace CCDKEngine
 {

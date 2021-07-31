@@ -3,6 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using CCDKEngine;
 using UnityEngine.InputSystem;
+using System;
+using UnityEditor;
+using B83.Unity.Attributes;
 
 namespace CCDKObjects
 {
@@ -18,14 +21,13 @@ namespace CCDKObjects
         public States stateInfo;
 
         /** A dictionary storing all the Class names to add to the pawn on Construction **/
-        public Dictionary<string> classes =
-            new Dictionary<string>
+        public Dictionary<Script.ControllerClass> classes =
+            new Dictionary<Script.ControllerClass>
             (
-                    new List<DictionaryItem<string>>
+                    new List<DictionaryItem<Script.ControllerClass>>
                     {
-                    new DictionaryItem<string>("cameraClass", "Camera"),
-                    new DictionaryItem<string>("inputClass", "PlayerInput"),
-                    new DictionaryItem<string>("unitClass","AINEATUnit")
+                    new DictionaryItem<Script.ControllerClass>("inputClass", new Script.ControllerClass{script="CCDKGame.PlayerInput"}),
+                    new DictionaryItem<Script.ControllerClass>("unitClass",new Script.ControllerClass{script="CCDKGame.AINEATUnit"})
                     }
             );
 
@@ -34,6 +36,8 @@ namespace CCDKObjects
         {
             /** Key = Input Name, Value = Method Name **/
             public Dictionary<string> InputOutput = new Dictionary<string>();
+            /** Input Action Script **/
+            [MonoScript(type=typeof(IInputActionCollection))] public string inputActions;
         }
         public Input inputInfo;
     }

@@ -33,17 +33,17 @@ namespace CCDKEngine
         [HideInInspector]
         public ControllerInput input;
 
-        public ComponentConstructor componentConstructor;
+        public ComponentConstructor<Script.ControllerClass> componentConstructor;
 
         public void PCConstructor()
         {
             /** Call the Component Constructor for the list of Components **/
-            componentConstructor = new ComponentConstructor(gameObject, data.classes, null);
+            componentConstructor = new ComponentConstructor<Script.ControllerClass>(gameObject, data.classes, null);
 
             /** Loop through the components (Cast as Possessable Objects) and set their Controller values **/
-            foreach (DictionaryItem<Type> item in componentConstructor.classes.dictionary)
+            foreach (DictionaryItem<Script.ControllerClass> item in componentConstructor.classNames.dictionary)
             {
-                PossessableObject component = (PossessableObject) gameObject.GetComponent(item.value);
+                ControllerClass component = (ControllerClass) gameObject.GetComponent(Type.GetType(item.value.ToString()));
                 component.controller = this;
             }
         }

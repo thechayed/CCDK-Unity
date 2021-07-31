@@ -19,17 +19,17 @@ namespace CCDKObjects
 
             /** A dictionary storing all the Class names to add to the pawn on Construction **/
             /** The Key stores the name of the original class, and the Value stores the new class **/
-            public Dictionary<string> classes =
-                new Dictionary<string>
+            public Dictionary<Script.PawnClass> classes =
+                new Dictionary<Script.PawnClass>
                 (
-                        new List<DictionaryItem<string>>
+                        new List<DictionaryItem<Script.PawnClass>>
                         {
-                    new DictionaryItem<string>("Input Handler", "CCDKGame.PawnInputHandler"),
-                    new DictionaryItem<string>("Movement", "CCDKGame.PawnMovement"),
-                    new DictionaryItem<string>("Life", "CCDKGame.PawnLife"),
-                    new DictionaryItem<string>("Audio", "CCDKGame.PawnAudio"),
-                    new DictionaryItem<string>("Inventory Manager", "CCDKGame.PawnInventoryManager"),
-                    new DictionaryItem<string>("Costume", "CCDKGame.PawnCostume")
+                    new DictionaryItem<Script.PawnClass>("Input Handler", new Script.PawnClass{script = "CCDKGame.PawnInputHandler"}),
+                    new DictionaryItem<Script.PawnClass>("Movement", new Script.PawnClass{script = "CCDKGame.PawnMovement"}),
+                    new DictionaryItem<Script.PawnClass>("Life", new Script.PawnClass{script = "CCDKGame.PawnLife"}),
+                    new DictionaryItem<Script.PawnClass>("Audio", new Script.PawnClass{script = "CCDKGame.PawnAudio"}),
+                    new DictionaryItem<Script.PawnClass>("Inventory Manager", new Script.PawnClass{script = "CCDKGame.PawnInventoryManager"}),
+                    new DictionaryItem<Script.PawnClass>("Costume", new Script.PawnClass{script = "CCDKGame.PawnCostume"})
                         }
                 );
 

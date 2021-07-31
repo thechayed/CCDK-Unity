@@ -14,15 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateInfo:
     state:
-      States:
-      - Enabled
+      States: []
       curState: 
       prevState: 
   classes:
     dictionary:
     - lockKey: 0
       key: inputClass
-      value: TemplateGame.TMPPlayerInput
+      value:
+        script: TemplateGame.TMPPlayerInput
+    - lockKey: 0
+      key: unitClass
+      value:
+        script: CCDKGame.AINEATUnit
     length: 0
     lockKey: 0
   inputInfo:
@@ -40,3 +44,4 @@ MonoBehaviour:
         value: MoveRight
       length: 0
       lockKey: 0
+    inputActions: TemplateGame.TemplateControls

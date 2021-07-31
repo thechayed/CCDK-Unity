@@ -15,6 +15,8 @@ public class Dictionary<T>
     [HideInInspector]
     public bool lockKey = false;
 
+    public Type type = typeof(T);
+
     public Dictionary(List<DictionaryItem<T>> newDictionary = default(List<DictionaryItem<T>>))
     {
         if (newDictionary != null)
@@ -27,7 +29,7 @@ public class Dictionary<T>
     {
         if(from != null)
         {
-            dictionary = from.dictionary;
+            dictionary = (List<DictionaryItem<T>>) from.dictionary;
             length = dictionary.Count;
         }
         else

@@ -15,7 +15,7 @@ namespace CCDKGame
 
         public CCDKObjects.Pawn data;
 
-        public ComponentConstructor componentConstructor;
+        public ComponentConstructor<Script.PawnClass> componentConstructor;
 
         public bool possessable = true;
 
@@ -31,26 +31,16 @@ namespace CCDKGame
             //}
         }
 
-        ///** The Pawn constructor allows a Pawn of any type to be created anywhere **/
-        //public Pawn(bool construct = false, StringsDictionary newClasses = null)
-        //{
-        //    if (construct)
-        //    {
-        //        data.baseInfo.classes = newClasses;
-        //        PawnConstructer();
-        //    }
-        //}
-
         /** Create children Functionality Classes that enable the Pawn's behavior in the game **/
         public void PawnConstructer(Dictionary<string> newClasses = null)
         {
             /** Initialize the Component Constructor **/ 
-            componentConstructor = new ComponentConstructor(gameObject, data.baseInfo.classes, PawnManager.classDefaults);
+            componentConstructor = new ComponentConstructor<Script.PawnClass>(gameObject, data.baseInfo.classes, PawnManager.classDefaults);
 
             /** Loop through all the Pawn's SubComponents to set the Controller and Pawn values. **/
-            foreach (DictionaryItem<string> item in componentConstructor.classNames.dictionary)
+            foreach (DictionaryItem<Script.PawnClass> item in componentConstructor.classNames.dictionary)
             {
-                PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value));
+                PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value.ToString()));
                 pawnClass.controller = controller;
                 pawnClass.pawn = this;
             }
@@ -79,9 +69,9 @@ namespace CCDKGame
                     this.controller = controller;
 
                     /** Loop through all the Pawn's SubComponents to set the Controller values. **/
-                    foreach (DictionaryItem<string> item in componentConstructor.classNames.dictionary)
+                    foreach (DictionaryItem<Script.PawnClass> item in componentConstructor.classNames.dictionary)
                     {
-                        PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value));
+                        PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value.ToString()));
                         pawnClass.controller = controller;
                     }
                 }
