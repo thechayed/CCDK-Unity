@@ -13,7 +13,7 @@ namespace CCDKGame
         public Player player;
 
         /** Input Action Collection script. Input actions are used in the Player Controller to get control from the Player **/
-        IInputActionCollection inputActions;
+        public IInputActionCollection inputActions;
 
         public override void Start()
         {

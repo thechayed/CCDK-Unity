@@ -13,13 +13,6 @@ namespace CCDKObjects
     public class Controller : ScriptableObject
     {
 
-        [System.Serializable]
-        public class States : StateEnabledObject
-        {
-
-        }
-        public States stateInfo;
-
         /** A dictionary storing all the Class names to add to the pawn on Construction **/
         public Dictionary<Script.ControllerClass> classes =
             new Dictionary<Script.ControllerClass>
@@ -32,7 +25,7 @@ namespace CCDKObjects
             );
 
         [System.Serializable]
-        public class Input : StateEnabledObject
+        public class Input 
         {
             /** Key = Input Name, Value = Method Name **/
             public Dictionary<string> InputOutput = new Dictionary<string>();

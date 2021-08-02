@@ -8,21 +8,19 @@ namespace TemplateGame
 {
     public class TMPPawn : Pawn
     {
-        public override Dictionary<string> GetDefaultClasses()
+        public override void Awake()
         {
-            Dictionary<string> defaultDic =
-                new Dictionary<string>
-                (
-                        new List<DictionaryItem<string>>
-                        {
-                            new DictionaryItem<string>("PawnMovement", "TMPPawnMovement"),
-                            new DictionaryItem<string>("PawnLife", "CCDKGame.PawnLife"),
-                            new DictionaryItem<string>("PawnAudio", "CCDKGame.PawnAudio"),
-                            new DictionaryItem<string>("PawnInventoryManager", "CCDKGame.PawnInventoryManager")
-                        }
-                );
+            stateMachine = new CBStateMachine(this, gameObject);
+            
+        }
 
-            return defaultDic;
+        public class Normal : State
+        {
+            public override void Enter()
+            {
+                base.Enter();
+                Debug.Log("Hello World!");
+            }
         }
     }
 }

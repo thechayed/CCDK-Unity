@@ -12,8 +12,6 @@ namespace CCDKGame
 
         public override void Start()
         {
-
-            state = pawn.data.movementInfo.state;
             base.Start();
             movement = pawn.data.movementInfo;
         }

@@ -19,18 +19,6 @@ namespace CCDKGame
 
         public bool possessable = true;
 
-        /** Override this function as a replacement for Start **/
-        public override void Start()
-        {
-            base.Start();
-            /** If the Pawn hasn't be completely constructed, construct it on StartUp! **/
-            //if (gameObject.GetComponent<PawnMovement>() == null || gameObject.GetComponent<PawnLife>() == null || gameObject.GetComponent<PawnInventoryManager>() == null || gameObject.GetComponent<PawnAudio>() == null)
-            //{
-            //    PawnConstructer();
-            //    Debug.LogWarning("Pawn " + data.baseInfo.pawnName + ": has not be Constructed! Constructing now!");
-            //}
-        }
-
         /** Create children Functionality Classes that enable the Pawn's behavior in the game **/
         public void PawnConstructer(Dictionary<string> newClasses = null)
         {
@@ -44,9 +32,6 @@ namespace CCDKGame
                 pawnClass.controller = controller;
                 pawnClass.pawn = this;
             }
-
-            /** Set State info **/
-            state = data.baseInfo.state;
         }
 
         /** Override this function for Pawn classes to set their own default classes when spawned into the game **/

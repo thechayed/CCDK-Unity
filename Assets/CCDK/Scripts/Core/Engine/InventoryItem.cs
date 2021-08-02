@@ -31,40 +31,12 @@ namespace CCDKEngine
         public override void Start()
         {
             base.Start();
-            /** Set Object state so that it can call relative update functions **/
-            state.States = states;
-        }
-
-        /** When the item is sent to the world, decide what to do with it here **/
-        public virtual void State_EnterWorld()
-        {
-            //Other functionality here
-            state.GotoState("World");
-        }
-
-        /** When the InventoryItem exists in the world, extend this function
-         * to determine how it is picked up and/or used in the world**/
-        public virtual void State_World()
-        {
-
-        }
-
-        /** When the player has this item equipped **/
-        public virtual void State_Equipped()
-        {
-
-        }
-
-        /** When the player has this item stored in the dictionary **/
-        public virtual void State_Stashed()
-        {
-
         }
 
         /** What to do with the Item when it's thrown **/
         public virtual void Thrown()
         {
-            state.GotoState("EnterWorld");
+            //state.GotoState("EnterWorld");
         }
 
         /** Careate the mesh and collider objets **/

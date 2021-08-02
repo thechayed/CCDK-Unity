@@ -23,10 +23,6 @@ MonoBehaviour:
       key: inputClass
       value:
         script: TemplateGame.TMPPlayerInput
-    - lockKey: 0
-      key: unitClass
-      value:
-        script: CCDKGame.AINEATUnit
     length: 0
     lockKey: 0
   inputInfo:

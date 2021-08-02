@@ -10,7 +10,6 @@ namespace CCDKGame
 
         public override  void Start()
         {
-            state = pawn.data.audioInfo.state;
             base.Start();
         }
     }

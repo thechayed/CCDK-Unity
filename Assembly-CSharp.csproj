@@ -62,6 +62,7 @@
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\EvolutionAlgorithms\ComplexityRegulation\ComplexityCeilingType.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\LevelManager.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Utils\Class-Based State Machine\State.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_HorizontalAlignmentOptions.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\ActivationFunctions\Unipolar\Gaussian.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\ActivationFunctions\Unipolar\Absolute.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\Pawn\PawnCostume.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Genomes\RbfNeat\RbfGenomeFactory.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Phenomes\IBlackBox.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\EdExtend\MonoScriptString.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_SubmitEvent.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\RunState.cs" />
     <Compile Include="Assets\Template Project\Scripts\TMPPawn\TMPPawnInputHandler.cs" />
@@ -109,7 +111,7 @@
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Utility\XmlIoUtils.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Phenomes\NeuralNets\CyclicNetwork\Connection.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_Unity_Mathematics_bool2x2.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\ComponentConstructor.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Utils\ComponentConstructor.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_InputField_TouchScreenKeyboardEvent.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\PawnManager.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Genomes\Neat\NeuronGene.cs" />
@@ -121,10 +123,11 @@
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Genomes\Neat\NeatGenomeXmlIO.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\EvolutionAlgorithms\NeatEvolutionAlgorithm.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\IGenomeListEvaluator.cs" />
+    <Compile Include="Assets\Template Project\Objects\TemplateControls.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\AINEATUnit.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\DistanceMetrics\DistanceMetricUtils.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Engine\StateEnabledMonoBehavior.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Dictionary.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Utils\Class-Based State Machine\CBStateMachineComponent.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Data\Dictionary.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Objects\InventoryItem.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\EvolutionAlgorithms\NeatAlgorithmStats.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Utility.cs" />
@@ -144,7 +147,6 @@
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\BallExperiment\BallController.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\ActivationFunctions\NullFn.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\IActivationFunction.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Objects\StateEnabledObject.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_SpriteGlyph.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Objects\Pawn.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\IGenome.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_EventSystems_EventTrigger_TriggerEvent.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_TMPro_TMP_GlyphPairAdjustmentRecord.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\DefaultActivationFunctionLibrary.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\EdExtend\MonoScriptAttribute.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\DistanceMetrics\ManhattanDistanceMetric.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Decoders\HyperNeat\DefaultNodeSetMappingFunction.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\SharpNeatException.cs" />
@@ -251,7 +254,7 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\CameraClass.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\CarExperiment\SimpleEvaluator.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\UnityParallelListEvaluator.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\SimpleState.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Utils\Class-Based State Machine\CBStateMachine.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\NetworkNode.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Quaternion.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\ActivationFunctions\Bipolar\Sine.cs" />
@@ -320,9 +323,6 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\PlayerController.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\NetworkDefinition.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\GameMode.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\MonoScriptAttribute.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\MonoScriptString.cs" />
-    <Compile Include="Assets\Template Project\Objects\TemplateControls.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\Resources\experiment.config.xml" />

@@ -5,7 +5,7 @@ using CCDKGame;
 
 namespace TemplateGame
 {
-    public class TMPPawnCostume : PawnMovement
+    public class TMPPawnCostume : PawnCostume
     {
         public override void Start()
         {

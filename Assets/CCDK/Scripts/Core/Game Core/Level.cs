@@ -11,12 +11,14 @@ using System;
 
 namespace CCDKGame
 {
-    public class Level : CCDKEngine.StateEnabledMonoBehavior
+    public class Level : StateMachineComponent
     {
         /** The Level Game Object this Level belongs to **/
         public GameObject levelObj;
         /** The scene that belongs to this level **/
         public Scene scene;
+
+        public bool isReady=false;
 
         public string levelName;
 
@@ -24,9 +26,10 @@ namespace CCDKGame
 
         private void Update()
         {
-            if (scene.isLoaded)
+            if (scene.isLoaded&&!isReady)
             {
                 LevelManager.LevelLoaded(this.levelName);
+                isReady = true;
             }
         }
 

@@ -12,7 +12,6 @@ namespace CCDKGame
 
         public override void Start()
         {
-            state = pawn.data.costumeInfo.state;
             base.Start();
             costume = GameObject.Instantiate(pawn.data.costumeInfo.costumeObject);
             costume.transform.SetParent(pawn.transform);

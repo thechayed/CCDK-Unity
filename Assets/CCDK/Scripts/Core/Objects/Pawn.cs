@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using B83.Unity.Attributes;
 
 namespace CCDKObjects
 {
@@ -9,10 +10,10 @@ namespace CCDKObjects
     public class Pawn : ScriptableObject
     {
         /** The C# Pawn class **/
-        public string pawnClass = "Pawn"; 
+       [MonoScript(type = typeof(CCDKGame.Pawn))]  public string pawnClass = "Pawn"; 
 
         [System.Serializable]
-        public class Default : StateEnabledObject
+        public class Default 
         {
             /* This pawn's name */
             public string pawnName = "NoName";
@@ -42,21 +43,21 @@ namespace CCDKObjects
         public Default baseInfo = new Default();
 
         [System.Serializable]
-        public class Life : StateEnabledObject
+        public class Life 
         {
             public float health;
         }
         public Life lifeInfo;
     
         [System.Serializable]
-        public class Audio : StateEnabledObject
+        public class Audio 
         {
             public Dictionary<AudioClip> audioClips;
         }
         public Audio audioInfo;
     
         [System.Serializable]
-        public class Costume : StateEnabledObject
+        public class Costume 
         {
             /** What kind of costume do we got **/
             public enum CostumeEnum
@@ -77,7 +78,7 @@ namespace CCDKObjects
         public Costume costumeInfo;
 
         [System.Serializable]
-        public class Inventory : StateEnabledObject
+        public class Inventory 
         {
             /** A list of all the Items currently in the Pawn's inventory **/
             public List<CCDKEngine.InventoryItem> inventory;
@@ -89,7 +90,7 @@ namespace CCDKObjects
 
 
         [System.Serializable]
-        public class Movement : StateEnabledObject
+        public class Movement 
         {
             public float MaxStepHeight,
             MaxJumpHeight,

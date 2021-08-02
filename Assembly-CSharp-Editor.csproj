@@ -57,9 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CCDK\Scripts\Editor\Conditionals.cs" />
+    <Compile Include="Assets\CCDK\Scripts\Editor\MonoScriptPropertyDrawer.cs" />
     <Compile Include="Assets\CCDK\Scripts\Editor\PCEditor.cs" />
     <Compile Include="Assets\CCDK\Scripts\Editor\PawnEditor.cs" />
-    <Compile Include="Assets\CCDK\Scripts\Editor\MonoScriptPropertyDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

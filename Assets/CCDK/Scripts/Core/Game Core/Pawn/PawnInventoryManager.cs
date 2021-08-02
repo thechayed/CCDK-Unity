@@ -9,7 +9,6 @@ namespace CCDKGame
     {
         public override void Start()
         {
-            state = pawn.data.inventoryInfo.state;
             base.Start();
         }
 

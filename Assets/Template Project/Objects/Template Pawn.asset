@@ -17,8 +17,8 @@ MonoBehaviour:
     state:
       States:
       - Default
-      curState: 
-      prevState: 
+      curState: Default
+      prevState: Default
     pawnName: NoName
     classes:
       dictionary:
@@ -50,40 +50,45 @@ MonoBehaviour:
       lockKey: 0
   lifeInfo:
     state:
-      States: []
-      curState: 
-      prevState: 
+      States:
+      - Default
+      curState: Default
+      prevState: Default
     health: 0
   audioInfo:
     state:
-      States: []
-      curState: 
-      prevState: 
+      States:
+      - Default
+      curState: Default
+      prevState: Default
     audioClips:
       dictionary: []
       length: 0
       lockKey: 0
   costumeInfo:
     state:
-      States: []
+      States:
+      - Default
       curState: 
       prevState: 
     costumeType: 0
     mesh: {fileID: 0}
     sprite: {fileID: 0}
-    costumeObject: {fileID: 0}
+    costumeObject: {fileID: 8568910303525964735, guid: 0763a4c2e476c2c4d9ccfdc871964fe0, type: 3}
   inventoryInfo:
     state:
-      States: []
-      curState: 
-      prevState: 
+      States:
+      - Default
+      curState: Default
+      prevState: Default
     inventory: []
     inventoryTags: []
   movementInfo:
     state:
-      States: []
-      curState: 
-      prevState: 
+      States:
+      - Default
+      curState: Default
+      prevState: Default
     MaxStepHeight: 0
     MaxJumpHeight: 0
     WalkableFloorZ: 0
