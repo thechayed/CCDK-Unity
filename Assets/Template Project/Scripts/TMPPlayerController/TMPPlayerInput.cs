@@ -7,14 +7,14 @@ namespace TemplateGame
     public class TMPPlayerInput : PlayerInput
     {
         /** The Script of actions we're using **/
-        //TemplatePCControls inputActions;
+        TemplateControls inputActions;
         
         /** Whether we've translated Pawn methods to input methods yet **/
         bool hasCommandedPawn;
 
         public override void Start()
         {
-            //inputActions = new TemplatePCControls();
+            inputActions = new TemplateControls();
             controller.Possessed += OnPossess;
             base.Start();
         }
@@ -25,14 +25,40 @@ namespace TemplateGame
         public void OnPossess()
         {
             int index = 0;
-            //foreach(DictionaryItem<string> item in controller.data.inputInfo.InputOutput.dictionary)
-            //{
-            //    if(item.key == inputActions.Newactionmap.Get().actions[index].name)
-            //    {
-            //        inputActions.Newactionmap.Get().actions[index].performed += ctx => controller.possessedPawn.GetComponent<PawnInputHandler>().GetType().GetMethod(item.value);
-            //    }
-            //    index++;
-            //}
+            foreach(DictionaryItem<string> item in controller.data.inputInfo.InputOutput.dictionary)
+            {
+                if(item.key == inputActions.Newactionmap.Get().actions[index].name)
+                {
+                    if (pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(item.value) != null)
+                    {
+                        inputActions.Newactionmap.Get().actions[index].performed += ctx => pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(item.value).Invoke(pawn.GetComponent<PawnInputHandler>(), null);
+
+                        if (pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(item.value+"_Cancel") != null)
+                            inputActions.Newactionmap.Get().actions[index].canceled += ctx => pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(item.value+"_Cancel").Invoke(pawn.GetComponent<PawnInputHandler>(), null);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("The requested Method: " + item.value + " does not exist in the class this Controller Possesses.");
+                    }
+                }
+                index++;
+            }
        }
+
+        public class Default : FSM.State
+        {
+            TMPPlayerInput self;
+
+            public override void Enter()
+            {
+                self = (TMPPlayerInput)selfObj;
+                self.inputActions.Enable();
+            }
+
+            public override void Update()
+            {
+
+            }
+        }
     }
 }

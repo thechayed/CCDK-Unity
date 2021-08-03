@@ -9,6 +9,8 @@ namespace TemplateGame
     public class TMPPawnMovement : PawnMovement
     {
         public CharacterController characterController;
+        public bool landed = false;
+        public bool jumping = false;
 
         public class Normal : FSM.State
         {
@@ -17,7 +19,10 @@ namespace TemplateGame
             public override void Enter()
             {
                 self = (TMPPawnMovement)selfObj;
-                gameObject.AddComponent<CharacterController>();
+                if (gameObject.GetComponent<CharacterController>() == null)
+                {
+                    gameObject.AddComponent<CharacterController>();
+                }
                 SetValue("characterController", gameObject.GetComponent<CharacterController>());
             }
 
@@ -35,10 +40,16 @@ namespace TemplateGame
                 if (!self.characterController.isGrounded)
                 {
                     self.velocity.y -= self.pawn.data.movementInfo.fallAccelRate * self.dt;
+                    self.landed = false;
+                    if (self.velocity.y < 0)
+                    {
+                        self.jumping = false;
+                    }
                 }
-                else
+                else if(!self.landed && !self.jumping)
                 {
-                    self.velocity.y = 0;
+                    self.velocity.y = -0.1f;
+                    self.landed = true;
                 }
             }
         }

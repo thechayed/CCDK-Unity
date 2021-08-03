@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Left",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "cd390b28-9463-41a4-939b-63e32f221e89",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -15,8 +15,16 @@
                 },
                 {
                     "name": "Right",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "f0c62bb3-b4ba-4072-bd58-9ae8b560e892",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "41d52165-f620-419e-b3d2-5d002146ce0f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -42,6 +50,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf24a6fa-9460-460c-ac17-3929d119898e",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

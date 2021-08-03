@@ -59,6 +59,8 @@ namespace CCDKGame
                         PawnClass pawnClass = (PawnClass)gameObject.GetComponent(Type.GetType(item.value.ToString()));
                         pawnClass.controller = controller;
                     }
+
+                    return true;
                 }
             }
             return false;

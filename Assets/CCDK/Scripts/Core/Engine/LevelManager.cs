@@ -30,7 +30,6 @@ namespace CCDKEngine
         /** Go to Level by Name **/
         public static void GoToLevel(string levelName)
         {
-            Debug.Log("Went to Level");
             GameObject newLevel = CreateNewLevel(levelName);
             nextLevel = levelName;
             loadedLevels.Add(newLevel);

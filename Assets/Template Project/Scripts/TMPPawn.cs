@@ -14,17 +14,15 @@ namespace TemplateGame
 
         public class Normal : FSM.State
         {
+            TMPPawn self;
 
             public override void Enter()
             {
-                Debug.Log("Hello World!");
-                base.Enter();
+                self = (TMPPawn)selfObj;
             }
 
             public override void Update()
             {
-
-                Debug.Log("I'm updating!");
                 base.Update();
             }
         }

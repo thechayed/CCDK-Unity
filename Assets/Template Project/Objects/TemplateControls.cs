@@ -22,7 +22,7 @@ namespace TemplateGame
             ""actions"": [
                 {
                     ""name"": ""Left"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""cd390b28-9463-41a4-939b-63e32f221e89"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -30,8 +30,16 @@ namespace TemplateGame
                 },
                 {
                     ""name"": ""Right"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""f0c62bb3-b4ba-4072-bd58-9ae8b560e892"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""41d52165-f620-419e-b3d2-5d002146ce0f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -59,6 +67,17 @@ namespace TemplateGame
                     ""action"": ""Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf24a6fa-9460-460c-ac17-3929d119898e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -75,6 +94,7 @@ namespace TemplateGame
             m_Newactionmap = asset.FindActionMap("New action map", throwIfNotFound: true);
             m_Newactionmap_Left = m_Newactionmap.FindAction("Left", throwIfNotFound: true);
             m_Newactionmap_Right = m_Newactionmap.FindAction("Right", throwIfNotFound: true);
+            m_Newactionmap_Jump = m_Newactionmap.FindAction("Jump", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -126,12 +146,14 @@ namespace TemplateGame
         private INewactionmapActions m_NewactionmapActionsCallbackInterface;
         private readonly InputAction m_Newactionmap_Left;
         private readonly InputAction m_Newactionmap_Right;
+        private readonly InputAction m_Newactionmap_Jump;
         public struct NewactionmapActions
         {
             private @TemplateControls m_Wrapper;
             public NewactionmapActions(@TemplateControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Left => m_Wrapper.m_Newactionmap_Left;
             public InputAction @Right => m_Wrapper.m_Newactionmap_Right;
+            public InputAction @Jump => m_Wrapper.m_Newactionmap_Jump;
             public InputActionMap Get() { return m_Wrapper.m_Newactionmap; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -147,6 +169,9 @@ namespace TemplateGame
                     @Right.started -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnRight;
                     @Right.performed -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnRight;
                     @Right.canceled -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnRight;
+                    @Jump.started -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnJump;
+                    @Jump.performed -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnJump;
+                    @Jump.canceled -= m_Wrapper.m_NewactionmapActionsCallbackInterface.OnJump;
                 }
                 m_Wrapper.m_NewactionmapActionsCallbackInterface = instance;
                 if (instance != null)
@@ -157,6 +182,9 @@ namespace TemplateGame
                     @Right.started += instance.OnRight;
                     @Right.performed += instance.OnRight;
                     @Right.canceled += instance.OnRight;
+                    @Jump.started += instance.OnJump;
+                    @Jump.performed += instance.OnJump;
+                    @Jump.canceled += instance.OnJump;
                 }
             }
         }
@@ -174,6 +202,7 @@ namespace TemplateGame
         {
             void OnLeft(InputAction.CallbackContext context);
             void OnRight(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
     }
 }

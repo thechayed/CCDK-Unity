@@ -12,11 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4416ae6533fbd2458b0ec7caa6daabd, type: 3}
   m_Name: Template Player Controller
   m_EditorClassIdentifier: 
-  stateInfo:
-    state:
-      States: []
-      curState: 
-      prevState: 
   classes:
     dictionary:
     - lockKey: 0
@@ -26,10 +21,6 @@ MonoBehaviour:
     length: 0
     lockKey: 0
   inputInfo:
-    state:
-      States: []
-      curState: 
-      prevState: 
     InputOutput:
       dictionary:
       - lockKey: 0
@@ -38,6 +29,9 @@ MonoBehaviour:
       - lockKey: 0
         key: Right
         value: MoveRight
+      - lockKey: 0
+        key: Jump
+        value: Jump
       length: 0
       lockKey: 0
     inputActions: TemplateGame.TemplateControls
