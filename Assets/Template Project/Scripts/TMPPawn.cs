@@ -10,11 +10,11 @@ namespace TemplateGame
     {
         public override void Awake()
         {
-            stateMachine = new CBStateMachine(this, gameObject);
+            stateMachine = new FSM.Machine(this, gameObject);
             
         }
 
-        public class Normal : State
+        public class Normal : FSM.State
         {
             public override void Enter()
             {

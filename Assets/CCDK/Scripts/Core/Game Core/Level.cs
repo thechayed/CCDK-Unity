@@ -11,7 +11,7 @@ using System;
 
 namespace CCDKGame
 {
-    public class Level : StateMachineComponent
+    public class Level : FSM.Component
     {
         /** The Level Game Object this Level belongs to **/
         public GameObject levelObj;

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CCDKEngine
 {
-    public class Object : StateMachineComponent
+    public class Object : FSM.Component
     {
         //Gameplay Values
         /**The engine has told us play has begun, be ready!**/

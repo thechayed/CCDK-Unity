@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace CCDKEngine
+namespace FSM
 {
 
-    public class StateMachineComponent : MonoBehaviour
+    public class Component : MonoBehaviour
     {
-        public CBStateMachine stateMachine;
+        public FSM.Machine stateMachine;
 
         public bool initialized = false;
 
         /** When the Object Starts in the game, ask it to Initialize **/
         public virtual void Start()
         {
-            stateMachine = new CBStateMachine(this, gameObject);
+            stateMachine = new FSM.Machine(this, gameObject);
             Init();
         }        
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CCDKEngine
 {
-    public class LASEMono : StateMachineComponent
+    public class LASEMono : FSM.Component
     {
         public override void Init()
         {

@@ -10,11 +10,11 @@ namespace CCDKGame
 {
     public class Runtime : CCDKEngine.Object
     {
-        StateMachineComponent stateMachine;
+        FSM.Component stateMachine;
 
         public override void Start()
         {
-            stateMachine = GetComponent<StateMachineComponent>();
+            stateMachine = GetComponent<FSM.Component>();
             stateMachine.enabled = false;
             base.Start();
         }

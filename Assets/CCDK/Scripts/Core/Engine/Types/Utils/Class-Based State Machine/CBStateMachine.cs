@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-namespace CCDKEngine
+namespace FSM
 {
     [System.Serializable]
-    public class CBStateMachine
+    public class Machine
     {
         [SerializeField]
         /** The Class that this Simple State Machine is controlling **/
-        public StateMachineComponent component;
+        public FSM.Component component;
         public GameObject gameObject;
         public Dictionary<MethodInfo[]> states;
         public string curState;
@@ -25,7 +25,7 @@ namespace CCDKEngine
         bool stateInit = false;
 
         /** Construct the State Machine and Initialize all the States **/
-        public CBStateMachine(StateMachineComponent component, GameObject gameObject)
+        public Machine(FSM.Component component, GameObject gameObject)
         {
             this.component = component;
             this.gameObject = gameObject;
