@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{087E2D2C-C11E-93A4-9CB0-C2DC9DDE8B57}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -60,6 +61,7 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\LASEMono.cs" />
     <Compile Include="Assets\Template Project\Scripts\TMPPawn.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\EvolutionAlgorithms\ComplexityRegulation\ComplexityCeilingType.cs" />
+    <Compile Include="Assets\Template Project\Scripts\TMPPawn\TMPPawnAudio.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_ParticleSystem_MinMaxGradient.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\LevelManager.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Utils\Class-Based State Machine\State.cs" />
@@ -325,10 +327,10 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\GameMode.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\Resources\experiment.config.xml" />
-     <None Include="Assets\Template Project\Shaders\Shaders\SobelFilter.shader" />
-     <None Include="Assets\Template Project\Shaders\Shaders\ToonBasicOutline.shader" />
-     <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\ProjectSettings\ProjectVersion.txt" />
+    <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\Resources\experiment.config.xml" />
+    <None Include="Assets\Template Project\Shaders\Shaders\SobelFilter.shader" />
+    <None Include="Assets\Template Project\Shaders\Shaders\ToonBasicOutline.shader" />
+    <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\ProjectSettings\ProjectVersion.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.5f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

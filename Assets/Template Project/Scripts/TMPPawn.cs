@@ -10,12 +10,11 @@ namespace TemplateGame
     {
         public override void Awake()
         {
-            stateMachine = new FSM.Machine(this, gameObject);
-            
         }
 
         public class Normal : FSM.State
         {
+
             public override void Enter()
             {
                 Debug.Log("Hello World!");

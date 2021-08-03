@@ -10,30 +10,36 @@ namespace TemplateGame
     {
         public CharacterController characterController;
 
-        public void State_Default_Enter()
+        public class Normal : FSM.State
         {
-            gameObject.AddComponent<CharacterController>();
-            characterController = GetComponent<CharacterController>();
-        }
-        // Update is called once per frame
-        public void State_Default()
-        {
-            if (characterController != null)
-            {
-                CalcVelocity();
-                characterController.Move(velocity);
-            }
-        }
+            TMPPawnMovement self;
 
-        public void CalcVelocity()
-        {
-            if (!characterController.isGrounded)
+            public override void Enter()
             {
-                velocity.y -= pawn.data.movementInfo.fallAccelRate * dt;
+                self = (TMPPawnMovement)selfObj;
+                gameObject.AddComponent<CharacterController>();
+                SetValue("characterController", gameObject.GetComponent<CharacterController>());
             }
-            else
+
+            public override void Update()
             {
-                velocity.y = 0;
+                if (self.characterController != null)
+                {
+                    CalcVelocity();
+                    self.characterController.Move(self.velocity);
+                }
+            }
+
+            public void CalcVelocity()
+            {
+                if (!self.characterController.isGrounded)
+                {
+                    self.velocity.y -= self.pawn.data.movementInfo.fallAccelRate * self.dt;
+                }
+                else
+                {
+                    self.velocity.y = 0;
+                }
             }
         }
     }

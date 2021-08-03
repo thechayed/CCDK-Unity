@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace FSM
@@ -6,6 +7,7 @@ namespace FSM
 
     public class Component : MonoBehaviour
     {
+
         public FSM.Machine stateMachine;
 
         public bool initialized = false;
@@ -16,6 +18,10 @@ namespace FSM
             stateMachine = new FSM.Machine(this, gameObject);
             Init();
         }        
+
+        public void CreateStateMachine(Component component)
+        {
+        }
 
         /** Update the active State in the State Machine **/
         public virtual void FixedUpdate()
@@ -32,7 +38,7 @@ namespace FSM
         /** Override the Initialize event to change the conditions for which the State Machine can be active **/
         public virtual void Init()
         {
-            if (stateMachine != null && stateMachine.states != null && stateMachine.states.length > 0)
+            if (stateMachine != null && stateMachine.stateMethods != null && stateMachine.stateMethods.length > 0)
             {
                 if (!initialized)
                 {

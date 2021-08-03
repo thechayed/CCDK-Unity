@@ -4,7 +4,7 @@ using CCDKGame;
 
 namespace CCDKEngine
 {
-    public class PawnClass : FSM.Component
+    public class PawnClass : Object
     {
         public Pawn pawn;
         /**This object's Player Controller **/

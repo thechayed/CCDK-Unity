@@ -18,19 +18,24 @@ namespace FSM
         /** The Class that this Simple State Machine is controlling **/
         public FSM.Component component;
         public GameObject gameObject;
-        public Dictionary<MethodInfo[]> states;
+        public Dictionary<MethodInfo[]> stateMethods;
+        public Dictionary<State> stateInstances;
         public string curState;
         public string prevState;
+        public object parent;
+
 
         bool stateInit = false;
 
         /** Construct the State Machine and Initialize all the States **/
-        public Machine(FSM.Component component, GameObject gameObject)
+        public Machine(object component, GameObject gameObject)
         {
-            this.component = component;
+            this.component = (FSM.Component) component;
             this.gameObject = gameObject;
+            this.parent = component;
 
-            states = new Dictionary<MethodInfo[]>();
+            stateMethods = new Dictionary<MethodInfo[]>();
+            stateInstances = new Dictionary<State>();
 
             /** Loop through all the Types in our given SEMB, and add it to our State Type List **/
             foreach (Type type in component.GetType().GetNestedTypes())
@@ -38,11 +43,12 @@ namespace FSM
                 if(type.BaseType.Name == "State")
                 {
                     /** Set up the State Dictionary and Initialize States **/
-                    states.Set(type.Name, type.GetMethods());
-                    CallMethod(type.Name, "Init", new object[] { gameObject });
+                    stateMethods.Set(type.Name, type.GetMethods());
+                    stateInstances.Set(type.Name, (State) Activator.CreateInstance(type));
+                    CallMethod(type.Name, "Init", new object[] { gameObject, parent, this });
 
                     /** If the current state hasn't been set yet, go to this one. **/
-                    if((curState == "" | curState == null)&&!stateInit)
+                    if ((curState == "" | curState == null)&&!stateInit)
                     {
                         GotoState(type.Name);
                         stateInit = true;
@@ -56,7 +62,7 @@ namespace FSM
         /** Go to State by Name **/
         public void GotoState(string name)
         {
-            foreach (DictionaryItem<MethodInfo[]> item in states.dictionary)
+            foreach (DictionaryItem<MethodInfo[]> item in stateMethods.dictionary)
             {
                 string s = item.key;
                 if (s == name)
@@ -78,9 +84,7 @@ namespace FSM
             int index = GetMethodIndex(state, methodName);  
             if (index>-1)
             {
-                var type = component.GetType().GetNestedType(state);
-                State instance = (State)Activator.CreateInstance(type);
-                states.Get(state)[index].Invoke(instance, parameters);
+                stateMethods.Get(state)[index].Invoke(stateInstances.Get(state), parameters);
             }
         }
 
@@ -90,7 +94,7 @@ namespace FSM
             int index = 0;
             if(typeName != null || typeName == "")
             {
-                foreach (MethodInfo method in states.Get(typeName))
+                foreach (MethodInfo method in stateMethods.Get(typeName))
                 {
                     if (method.Name == methodName)
                     {
