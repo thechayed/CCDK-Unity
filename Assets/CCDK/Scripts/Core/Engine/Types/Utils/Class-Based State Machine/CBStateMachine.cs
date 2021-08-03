@@ -22,6 +22,8 @@ namespace CCDKEngine
         public string curState;
         public string prevState;
 
+        bool stateInit = false;
+
         /** Construct the State Machine and Initialize all the States **/
         public CBStateMachine(StateMachineComponent component, GameObject gameObject)
         {
@@ -40,9 +42,10 @@ namespace CCDKEngine
                     CallMethod(type.Name, "Init", new object[] { gameObject });
 
                     /** If the current state hasn't been set yet, go to this one. **/
-                    if(curState == "" | curState == null)
+                    if((curState == "" | curState == null)&&!stateInit)
                     {
-                        curState = type.Name;
+                        GotoState(type.Name);
+                        stateInit = true;
                     }
                 }
             }
@@ -72,10 +75,12 @@ namespace CCDKEngine
         /** Call a method if it exists **/
         public void CallMethod(string state, string methodName, object[] parameters = null)
         {
-            int index = GetMethodIndex(state, methodName);
+            int index = GetMethodIndex(state, methodName);  
             if (index>-1)
             {
-                states.Get(state)[index].Invoke(component.GetType().GetNestedType(state,BindingFlags.Default), parameters);
+                var type = component.GetType().GetNestedType(state);
+                State instance = (State)Activator.CreateInstance(type);
+                states.Get(state)[index].Invoke(instance, parameters);
             }
         }
 

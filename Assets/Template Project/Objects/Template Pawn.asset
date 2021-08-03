@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb477c777f039f4428ad9eaedfc9229d, type: 3}
   m_Name: Template Pawn
   m_EditorClassIdentifier: 
-  pawnClass: CCDKGame.Pawn
+  pawnClass: TemplateGame.TMPPawn
   baseInfo:
-    state:
-      States:
-      - Default
-      curState: Default
-      prevState: Default
     pawnName: NoName
     classes:
       dictionary:
@@ -49,46 +44,21 @@ MonoBehaviour:
       length: 0
       lockKey: 0
   lifeInfo:
-    state:
-      States:
-      - Default
-      curState: Default
-      prevState: Default
     health: 0
   audioInfo:
-    state:
-      States:
-      - Default
-      curState: Default
-      prevState: Default
     audioClips:
       dictionary: []
       length: 0
       lockKey: 0
   costumeInfo:
-    state:
-      States:
-      - Default
-      curState: 
-      prevState: 
     costumeType: 0
     mesh: {fileID: 0}
     sprite: {fileID: 0}
     costumeObject: {fileID: 8568910303525964735, guid: 0763a4c2e476c2c4d9ccfdc871964fe0, type: 3}
   inventoryInfo:
-    state:
-      States:
-      - Default
-      curState: Default
-      prevState: Default
     inventory: []
     inventoryTags: []
   movementInfo:
-    state:
-      States:
-      - Default
-      curState: Default
-      prevState: Default
     MaxStepHeight: 0
     MaxJumpHeight: 0
     WalkableFloorZ: 0

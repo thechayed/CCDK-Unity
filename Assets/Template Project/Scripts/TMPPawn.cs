@@ -18,8 +18,15 @@ namespace TemplateGame
         {
             public override void Enter()
             {
-                base.Enter();
                 Debug.Log("Hello World!");
+                base.Enter();
+            }
+
+            public override void Update()
+            {
+
+                Debug.Log("I'm updating!");
+                base.Update();
             }
         }
     }

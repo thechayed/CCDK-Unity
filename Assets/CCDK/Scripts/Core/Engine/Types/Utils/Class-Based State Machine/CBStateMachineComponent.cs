@@ -22,7 +22,7 @@ namespace CCDKEngine
         {
             if (stateMachine != null)
             {
-                if (!initialized)
+                if (initialized)
                 {
                     stateMachine.CallMethod(stateMachine.curState, "Update"); ;
                 }
@@ -35,7 +35,7 @@ namespace CCDKEngine
             if (stateMachine != null && stateMachine.states != null && stateMachine.states.length > 0)
             {
                 if (!initialized)
-                {;
+                {
                     initialized = true;
                 }
             }
