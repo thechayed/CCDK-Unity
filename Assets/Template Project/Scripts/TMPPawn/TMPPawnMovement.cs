@@ -39,7 +39,7 @@ namespace TemplateGame
             {
                 if (!self.characterController.isGrounded)
                 {
-                    self.velocity.y -= self.pawn.data.movementInfo.fallAccelRate * self.dt;
+                    self.velocity.y -= self.pawn.data.movementInfo.fallAccelRate * Time.deltaTime;
                     self.landed = false;
                     if (self.velocity.y < 0)
                     {

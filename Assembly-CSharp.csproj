@@ -123,7 +123,7 @@
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Genomes\Neat\NeatGenomeXmlIO.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\EvolutionAlgorithms\NeatEvolutionAlgorithm.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\IGenomeListEvaluator.cs" />
-    <Compile Include="Assets\Template Project\Objects\TemplateControls.cs" />
+    <Compile Include="Assets\Template Project\Assets\Objects\TemplateControls.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\AINEATUnit.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\DistanceMetrics\DistanceMetricUtils.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\Utils\Class-Based State Machine\CBStateMachineComponent.cs" />
@@ -270,6 +270,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_Experimental_Rendering_Universal_RenderObjects_RenderObjectsSettings.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Core\FitnessInfo.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\EvolutionAlgorithms\ComplexityRegulation\NullComplexityRegulationStrategy.cs" />
+    <Compile Include="Assets\Template Project\Scripts\TMPPawn\TMPPawnAudio.cs" />
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_MaskableGraphic_CullStateChangedEvent.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Genomes\Neat\AddedNeuronGeneStruct.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\Domains\IntPoint.cs" />
@@ -323,10 +324,11 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\PlayerController.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\NetworkDefinition.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\GameMode.cs" />
-    <Compile Include="Assets\Template Project\Scripts\TMPPawn\TMPPawnAudio.cs" />
+    <Compile Include="Assets\CursorObject.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\Resources\experiment.config.xml" />
+     <None Include="Assets\Template Project\Shaders\CustomLighting.hlsl" />
      <None Include="Assets\Template Project\Shaders\Shaders\SobelFilter.shader" />
      <None Include="Assets\Template Project\Shaders\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\ProjectSettings\ProjectVersion.txt" />
@@ -568,7 +570,10 @@
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Runtime\VisualScripting.Flow\Dependencies\NCalc\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.4\Runtime\ThirdParty\clipper_library.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.5\Runtime\ThirdParty\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.5f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -1052,6 +1057,22 @@
     <ProjectReference Include="Unity.Recorder.csproj">
       <Project>{CA87DDE4-2DB4-5633-E68A-BC353816EFF4}</Project>
       <Name>Unity.Recorder</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Animation.Rigging.csproj">
+      <Project>{E282015E-157C-E999-3445-B3C8E15CDC2A}</Project>
+      <Name>Unity.Animation.Rigging</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
+      <Project>{01467582-C370-D243-7A94-C7903A7EF921}</Project>
+      <Name>Unity.Animation.Rigging.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.Editor.csproj">
+      <Project>{C18CFA83-37B0-77EA-AB80-AC55C4913D74}</Project>
+      <Name>Unity.Burst.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{ABAF8543-27A3-AD60-2188-DF7069EA94AC}</Project>
+      <Name>Unity.Burst</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

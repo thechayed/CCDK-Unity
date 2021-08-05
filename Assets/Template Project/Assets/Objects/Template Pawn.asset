@@ -64,13 +64,13 @@ MonoBehaviour:
     WalkableFloorZ: 0
     bRunPhysicsWithNoController: 0
     bForceMaxAccel: 0
-    GroundSpeed: 250
+    GroundSpeed: 35
     WaterSpeed: 0
     AirSpeed: 0
     LadderSpeed: 0
-    AccelRate: 0
-    fallAccelRate: 1
-    JumpZ: 0
+    AccelRate: 7
+    fallAccelRate: 3
+    JumpZ: 1
     OutofWaterZ: 0
     MaxOutOfWaterStepHeight: 0
     bLimitFallAccel: 0

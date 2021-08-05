@@ -12,17 +12,10 @@ namespace CCDKGame
         /**Player Info*/
         public Player player;
 
-        /** Input Action Collection script. Input actions are used in the Player Controller to get control from the Player **/
-        public IInputActionCollection inputActions;
-
         public override void Start()
         {
             base.Start();
             PlayerManager.AddPC(this);
-            if (Type.GetType(data.inputInfo.inputActions).BaseType.Name == "IInputActionCollection")
-            {
-                inputActions = (IInputActionCollection)Type.GetType(data.inputInfo.inputActions);
-            }
         }
     }
 

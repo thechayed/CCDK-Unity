@@ -31,6 +31,7 @@ namespace CCDKObjects
             public Dictionary<string> InputOutput = new Dictionary<string>();
             /** Input Action Script **/
             [MonoScript(type=typeof(IInputActionCollection))] public string inputActions;
+            public string actionMap;
         }
         public Input inputInfo;
     }
