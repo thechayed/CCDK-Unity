@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Left",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "cd390b28-9463-41a4-939b-63e32f221e89",
                     "expectedControlType": "Button",
                     "processors": "",

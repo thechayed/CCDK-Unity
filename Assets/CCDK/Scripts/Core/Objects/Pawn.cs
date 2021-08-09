@@ -114,5 +114,13 @@ namespace CCDKObjects
                          MaxFallSpeed;  // max speed pawn can land without taking damage
         }
         public Movement movementInfo;
+
+        [System.Serializable]
+        public class Input
+        {
+            /** A dictionary storing all the Input Actions recieved from the Player Controller that the Pawn should respond to. **/
+            public Dictionary<string> actions = new Dictionary<string>();
+        }
+        public Input inputinfo;
     }
 }

@@ -56,62 +56,62 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Attributes\SyncSceneToStreamAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TwistCorrectionJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiPositionConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\IRigLayer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\OverrideRigLayer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigUtils.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\OverrideTransform.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\SyncSceneToStreamLayer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\AnimationRuntimeUtils.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Rig.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\TwistChainConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IAnimatableProperty.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Effectors\IRigEffectorHolder.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TwistCorrectionJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiReferentialConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AssemblyInfo.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiParentConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\QuaternionExt.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\BoneRenderer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\TwoBoneIKConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiPositionConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\DampedTransformJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\ChainIKConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\ConstraintsUtils.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Attributes\SyncSceneToStreamAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\OverrideRigLayer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\WeightedTransformArray.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigUtils.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\AnimationRuntimeUtils.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\Vector3Bool.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\WeightedTransformArrayBinder.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\RigSyncSceneToStreamJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\AnimationJobCache.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Effectors\RigEffectorData.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IAnimationJobBinder.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiReferentialConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\WeightedTransform.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiAimConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiParentConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiRotationConstraintJob.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigBuilder.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigBuilderUtils.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\TwistChainConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiPositionConstraintJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TwistChainConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\DampedTransform.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\IRigLayer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\OverrideRigConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\AffineTransform.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IWeightedAnimationJob.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigLayer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\DampedTransformJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\BlendConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigTransform.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\ChainIKConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiPositionConstraint.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\OverrideTransform.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\SyncSceneToStreamLayer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TwistChainConstraintJob.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IAnimationJobData.cs" />
+    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TransformHandle.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TwoBoneIKConstraintJob.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\BlendConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\Vector3Bool.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiReferentialConstraintJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\AnimationJobCache.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\QuaternionExt.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Effectors\RigEffectorData.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\WeightedTransformArrayBinder.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiReferentialConstraint.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiRotationConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IAnimatableProperty.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\ChainIKConstraintJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\OverrideRigConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\WeightedTransform.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\AffineTransform.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\RigSyncSceneToStreamJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\ConstraintsUtils.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Utils\BoneRenderer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\BlendConstraintJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\TransformHandle.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigTransform.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\RigConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IWeightedAnimationJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiAimConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AssemblyInfo.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiAimConstraintJob.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\TwistCorrection.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\TwoBoneIKConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiParentConstraintJob.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\OverrideTransformJob.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\DampedTransform.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IAnimationJobData.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\ChainIKConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\IAnimationJobBinder.cs" />
     <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\IRigConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Effectors\IRigEffectorHolder.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\Constraints\MultiParentConstraint.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationRig\WeightedTransformArray.cs" />
-    <Compile Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\AnimationJobs\MultiRotationConstraintJob.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Library\PackageCache\com.unity.animation.rigging@1.0.3\Runtime\Unity.Animation.Rigging.asmdef" />
@@ -355,6 +355,9 @@
     <Reference Include="YamlDotNet">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Dependencies\YamlDotNet\YamlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="IonicZip">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Dependencies\DotNetZip\IonicZip.dll</HintPath>
     </Reference>
@@ -366,9 +369,6 @@
     </Reference>
     <Reference Include="clipper_library">
       <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.5\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.5f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

@@ -82,6 +82,7 @@
     <Compile Include="Assets\Unity.VisualScripting.Generated\VisualScripting.Core\Property Providers\PropertyProvider_UnityEngine_UI_Navigation.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Decoders\HyperNeat\HyperNeatDecoder.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\AI\Deprecated\GeneticAlgorithm.cs" />
+    <Compile Include="Assets\CursorObject.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\Pawn\PawnMovement.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Utility\RouletteWheelLayout.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\Types\AI\Deprecated\Examples\GeneticInputManager.cs" />
@@ -324,7 +325,6 @@
     <Compile Include="Assets\CCDK\Scripts\Core\Game Core\PlayerController.cs" />
     <Compile Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\SharpNEAT\Network\NetworkDefinition.cs" />
     <Compile Include="Assets\CCDK\Scripts\Core\Engine\GameMode.cs" />
-    <Compile Include="Assets\CursorObject.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\CCDK\Scripts\SubModules\UnityNEAT\UnityNEAT\Assets\Resources\experiment.config.xml" />
@@ -563,6 +563,9 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.5f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="MiscUtil">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Runtime\VisualScripting.Core\Dependencies\MiscUtil\MiscUtil.dll</HintPath>
     </Reference>
@@ -571,9 +574,6 @@
     </Reference>
     <Reference Include="clipper_library">
       <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.5\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.5f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -970,6 +970,10 @@
       <Project>{EFE45ED1-A06D-F7BB-5E7B-4ECA9588B870}</Project>
       <Name>Unity.VisualScripting.State.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Burst.Editor.csproj">
+      <Project>{C18CFA83-37B0-77EA-AB80-AC55C4913D74}</Project>
+      <Name>Unity.Burst.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Searcher.Editor.csproj">
       <Project>{2746FC61-335A-C6B2-A929-1BFD83A16C63}</Project>
       <Name>Unity.Searcher.Editor</Name>
@@ -1010,6 +1014,10 @@
       <Project>{B09B0E05-167F-55B9-F7CB-CB48D2D424BA}</Project>
       <Name>Unity.VisualScripting.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Animation.Rigging.csproj">
+      <Project>{E282015E-157C-E999-3445-B3C8E15CDC2A}</Project>
+      <Name>Unity.Animation.Rigging</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.csproj">
       <Project>{803CF41B-93BA-0E21-3A65-3178A264AB39}</Project>
       <Name>Unity.Mathematics</Name>
@@ -1021,6 +1029,10 @@
     <ProjectReference Include="Cinemachine.csproj">
       <Project>{4EC92058-8FFD-55EC-441F-AE942DF65A00}</Project>
       <Name>Cinemachine</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{ABAF8543-27A3-AD60-2188-DF7069EA94AC}</Project>
+      <Name>Unity.Burst</Name>
     </ProjectReference>
     <ProjectReference Include="com.unity.cinemachine.editor.csproj">
       <Project>{253B229C-C925-8F30-241B-AD81C5CE2243}</Project>
@@ -1034,17 +1046,21 @@
       <Project>{F41B53A7-3D6D-F119-1413-A6B4A0244EF0}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
-      <Project>{4608AEE9-752A-670A-3D92-1F8188C32B51}</Project>
-      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Editor.csproj">
       <Project>{60322371-B9B2-F46E-DC1C-435861CA3207}</Project>
       <Name>Unity.Timeline.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
+      <Project>{4608AEE9-752A-670A-3D92-1F8188C32B51}</Project>
+      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.Editor.csproj">
       <Project>{61A05BA1-3A23-C46D-A8AD-E20DBBF10212}</Project>
       <Name>Unity.Mathematics.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
+      <Project>{01467582-C370-D243-7A94-C7903A7EF921}</Project>
+      <Name>Unity.Animation.Rigging.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.Editor.csproj">
       <Project>{DE1F0288-B01B-1060-5586-A7849965F19F}</Project>
@@ -1057,22 +1073,6 @@
     <ProjectReference Include="Unity.Recorder.csproj">
       <Project>{CA87DDE4-2DB4-5633-E68A-BC353816EFF4}</Project>
       <Name>Unity.Recorder</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Animation.Rigging.csproj">
-      <Project>{E282015E-157C-E999-3445-B3C8E15CDC2A}</Project>
-      <Name>Unity.Animation.Rigging</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
-      <Project>{01467582-C370-D243-7A94-C7903A7EF921}</Project>
-      <Name>Unity.Animation.Rigging.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.Editor.csproj">
-      <Project>{C18CFA83-37B0-77EA-AB80-AC55C4913D74}</Project>
-      <Name>Unity.Burst.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{ABAF8543-27A3-AD60-2188-DF7069EA94AC}</Project>
-      <Name>Unity.Burst</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

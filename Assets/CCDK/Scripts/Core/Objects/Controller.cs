@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEditor;
 using B83.Unity.Attributes;
+using CCDKGame;
 
 namespace CCDKObjects
 {

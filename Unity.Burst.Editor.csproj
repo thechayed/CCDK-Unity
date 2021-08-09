@@ -56,22 +56,22 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.Wasm.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.LLVMIR.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstMenu.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.x86.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstCompileTarget.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstEditorUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.ARM64.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstReflection.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstCompileTarget.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstLoader.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\LongTextArea.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstEditorUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstInspectorGUI.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstReflection.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstAotSettings.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstMenu.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.x86.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstEditorOptions.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstAotCompiler.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.Wasm.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\BurstDisassembler.Core.LLVMIR.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Library\PackageCache\com.unity.burst@1.4.7\Editor\Unity.Burst.Editor.asmdef" />
@@ -315,6 +315,9 @@
     <Reference Include="YamlDotNet">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Dependencies\YamlDotNet\YamlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="IonicZip">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Dependencies\DotNetZip\IonicZip.dll</HintPath>
     </Reference>
@@ -326,9 +329,6 @@
     </Reference>
     <Reference Include="clipper_library">
       <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.5\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

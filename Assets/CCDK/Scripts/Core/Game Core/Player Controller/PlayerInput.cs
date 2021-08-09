@@ -12,50 +12,40 @@ namespace CCDKGame
 {
     public class PlayerInput : ControllerInput
     {
+        public object pawnInputHandler;
 
         /** Input Action Collection script. Input actions are used in the Player Controller to get control from the Player **/
         public object inputActions;
         public Type inputActionsType;
 
-        public InputAction[] inputActionValues;
+        /** Action Map Values **/
+        object actionMap;
+        MethodInfo get;
+        InputActionMap map;
+        ReadOnlyArray<InputAction> actions;
 
         /** Whether we've translated Pawn methods to input methods yet **/
         bool hasCommandedPawn;
 
         public override void Start()
         {
-            if (Type.GetType(controller.data.inputInfo.inputActions).BaseType.Name == "IInputActionCollection")
-            {
-                inputActionsType = Type.GetType(controller.data.inputInfo.inputActions);
-                inputActions = Activator.CreateInstance(inputActionsType);
-            }
+            inputActionsType = Type.GetType(controller.data.inputInfo.inputActions);
+            inputActions = Activator.CreateInstance(inputActionsType);
 
             controller.Possessed += OnPossess;
             base.Start();
         }
 
-        /** When a Pawn has been possessed, loop through all the Items in the Controller's
-         * IO Dictionary to find what methods should be called for each Input, 
-         * and assign the Inputs accordingly within the Pawn's Input Handler **/
+
         public void OnPossess()
         {
-            int index = 0;
-            inputActionValues = GetActions();
+            pawnInputHandler = pawn.GetComponent<PawnInputHandler>();
+            SetupInput();
 
-            foreach (DictionaryItem<string> item in controller.data.inputInfo.InputOutput.dictionary)
+            foreach (InputAction action in actions)
             {
-                if (item.key == inputActionValues[index].name)
-                {
-                    if (pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(item.value) != null)
-                    {
-                        SetAction(index, pawn, item.value);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("The requested Method: " + item.value + " does not exist in the class this Controller Possesses.");
-                    }
-                }
-                index++;
+                action.performed += ctx => pawnInputHandler.GetType().GetMethod("InputPerformed").Invoke(pawnInputHandler, new object[] { ctx });
+                action.canceled += ctx => pawnInputHandler.GetType().GetMethod("InputCanceled").Invoke(pawnInputHandler, new object[] { ctx });
             }
         }
 
@@ -80,27 +70,14 @@ namespace CCDKGame
             inputActionsType.GetMethod(name).Invoke(inputActions, parameters);
         }
 
-        public InputAction[] GetActions()
+        public void SetupInput()
         {
-            Type actionMap = inputActionsType.GetNestedType(controller.data.inputInfo.actionMap);
-            MethodInfo get = actionMap.GetMethod("Get");
-            InputActionMap map = (InputActionMap)get.Invoke(actionMap, null);
-            ReadOnlyArray<InputAction> actions = (ReadOnlyArray<InputAction>)map.GetType().GetField("actions").GetValue(map);
-            InputAction[] arr = (InputAction[]) actions.GetType().GetMethod("ToArray").Invoke(actions, null);
-            return arr;
+            //actionMap = Activator.CreateInstance(inputActions.GetType().GetNestedType(controller.data.inputInfo.actionMap));
+            actionMap = inputActions.GetType().GetProperty(controller.data.inputInfo.actionMap).GetValue(inputActions);
+            get = actionMap.GetType().GetMethod("Get");
+            map = (InputActionMap)get.Invoke(actionMap, null);
+            actions = (ReadOnlyArray<InputAction>)map.GetType().GetProperty("actions").GetValue(map);
+            inputActions.GetType().GetMethod("Enable").Invoke(inputActions,null);
         }
-
-        public void SetAction(int index, Pawn pawn, string Action)
-        {
-            Type actionMap = inputActionsType.GetNestedType(controller.data.inputInfo.actionMap);
-            MethodInfo get = actionMap.GetMethod("Get");
-            InputActionMap map = (InputActionMap)get.Invoke(actionMap, null);
-            ReadOnlyArray<InputAction> actions = (ReadOnlyArray<InputAction>)map.GetType().GetField("actions").GetValue(map);
-
-            actions[index].performed += ctx => pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(controller.data.inputInfo.InputOutput.Get(Action)).Invoke(pawn.GetComponent<PawnInputHandler>(), null);
-            if (pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(Action + "_Cancel") != null)
-                actions[index].canceled += ctx => pawn.GetComponent<PawnInputHandler>().GetType().GetMethod(controller.data.inputInfo.InputOutput.Get(Action) + "_Cancel").Invoke(pawn.GetComponent<PawnInputHandler>(), null);
-        }
-
     }
 }

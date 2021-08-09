@@ -64,11 +64,11 @@ MonoBehaviour:
     WalkableFloorZ: 0
     bRunPhysicsWithNoController: 0
     bForceMaxAccel: 0
-    GroundSpeed: 35
+    GroundSpeed: 0.2
     WaterSpeed: 0
     AirSpeed: 0
     LadderSpeed: 0
-    AccelRate: 7
+    AccelRate: 6
     fallAccelRate: 3
     JumpZ: 1
     OutofWaterZ: 0
@@ -79,3 +79,20 @@ MonoBehaviour:
     MovementSpeedModifier: 0
     CrouchedPct: 0
     MaxFallSpeed: 0
+  inputinfo:
+    actions:
+      dictionary:
+      - lockKey: 0
+        key: Left
+        value: MoveLeft
+      - lockKey: 0
+        key: Right
+        value: MoveRight
+      - lockKey: 0
+        key: Jump
+        value: Jump
+      - lockKey: 0
+        key: Look
+        value: Look
+      length: 4
+      lockKey: 0

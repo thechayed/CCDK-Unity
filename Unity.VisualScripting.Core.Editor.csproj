@@ -193,8 +193,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Description\MachineDescriptor.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqCore\Changelog_1_4_11.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Utilities\ScriptUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Widgets\Nodes\INodeWidget.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqCore\Changelog_1_4_0.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Widgets\Nodes\INodeWidget.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\DraggedListItem.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Utilities\AssetUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Meta\MemberMetadata.cs" />
@@ -308,8 +308,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Utilities\LudiqEditorUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Interface\Fuzzy\FuzzyGroup.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\Unity\Vector2Inspector.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugins\PluginAttribute.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Interface\Edge.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugins\PluginAttribute.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Widgets\Nodes\NodeWidget.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqGraphs\Changelog_1_1_1.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Assignment\IAssigner.cs" />
@@ -378,8 +378,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Interface\ListOption.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\EventMachineEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\VSEditorSettingsProviderView.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Utilities\AssetBundleUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Interface\EventWrapper.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Utilities\AssetBundleUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\Primitives\DoubleInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Interface\Fuzzy\IFuzzyOption.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Analysis\Analysis.cs" />
@@ -504,8 +504,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\Unity\RectInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqGraphs\Changelog_1_2_0.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\IndividualPropertyDrawer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\Inspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Meta\DictionaryKeyAtIndexMetadata.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Inspection\Inspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Utilities\ScriptReference.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Platforms\AotPreBuilder.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Plugin\BoltCoreConfiguration.cs" />
@@ -765,6 +765,9 @@
     <Reference Include="YamlDotNet">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Dependencies\YamlDotNet\YamlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="IonicZip">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Editor\VisualScripting.Core\Dependencies\DotNetZip\IonicZip.dll</HintPath>
     </Reference>
@@ -776,9 +779,6 @@
     </Reference>
     <Reference Include="clipper_library">
       <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.5\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.7\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

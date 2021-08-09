@@ -40,7 +40,8 @@ public class Dictionary<T>
 
     public T Get(string name)
     {
-        if (length != 0)
+        length = dictionary.Count;
+        if (length != 0 && GetIndex(name)!=-1)
         {
             return dictionary[GetIndex(name)].value;
         }
@@ -52,6 +53,7 @@ public class Dictionary<T>
 
     public void Set(string name, T value)
     {
+        length = dictionary.Count;
         //If the item exists in the dictionary, set it's value, if it doesn't, add it to the List
         if (GetIndex(name) != -1)
         {
@@ -61,8 +63,8 @@ public class Dictionary<T>
         {
             DictionaryItem<T> item = new DictionaryItem<T>(name, value);
             dictionary.Add(item);
-            length++;
         }
+        length = dictionary.Count;
     }
 
     public int GetIndex(string name)
