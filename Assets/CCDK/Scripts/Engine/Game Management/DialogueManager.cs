@@ -53,7 +53,6 @@ namespace CCDKEngine
             }
             DisplayNextSentence();
             speaker = dialogue.name;
-            Debug.Log(dialogue.name);
         }
 
         /** Display the next sentnece of the current Dialogue **/

@@ -8,15 +8,17 @@ namespace CCDKEngine
 {
     public class LevelManager
     {
-        /** The Level who's scene is currently active **/
+
+
+        /**<summary> The Level who's scene is currently active </summary>**/
         public static string currentLevel;
-        /** The Level to go to when it has finished loading **/
+        /**<summary> The Level to go to when it has finished loading </summary>**/
         public static string nextLevel;
-        /** A List of all the currently loaded Levels **/
+        /**<summary> A List of all the currently loaded Levels </summary>**/
         public static List<GameObject> loadedLevels = new List<GameObject>();
 
 
-        /** Simply returns whether any Level is currently loaded and active **/
+        /**<summary> Get whether any Level is currently loaded and active </summary>**/
         public static bool GetInLevel()
         {
             bool inLevel = false;
@@ -27,7 +29,7 @@ namespace CCDKEngine
             return inLevel;
         }
 
-        /** Go to Level by Name **/
+        /**<summary> Go to Level by Name </summary>**/
         public static void GoToLevel(string levelName)
         {
             GameObject newLevel = CreateNewLevel(levelName);
@@ -35,7 +37,7 @@ namespace CCDKEngine
             loadedLevels.Add(newLevel);
         }
 
-        /** Create and Load a level by name **/
+        /**<summary> Create and Load a level by name </summary>**/
         public static GameObject CreateNewLevel(string levelName)
         {
             ManageEngine();
@@ -49,7 +51,7 @@ namespace CCDKEngine
             return levelObj;
         }
 
-        /** Recieved from a Level object, tells the Manager that it has finished loading **/
+        /**<summary> Tell the Level Manaaager that the level has finished loading. </summary>**/
         public static void LevelLoaded(string level)
         {
             if(level == nextLevel)
@@ -63,17 +65,17 @@ namespace CCDKEngine
                 /** Return to the Game Scene **/
                 ReturnToGameplay();
             
-                if(level == Engine.sStartingLevelName)
+                if(level == Engine.data.startingLevelName)
                 {
-                    Engine.startingLevelLoaded = true;
+                    Engine.data.startingLevelLoaded = true;
                 }
             }
         }
 
-        /** Destroys levels that are no longer active **/
+        /**<summary> Destroys levels that are no longer active </summary>**/
         public static void DropInactiveLevels()
         {
-            if (Engine.sdropLevelOnLoad)
+            if (Engine.data.dropLevelOnLoad)
             {
                 foreach (GameObject level in loadedLevels)
                 {
@@ -86,20 +88,29 @@ namespace CCDKEngine
             }
         }
 
-        /** Sets the Engine scene active for making modifications to Levels **/
+        /**<summary> Sets the Engine scene active for making modifications to Levels </summary>**/
         public static void ManageEngine()
         {
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Engine"));
         }
 
-        /* ALWAYS CALL THIS FUNCTION AFTER ManageEngine()! 
-         * If you don't, The Engine Scene will be active in Gameplay! */
+        /* <summary> ALWAYS CALL THIS FUNCTION AFTER ManageEngine()! 
+         * If you don't, The Engine Scene will be active in Gameplay! </summary>*/
         public static void ReturnToGameplay()
         {
             if (currentLevel != null)
             {
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName(currentLevel));
             }
+        }
+
+
+        /**<summary>
+         * Creates the Runtime Game Object from the Prefab given the Engine Scriptable Object
+         * </summary>**/
+        public static void MakeEngineScene()
+        {
+            SceneManager.CreateScene("Engine");
         }
     }
 }

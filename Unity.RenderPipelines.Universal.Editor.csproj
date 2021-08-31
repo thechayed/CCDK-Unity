@@ -165,8 +165,8 @@
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\ShaderGUI\Shaders\ParticlesUnlitShader.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\2D\ShapeEditor\GUIFramework\GenericDefaultControl.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\Deprecated.cs" />
-    <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\AssetPostProcessors\ModelPostProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\ShaderGraph\Targets\UniversalSpriteUnlitSubTarget.cs" />
+    <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\AssetPostProcessors\ModelPostProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\Overrides\TonemappingEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\ShaderGUI\Shaders\LitShader.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@11.0.0\Editor\ShaderGraph\UniversalFields.cs" />

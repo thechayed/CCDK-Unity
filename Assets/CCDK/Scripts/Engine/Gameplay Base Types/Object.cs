@@ -24,7 +24,7 @@ namespace CCDKEngine
             /* If the object should be ready after play has begun, set to true */
             if (readyOnStart)
             {
-                if (Engine.runtimeInit&&LevelManager.GetInLevel())
+                if (Engine.running&&LevelManager.GetInLevel())
                 {
                     ready = true;
                 }

@@ -23,7 +23,7 @@ namespace CCDKVisualScripting
         /** Get whether the first level has been loaded. **/
         public static bool StartingLevelLoaded()
         {
-            return Engine.startingLevelLoaded;
+            return Engine.data.startingLevelLoaded;
         }
 
     }

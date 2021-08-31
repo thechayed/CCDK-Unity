@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using CCDKEngine;
+using System;
 
 namespace CCDKGame
 {
@@ -10,6 +11,8 @@ namespace CCDKGame
         public Vector3 velocity = new Vector3(0,0,0);
         public float dt;
 
+        public CharacterController characterController;
+
         public override void Start()
         {
             base.Start();
@@ -18,6 +21,15 @@ namespace CCDKGame
         private void Update()
         {
             dt = Time.deltaTime;
+        }
+
+        /** Performs basic set up of Controllers for Pawn Movement **/
+        public object GenerateController(Type type)
+        {
+            if (type == typeof(CharacterController))
+            {
+                characterController = gameObject.AddComponent<CharacterController>();
+            }
         }
     }
 }

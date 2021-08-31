@@ -19,7 +19,7 @@ namespace CCDKEngine
         {
             GameObject hudObject = new GameObject();
             hudObject.name = HUDObject.name;
-            hudObject.AddComponent(Type.GetType(HUDObject.HUDClass.script));
+            hudObject.AddComponent(Type.GetType(HUDObject.script));
 
             if (liveHuds.Count == 0)
             {

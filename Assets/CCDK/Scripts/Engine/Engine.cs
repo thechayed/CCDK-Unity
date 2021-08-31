@@ -3,99 +3,57 @@ using Unity.VisualScripting;
 using UnityEngine;
 using CCDKGame;
 using B83.Unity.Attributes;
+using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace CCDKEngine
 {
-    public class Engine : MonoBehaviour
+    public class Engine 
     {
-        /** Initialize **/
-        /** The name of the first Level to go to **/
-        public string startingLevelName = "";
-        public static string sStartingLevelName = "";
+        /**<summary> The Engine Data, recieved from the last created Engine object </summary>**/
+        public static CCDKObjects.Engine data;
 
-        public static bool startingLevelLoaded = false;
+        /**<summary> Whether the Runtime has started </summary>**/
+        public static bool running;
 
-        /**Whether the Runtime has started**/
-        public static bool runtimeInit;
-        /** Whether to use a Graph to control the Runtime **/
-        public static bool useRGraph;
-        public bool useRuntimeGraph;
-        public static StateGraphAsset rGraph;
-        public StateGraphAsset runtimeGraph;
-
-        /** The object of the Game Mode that has been loaded **/
-        public GameObject gameModeObject;
-        public static GameMode gameMode;
-        public static GameInfo gameInfo;
-
-        /** Whether to destroy a Level when another is set to active **/
-        public static bool sdropLevelOnLoad;
-        /** Enable setting this value in the Inspector **/
-        public bool dropLevelOnLoad;
-
-
-        /** Whether the Engine has already been created **/
-        public static bool engineCreated;
-
-        /** The Engine object **/
-        public static Engine engine;
-        public static GameObject engineOBJ;
-
-        /** Defaults for Player Controllers that aren't externally defined **/
-        public static string defaultPCClass = "CCDKGame.PlayerController";
-        public CCDKObjects.Controller defaultPlayerControllerData;
-
-        private void Awake()
+        /** Initialize the engine loop **/
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        static async void Init()
         {
-            engine = this;
-            engineOBJ = gameObject;
-        }
 
-        // Use this for initialization
-        void Start()
-        {
-            /** If the default controller Data hasn't been created, create it **/
-            if (defaultPlayerControllerData == null)
+            /*Begin play!*/
+            running = true;
+
+            while (running)
             {
-                defaultPlayerControllerData = CCDKObjects.Controller.CreateInstance<CCDKObjects.Controller>();
-            }
-            /** Set the PlayerManager's default PC Data **/
-            PlayerManager.defaultPlayerControllerSO = defaultPlayerControllerData;
+                Engine.Update();
 
-            /** Go to the Starting level set in Engine settings **/
-            LevelManager.GoToLevel(startingLevelName);
-
-            useRGraph = useRuntimeGraph;
-            rGraph = runtimeGraph;
-            if (gameMode == null)
-            {
-                Instantiate(gameModeObject);
-                gameMode = gameModeObject.GetComponent<GameMode>();
-                gameInfo = gameModeObject.GetComponent<GameInfo>();
-                /*Begin play!*/
-                runtimeInit = true;
-            }
-            sdropLevelOnLoad = dropLevelOnLoad;
-            sStartingLevelName = startingLevelName;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            /** Check if the Player Manager has any records of Player Controllers. If not, create a new one from Engine default values **/
-            if (PlayerManager.playerControllers.Count == 0)
-            {
-                PlayerManager.defaultPlayerControllerSO = defaultPlayerControllerData;
-                PlayerManager.CreatePC(defaultPCClass);
+                // Update Game at 60fps
+                await Task.Delay(8);
             }
         }
 
-        /** Get the Game Mode object from disk, and get the components **/
-        public static void GoToGameMode(string name)
+        
+        static void Update()
         {
-
+            /** Create the Engine scene and load the first level **/
+            if(data!=null&&!data.startingLevelLoaded)
+            {
+                Engine.InitEngineTools();
+            }
         }
 
+        static void InitEngineTools()
+        {
+            LevelManager.MakeEngineScene();
+            GameObject runtimeObj = new GameObject();
+            runtimeObj.name = "Runtime";
+            StateMachine sm = runtimeObj.AddComponent<StateMachine>();
+            sm.nest.macro = data.runtimeGraph;
+            sm.enabled = true;
 
+            LevelManager.GoToLevel(data.startingLevelName);
+            data.startingLevelLoaded = true;
+        }
     }
 }
