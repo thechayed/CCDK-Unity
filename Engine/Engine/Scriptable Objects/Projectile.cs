@@ -26,6 +26,9 @@ namespace CCDKObjects
         
         
         public bool tracking;
+        public float baseTrackIntensity;
+        public float trackIntensityOnMoveMultiplier;
+        
         
         [hHeader(" - Base Properties - ")]
         [Tooltip("The length of the ray that is shot from the Projectile toward its moving angle")]
