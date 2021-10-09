@@ -27,7 +27,7 @@ namespace CCDKGame
         public GameObject ImapactedObject;
 
 
-        public float 
+        public float gravity;
     }
 
 }
