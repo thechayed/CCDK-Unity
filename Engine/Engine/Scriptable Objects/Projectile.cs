@@ -14,7 +14,7 @@ namespace CCDKObjects
     [CreateAssetMenu(menuName = "Game Objects/Projectile")]
     public class Projectile : PrefabSO
     {
-        [MonoScript(type = typeof(CCDKEngineCCDKEngine.Projectile))] public string projectileClass = "CCDKGame.Projectile";
+        [MonoScript(type = typeof(CCDKGame.Projectile))] public string projectileClass = "CCDKGame.Projectile";
 
         [Header(" - Flags - ")]
         [Tooltip("Whether the projectile is physical or not/ moves forward from the point it was shot, over time.")]
