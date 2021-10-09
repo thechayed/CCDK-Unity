@@ -12,6 +12,9 @@ namespace CCDKGame
         public float Speed;
         /**The angle of motion of the projectile**/
         public Vector3 movingAngle;
+        
+        /**The target Transform of the object the parent was aiming at when the projectile was shot.**/
+        public Transform target;
 
 
 
