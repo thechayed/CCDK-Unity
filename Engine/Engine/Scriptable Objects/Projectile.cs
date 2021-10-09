@@ -16,16 +16,21 @@ namespace CCDKObjects
     {
         [MonoScript(type = typeof(CCDKEngineCCDKEngine.Projectile))] public string projectileClass = "CCDKGame.Projectile";
 
+        [Header(" - Flags - ")]
         [Tooltip("Whether the projectile is physical or not/ moves forward from the point it was shot, over time.")]
         public bool physical = true;
         [Tooltip("Use physics will enable gravity and wind influence.")]
         public bool usePhysics = true;
         [Tooltip("If the projectile uses physics, enables the influence of wind.")]
         public bool useWind = false;
+        
+        [hHeader(" - Base Properties - ")]
         [Tooltip("The length of the ray that is shot from the Projectile toward its moving angle")]
         public float rayLength = 1.0f;
 
-
+        [Header(" - Physics Properties - ")]
+        public float gravity;
+        public float speed;
 
         public override void OnEnable()
         {
