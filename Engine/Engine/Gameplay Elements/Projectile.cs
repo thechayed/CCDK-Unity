@@ -23,6 +23,14 @@ namespace CCDKGame
         public GameObject ImapactedObject;
         
         public void Spawn(CCDKObjects.Projectile data, Transform direction, Transform target, Pawn parent = null)
+        {
+          this.data = data;
+          this.target = target;
+          this.parent = parent;
+          
+          transform.position = direction.position;
+          transform.eulerAngles = direction.eulerAngles;
+        }
 
     }
 
