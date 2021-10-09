@@ -15,11 +15,14 @@ namespace CCDKGame
         
         /**The target Transform of the object the parent was aiming at when the projectile was shot.**/
         public Transform target;
-
+        
+        public Pawn parent;
 
 
         /** The object we collided with**/
         public GameObject ImapactedObject;
+        
+        public void Spawn(CCDKObjects.Projectile data, Transform direction, Transform target, Pawn parent = null)
 
     }
 
