@@ -34,7 +34,7 @@ namespace CCDKGame
         
         private void Update()
         {
-          
+          transform.position+transform.forward + new Vector
         }
 
     }
