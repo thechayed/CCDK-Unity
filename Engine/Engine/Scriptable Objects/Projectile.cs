@@ -28,14 +28,14 @@ namespace CCDKObjects
         
         
         public bool tracking;
-        public float baseTrackIntensity;
-        public float trackIntensityOnMoveMultiplier;
+        public float baseTrackIntensity=0.01f;
+        public float trackIntensityOnMoveMultiplier=0.1f;
         
         
         [hHeader(" - Base Properties - ")]
         public float initialSpeed = 5f;
         public float maxSpeed;
-        public float acceleration;
+        public float acceleration = 0.01f;
         [Tooltip("The length of the ray that is shot from the Projectile toward its moving angle")]
         public float rayLength = 1.0f;
 
