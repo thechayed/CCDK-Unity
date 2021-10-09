@@ -7,9 +7,11 @@ namespace CCDKGame
 {
     public class Projectile : CCDKEngine.Object
     {
+      public CCDKObjects.Projectile projectileData;
+      
         // Motion information.
         /** Initial speed of projectile. */
-        public float Speed;
+        public float speed;
         /**The angle of motion of the projectile**/
         public Vector3 movingAngle;
         
@@ -30,11 +32,13 @@ namespace CCDKGame
           
           transform.position = direction.position;
           transform.eulerAngles = direction.eulerAngles;
+          
+          projectileData = (CCDKObjects.Projectile) data;
         }
         
         private void Update()
         {
-          transform.position+transform.forward + new Vector
+          transform.position += (transform.etransform.forward*Time.deltaTime*speed);
         }
 
     }
