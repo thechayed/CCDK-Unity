@@ -41,10 +41,13 @@ namespace CCDKGame
           /**Update the position of the projectile by its speed**/
           transform.position += (transform.etransform.forward*Time.deltaTime*speed);
           
+          /**If using acceleration, interpolation to the Goal speed**/
           if(projectileData.accelerate)
           {
             speed = Marhf.Lerp(speed, projectileData.maxSpeed, projectileData.acceleration)
           }
+          
+          
         }
 
     }
