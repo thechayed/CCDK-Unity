@@ -38,7 +38,13 @@ namespace CCDKGame
         
         private void Update()
         {
+          /**Update the position of the projectile by its speed**/
           transform.position += (transform.etransform.forward*Time.deltaTime*speed);
+          
+          if(projectileData.accelerate)
+          {
+            
+          }
         }
 
     }
