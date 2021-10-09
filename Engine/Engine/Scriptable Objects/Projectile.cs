@@ -19,6 +19,8 @@ namespace CCDKObjects
         [Header(" - Flags - ")]
         [Tooltip("Whether the projectile is physical or not/ moves forward from the point it was shot, over time.")]
         public bool physical = true;
+        [Tooltip("Whether this projectile should accelerate toward the maxSpeed (slow down or speed up after being shot)")]
+        public bool accelerate = false;
         [Tooltip("Use physics will enable gravity and wind influence.")]
         public bool usePhysics = true;
         [Tooltip("If the projectile uses physics, enables the influence of wind.")]
@@ -31,6 +33,9 @@ namespace CCDKObjects
         
         
         [hHeader(" - Base Properties - ")]
+        public float initialSpeed = 5f;
+        public float maxSpeed;
+        public float acceleration;
         [Tooltip("The length of the ray that is shot from the Projectile toward its moving angle")]
         public float rayLength = 1.0f;
 
@@ -45,8 +50,6 @@ namespace CCDKObjects
 
         [Header(" - Physics Properties - ")]
         public float gravity;
-        public float maxSpeed;
-        public float acceleration;
         
 
         public override void OnEnable()
