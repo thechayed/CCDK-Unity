@@ -31,6 +31,11 @@ namespace CCDKGame
           transform.position = direction.position;
           transform.eulerAngles = direction.eulerAngles;
         }
+        
+        private void Update()
+        {
+          
+        }
 
     }
 
