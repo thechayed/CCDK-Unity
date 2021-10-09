@@ -14,33 +14,30 @@ namespace CCDKObjects
     [CreateAssetMenu(menuName = "Game Objects/Projectile")]
     public class Projectile : PrefabSO
     {
-        [MonoScript(type = typeof(CCDKEngineCCDKEngine.Projectile))] public string controllerClass = "CCDKGame.PlayerController";
+        [MonoScript(type = typeof(CCDKEngineCCDKEngine.Projectile))] public string projectileClass = "CCDKGame.Projectile";
 
-        
+        [Tooltip("Whether the projectile is physical or not/ moves forward from the point it was shot, over time.")]
+        public bool physical = true;
         [Tooltip("Use physics will enable gravity and wind influence.")]
         public bool usePhysics = true;
         [Tooltip("If the projectile uses physics, enables the influence of wind.")]
         public bool useWind = false;
+        [Tooltip("The length of the ray that is shot from the Projectile toward its moving angle")]
         public float rayLength = 1.0f;
-      
-        [Tooltip("The kind of Controller this is, determines how the Engine uses it.\nPlayer: Given to players that join a game\nAI: Given to AI's that join the game\nCustom: The engine does nothing.")]
-        public ControllerType controllerType;
-
-        public InputActionAsset inputActionAsset;
 
 
 
         public override void OnEnable()
         {
-            className = controllerClass;
-            defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/PlayerController");
+            className = projectileClass;
+            defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
             base.OnEnable();
         }
 
         public override void Awake()
         {
-            className = controllerClass;
-            defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/PlayerController");
+            className = pprojectileClass;
+            defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
             base.Awake();
         }
 
