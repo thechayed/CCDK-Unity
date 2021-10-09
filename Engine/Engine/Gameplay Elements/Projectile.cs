@@ -26,9 +26,6 @@ namespace CCDKGame
         /** The object we collided with**/
         public GameObject ImapactedObject;
 
-
-        public float gravity;
-        //simple comment  
     }
 
 }
