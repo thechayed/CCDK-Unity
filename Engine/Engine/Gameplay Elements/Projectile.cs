@@ -43,7 +43,7 @@ namespace CCDKGame
           
           if(projectileData.accelerate)
           {
-            
+            speed = Marhf.Lerp(speed, projectileData.maxSpeed, projectileData.acceleration)
           }
         }
 
