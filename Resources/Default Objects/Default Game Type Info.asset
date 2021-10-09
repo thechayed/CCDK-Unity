@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6932bf52c6167d949b0ec3159dda299f, type: 3}
+  m_Name: Default Game Type Info
+  m_EditorClassIdentifier: 
+  gameTypeClass: CCDKEngine.GameType
+  defaultPlayerController: {fileID: 0}
+  defualtAIController: {fileID: 0}
+  defaultPawn: {fileID: 0}
+  defaultHUD: {fileID: 0}
+  useOwnGameState: 1
+  managePlayerControler: 1
+  usePlayerManager: 0
+  managePawn: 1
+  Stats:
+    dictionary:
+    - lockKey: 0
+      key: MaxPlayers
+      value: 16
+    - lockKey: 0
+      key: MaxPlayersAllowed
+      value: 16
+    - lockKey: 0
+      key: GoalScore
+      value: 25
+    - lockKey: 0
+      key: TimeLimit
+      value: 30
+    length: 0
+    lockKey: 0
+  Flags:
+    dictionary:
+    - lockKey: 0
+      key: RestartLevel
+      value: 0
+    - lockKey: 0
+      key: TeamGame
+      value: 1
+    length: 0
+    lockKey: 0
