@@ -24,13 +24,27 @@ namespace CCDKObjects
         [Tooltip("If the projectile uses physics, enables the influence of wind.")]
         public bool useWind = false;
         
+        
+        public bool tracking;
+        
         [hHeader(" - Base Properties - ")]
         [Tooltip("The length of the ray that is shot from the Projectile toward its moving angle")]
         public float rayLength = 1.0f;
 
+        [Header(" - Damage Properties - ")]
+        /** Damage done by the projectile */
+        public float Damage;
+        /** Radius of effect in which damage is applied. */
+        public float DamageRadius;
+        /** Momentum magnitude imparted by impacting projectile. */
+        public float MomentumTransfer;
+
+
         [Header(" - Physics Properties - ")]
         public float gravity;
-        public float speed;
+        public float maxSpeed;
+        public float acceleration;
+        
 
         public override void OnEnable()
         {
