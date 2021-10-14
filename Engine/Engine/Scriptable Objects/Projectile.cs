@@ -32,7 +32,7 @@ namespace CCDKObjects
         public float trackIntensityOnMoveMultiplier=0.1f;
         
         
-        [hHeader(" - Base Properties - ")]
+        [Header(" - Base Properties - ")]
         public float initialSpeed = 5f;
         public float maxSpeed;
         public float acceleration = 0.01f;
@@ -61,14 +61,14 @@ namespace CCDKObjects
 
         public override void Awake()
         {
-            className = pprojectileClass;
+            className = projectileClass;
             defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
             base.Awake();
         }
 
         public override void OnValidate()
         {
-            className = controllerClass;
+            className = projectileClass;
             base.OnValidate();
         }
     }
