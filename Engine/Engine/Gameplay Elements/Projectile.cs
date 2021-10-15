@@ -20,9 +20,14 @@ namespace CCDKGame
         
         public Pawn parent;
 
-
         /** The object we collided with**/
         public GameObject ImapactedObject;
+        
+        private void Start()
+        {
+          
+        }
+        }
         
         public void Spawn(CCDKObjects.Projectile data, Transform direction, Transform target, Pawn parent = null)
         {
