@@ -13,7 +13,7 @@ namespace CCDKEngine
 
         public Player(PlayerController assignedController)
         {
-            ID = PlayerManager.playerControllers.Count;
+            ID = PlayerManager.controllers.Count;
             this.assignedController = assignedController;
         }
     }

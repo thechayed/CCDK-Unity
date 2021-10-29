@@ -19,8 +19,8 @@ namespace CCDKEditor
 
 
         /** Get the Game Object Prefab from the CCDK Resources **/
-        private static GameObject gameObjectPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/CCDK/Resources/CCDK/PrefabDefaults/Object.prefab");
-        private static GameObject pawnPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/CCDK/Resources/CCDK/PrefabDefaults/Pawn.prefab");
+        private static GameObject gameObjectPrefab = (GameObject)Resources.Load("CCDK/PrefabDefaults/Object");
+        private static GameObject pawnPrefab = (GameObject)Resources.Load("CCDK/PrefabDefaults/Pawn");
 
 
         /** Initialize the editor loop **/
@@ -85,7 +85,12 @@ namespace CCDKEditor
             /** If the Pawn's Game Object does not currently exist, make a new one **/
             if (scriptable.prefab == null&&AssetDatabase.LoadAssetAtPath<GameObject>(scriptable.path + scriptable.objectName + ".prefab") == null)
             {
-                GameObject gameObject = GameObject.Instantiate(pawnPrefab);
+                if(gameObjectPrefab == null)
+                {
+                    gameObjectPrefab = (GameObject)Resources.Load("CCDK/PrefabDefaults/Object");
+                }
+
+                GameObject gameObject = GameObject.Instantiate(gameObjectPrefab);
                 CCDKEngine.Object component = (CCDKEngine.Object)gameObject.AddComponent(scriptable.className.GetAssemblyType());
                 if (component != null)
                 {

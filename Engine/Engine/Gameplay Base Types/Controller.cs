@@ -13,6 +13,7 @@ namespace CCDKEngine
 {
     public class Controller : Object
     {
+        public CCDKObjects.Controller controllerData;
         /** The Pawn that the controller has possessed **/
         public Pawn possessedPawn;
         /** Call this when the Pawn has been possessed **/
@@ -34,11 +35,26 @@ namespace CCDKEngine
 
         public ComponentConstructor<Script.ControllerClass> componentConstructor;
 
+        /**Tells the Pawn where to go if it is using the Nav Mesh Agent.**/
+        public Vector3 navMeshAgentDestination;
+        public Transform navMeshAgentDestionationTransform;
 
+        public override void Start()
+        {
+            base.Start();
+            controllerData = (CCDKObjects.Controller)data;
+        }
 
         public void PCConstructor()
         {
             input.controller = this;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (possessedPawn.pawnCamera != null)
+                possessedCamera = possessedPawn.pawnCamera;
         }
 
         public bool Possess(Pawn pawn)
@@ -50,6 +66,7 @@ namespace CCDKEngine
                 if (pawn.SetController(this))
                 {
                     possessedPawn = pawn;
+                    possessedCamera = pawn.pawnCamera;
                 }
                 return true;
             }

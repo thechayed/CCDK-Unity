@@ -28,20 +28,21 @@ namespace CCDKEngine
         public static List<Pawn> PawnsInGame = new List<Pawn>();
 
         /**<summary>Create a pawn in the current Level</summary> **/
-        public static Pawn CreatePawn(CCDKObjects.Pawn data, Vector3 position = default(Vector3))
+        public static Pawn CreatePawn(CCDKObjects.Pawn data, Transform spawnTransform = default(Transform))
         {
             GameObject pawnObject = GameObject.Instantiate(data.prefab);
             pawnObject.name = data.prefab.name;
             Pawn pawn = pawnObject.GetComponent<Pawn>();
-            pawnObject.transform.position = position;
+            pawnObject.transform.position = spawnTransform.position;
+            pawnObject.transform.rotation = spawnTransform.rotation; 
             pawn.data = data;
             pawn.pawnData = data;
             return pawn;
         }
 
-        public static Transform CreatePawnAndGetRoot(CCDKObjects.Pawn data, Vector3 position = default(Vector3))
+        public static Transform CreatePawnAndGetRoot(CCDKObjects.Pawn data, Transform spawnTransform = default(Transform))
         {
-            return CreatePawn(data, position).transform.root;
+            return CreatePawn(data, spawnTransform).transform.root;
         }
 
         public static void GetPawn(Pawn pawn)

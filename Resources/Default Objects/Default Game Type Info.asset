@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6932bf52c6167d949b0ec3159dda299f, type: 3}
   m_Name: Default Game Type Info
   m_EditorClassIdentifier: 
-  gameTypeClass: CCDKEngine.GameType
+  gameTypeClass: CCDKGame.GameType
   defaultPlayerController: {fileID: 0}
   defualtAIController: {fileID: 0}
   defaultPawn: {fileID: 0}

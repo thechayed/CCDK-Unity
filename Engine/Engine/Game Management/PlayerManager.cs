@@ -20,7 +20,7 @@ namespace CCDKEngine
         /**<summary>List of all the Players in the game and their information.</summary>**/
         public List<Player> players = new List<Player>();
         /**<summary>The list of Player Controllers in the game</summary>**/
-        public static List<Controller> playerControllers = new List<Controller>();
+        public static List<Controller> controllers = new List<Controller>();
 
         public Dictionary<Pawn> controllerPossessions = new Dictionary<Pawn>();
 
@@ -35,14 +35,14 @@ namespace CCDKEngine
         /** Create a record of a created Player Controller in the Manager **/
         public static int AddPC(Controller controller)
         {
-            playerControllers.Add(controller);
+            controllers.Add(controller);
             PCCount += 1;
             return PCCount += 1;
         }
 
         public static void RemovePC(Controller controller)
         {
-            playerControllers.Remove(controller);
+            controllers.Remove(controller);
         }
 
         /**<summary>Create an instance of a Player Controller from it's Scriptable Object.</summary>**/

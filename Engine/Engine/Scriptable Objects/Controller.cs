@@ -27,7 +27,7 @@ namespace CCDKObjects
 
         public InputActionAsset inputActionAsset;
 
-
+        public bool mouseToNavMesh = false;
 
         public override void OnEnable()
         {

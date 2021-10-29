@@ -7,7 +7,8 @@ namespace CCDKGame
 {
     public class Projectile : CCDKEngine.Object
     {
-      public CCDKObjects.Projectile projectileData;
+     
+        public CCDKObjects.Projectile projectileData;
       
         // Motion information.
         /** Initial speed of projectile. */
@@ -18,28 +19,27 @@ namespace CCDKGame
         /**The target Transform of the object the parent was aiming at when the projectile was shot.**/
         public Transform target;
         
-        public Pawn parent;
+        public Pawn pawn;
 
         /** The object we collided with**/
         public GameObject ImapactedObject;
         
         private void Start()
         {
-          
-        }
+            speed = projectileData.initialSpeed;
         }
         
-        public void Spawn(CCDKObjects.Projectile data, Transform direction, Transform target, Pawn parent = null)
-        {
-          this.data = data;
-          this.target = target;
-          this.parent = parent;
+        //public void Spawn(CCDKObjects.Projectile data, Transform direction, Transform target, Pawn pawn = null)
+        //{
+        //  this.data = data;
+        //  this.target = target;
+        //  this.pawn = pawn;
           
-          transform.position = direction.position;
-          transform.eulerAngles = direction.eulerAngles;
+        //  transform.position = direction.position;
+        //  transform.eulerAngles = direction.eulerAngles;
           
-          projectileData = (CCDKObjects.Projectile) data;
-        }
+        //  projectileData = (CCDKObjects.Projectile) data;
+        //}
         
         private void Update()
         {

@@ -29,7 +29,7 @@ namespace CCDKGame
 
         #region Game Type Overrides
         /**<summary>Override to add extra Initialization functionality.</summary>**/
-        public virtual void Initialization()
+        public virtual void Init()
         {
         }
 
@@ -54,9 +54,9 @@ namespace CCDKGame
         }
 
         /**<summary>Another class can request the spawning of a pawn in the Game using this method. Override to add additional conditions for possessing a pawn.</summary>**/
-        public virtual Pawn TrySpawn(CCDKObjects.Pawn pawnToSpawn, Vector3 position = default(Vector3))
+        public virtual Pawn TrySpawn(CCDKObjects.Pawn pawnToSpawn, Transform spawnTransform = default(Transform))
         {
-            return PawnManager.CreatePawn(pawnToSpawn, position);
+            return PawnManager.CreatePawn(pawnToSpawn, spawnTransform);
         }
         
         /**<summary>Asks the Game Type to let the Player Controller possess a Pawn. Override to add conditions to the possession requirements.</summary>**/
@@ -86,7 +86,7 @@ namespace CCDKGame
                 }
             }
 
-            this.Invoke("Initialization", 0f);
+            this.Invoke("Init", 0f);
 
             init = true;
         }
@@ -105,5 +105,48 @@ namespace CCDKGame
         }
         #endregion
 
+        /**<summary>Spawns the default pawn into the game and returns it's Game Object</summary>**/
+        public Pawn Spawn(Transform spawnTransform = null)
+        {
+            if(spawnTransform == null)
+            {
+                Transform spawnerTransform = LevelManager.FindSpawn();
+                if(spawnerTransform == null)
+                {
+                    Debug.LogError("No spawn point or Spawn Position was given in GameType.Spawn(), please make a Spawn Point!");
+                    return PawnManager.CreatePawn(data.defaultPawn, default(Transform));
+                }
+
+                return PawnManager.CreatePawn(data.defaultPawn, spawnerTransform);
+            }
+            return PawnManager.CreatePawn(data.defaultPawn, spawnTransform);
+        }
+
+        public void SpawnForController(Controller controller, Pawn pawn = null, Transform spawnTransform = null)
+        {
+            if (controller == null)
+                return;
+
+            if (pawn == null)
+            {
+                controller.Possess(Spawn(spawnTransform));
+            }
+        }
+
+        public Controller GetControllerWithoutPawn()
+        {
+            Controller controller = null;
+
+            foreach(Controller item in PlayerManager.controllers)
+            {
+                if(item.possessedPawn == null)
+                {
+                    controller = item;
+                    break;
+                }
+            }
+
+            return controller;
+        }
     }
 }

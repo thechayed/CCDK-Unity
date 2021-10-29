@@ -90,11 +90,14 @@ namespace CCDKEngine
             level.levelName = scene.name;
 
             level.data = Engine.GetLevelInfoByName(scene.name);
+
             /**If we haven't already requested a game type when going to the Level, add the first Game Type in the Level Info's list of compatible Game Types.**/
             if (Engine.singleton.requestedGameType == null)
             {
-                levelObj.AddComponent(levelObj.GetComponent<Level>().data.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
-                levelObj.GetComponent<GameType>().data = levelObj.GetComponent<Level>().data.compatibleGameTypes[0];
+                levelObj.AddComponent(level.data.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
+                GameType gameType = levelObj.GetComponent<GameType>();
+
+                gameType.data = level.data.compatibleGameTypes[0];
             }
 
             ReturnToGameplay();
@@ -211,7 +214,10 @@ namespace CCDKEngine
 
                 foreach (GameObject lObject in levelInfo.Objects)
                 {
-                    lObject.transform.SetParent(level.transform);
+                    if(lObject.transform.root == lObject.transform)
+                    {
+                        lObject.transform.SetParent(level.transform);
+                    }
 
                     Object objectComponent = lObject.GetComponent<Object>();
                     if (objectComponent != null)
@@ -262,7 +268,8 @@ namespace CCDKEngine
             {
                 Level level = FindLevelWithScene(objectCreated.scene).GetComponent<Level>();
                 level.Objects.Add(objectCreated);
-                objectCreated.transform.parent = level.transform;
+                if(objectCreated.transform == objectCreated.transform.root)
+                    objectCreated.transform.parent = level.transform;
                 objectCreated.GetComponent<Object>().level = level;
             }
         }
@@ -284,7 +291,8 @@ namespace CCDKEngine
             return null;
         }
 
-        public static GameObject FindSpawn()
+        /**<summary>Get a Spawn Point from the current level.</summary>**/
+        public static Transform FindSpawn()
         {
             Level curLevel = GetLevelByName(currentLevelName);
             if (curLevel != null)

@@ -9,10 +9,16 @@ namespace CCDKObjects
     [CreateAssetMenu(menuName = "Game Objects/Weapon")]
     public class Weapon : InventoryItem
     {
-        [MonoScript(type = typeof(CCDKGame.Weapon))] public string projectileClass = "CCDKGame.Weapon";
+        [MonoScript(type = typeof(CCDKGame.Weapon))] public string weaponClass = "CCDKGame.Weapon";
+
+        [Tooltip("A list of the kinds of projectiles this weapon can shoot depending on the Fire Type.")]
+        public List<Projectile> projectiles;
 
         /** How long does it take to Equip this weapon */
         float EquipTime;
+
+        /**If the Weapon is set to autoattach, it will attach itself to the pawn when it is spawned**/
+        public bool autoAttach = true;
 
         /** How long does it take to put this weapon down */
         float PutDownTime;
@@ -24,21 +30,21 @@ namespace CCDKObjects
 
         public override void OnEnable()
         {
-            className = projectileClass;
+            className = weaponClass;
             defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
             base.OnEnable();
         }
 
         public override void Awake()
         {
-            className = projectileClass;
+            className = weaponClass;
             defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
             base.Awake();
         }
 
         public override void OnValidate()
         {
-            className = projectileClass;
+            className = weaponClass;
             base.OnValidate();
         }
     }

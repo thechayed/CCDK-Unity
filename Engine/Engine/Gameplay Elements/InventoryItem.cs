@@ -3,10 +3,11 @@
 
 using System.Collections;
 using UnityEngine;
+using CCDKEngine;
 
-namespace CCDKEngine
+namespace CCDKGame
 {
-    public class InventoryItem : Object
+    public class InventoryItem : CCDKEngine.Object
     {
         /** The Item Type tag let's the Pawn know whether the item can be recieved by it or not **/
         public string typeTag = "Default";

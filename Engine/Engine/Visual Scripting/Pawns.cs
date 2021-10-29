@@ -12,10 +12,10 @@ namespace CCDKVisualScripting
         public static UnityEvent pawnSpawned = new UnityEvent();
 
         /** Spawn a Pawn at a certain location **/
-        public static Pawn SpawnPawn(CCDKObjects.Pawn pawnData, Vector3 position)
+        public static Pawn SpawnPawn(CCDKObjects.Pawn pawnData, Transform spawnTransform)
         {
             pawnSpawned.Invoke();
-            return PawnManager.CreatePawn(pawnData, position);
+            return PawnManager.CreatePawn(pawnData, spawnTransform);
         }
 
         /** Tell the Controller to attempt to possess the pawn. Return a boolean telling whether it was successful or not **/

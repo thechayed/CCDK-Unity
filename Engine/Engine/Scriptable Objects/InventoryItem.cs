@@ -7,14 +7,16 @@ namespace CCDKObjects
     public class InventoryItem : PrefabSO
     {
 
+        public CCDKGame.InventoryItem instance;
+
         /** The Item Type tag let's the Pawn know whether the item can be recieved by it or not **/
-        protected string typeTag = "Default";
+        public string typeTag = "Default";
 
         /** How much should the pickup of this item be prioritized **/
-        protected float Priority;
+        public float Priority;
 
         /** Whether the player can throw this Item **/
-        protected bool isThrowable;
+        public bool isThrowable;
 
     }
 }

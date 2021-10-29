@@ -74,9 +74,9 @@ namespace CCDKGame
             spawnPoints.Add(spawnPointObject);
         }
 
-        public GameObject FindSpawn()
+        public Transform FindSpawn()
         {
-            return spawnPoints[0];
+            return spawnPoints[0].transform;
         }
     }
 }

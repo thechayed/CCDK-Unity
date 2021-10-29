@@ -25,6 +25,8 @@ namespace CCDKObjects
 
         public bool possessable = true;
 
+        public bool NavMeshAgent = true;
+        public bool NavMeshAgentMove = false;
 
 #if UNITY_EDITOR
 
@@ -60,8 +62,11 @@ namespace CCDKObjects
         [System.Serializable]
         public class Inventory 
         {
-            /** A list of all the Items currently in the Pawn's inventory **/
-            public List<CCDKEngine.InventoryItem> inventory;
+            /** How many weapons the player can hold **/
+            public int weaponSlots = 1;
+
+            /** List of InventoryItems the Pawn should start with **/
+            public List<CCDKObjects.InventoryItem> inventory;
 
             /** A list defining what kings of Items a Pawn can hold **/
             public List<string> inventoryTags;

@@ -85,7 +85,7 @@ namespace CCDKObjects
 
             if (AssetDatabase.LoadAssetAtPath<GameObject>(path + objectName + ".prefab") == null)
             {
-                Debug.Log("Original prefab was made");
+                //Debug.Log("Original prefab was made");
                 GameObject gameObject = GameObject.Instantiate(defaultObjectPrefab);
                 CCDKEngine.Object component = (CCDKEngine.Object)gameObject.AddComponent(this.className.GetAssemblyType());
                 if (component != null)
@@ -93,7 +93,7 @@ namespace CCDKObjects
                     component.data = this;
                 }
                 prefab = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, path + objectName + ".prefab", InteractionMode.AutomatedAction);
-                Debug.Log(path);
+                //Debug.Log(path);
                 GameObject.DestroyImmediate(gameObject);
                 originalMade = true;
             }

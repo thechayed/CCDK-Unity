@@ -11,13 +11,13 @@ namespace CCDKVisualScripting
         /** Gets a Player Controller by it's index **/
         public static Controller GetPlayerController(int index)
         {
-            return PlayerManager.playerControllers[index];
+            return PlayerManager.controllers[index];
         }
 
         /** Gets all the player controllers in the game **/
         public static List<Controller> GetPlayerControllers()
         {
-            return PlayerManager.playerControllers;
+            return PlayerManager.controllers;
         }
     }
 }

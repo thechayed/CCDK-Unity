@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1893698076713589327
+--- !u!1 &3611509591979717676
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2595200983663292323}
-  - component: {fileID: 5422319889789845756}
+  - component: {fileID: 3852625636410172261}
+  - component: {fileID: 7590243718001202144}
+  - component: {fileID: 6149328495651364331}
   m_Layer: 0
   m_Name: Default Player Controller Object
   m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 6990c688bec1f4647bfc898ecfbb17fb, type: 3}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2595200983663292323
+--- !u!4 &3852625636410172261
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893698076713589327}
+  m_GameObject: {fileID: 3611509591979717676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +32,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5422319889789845756
+--- !u!114 &7590243718001202144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893698076713589327}
+  m_GameObject: {fileID: 3611509591979717676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &6149328495651364331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3611509591979717676}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45937a9aed7ce794b8d41970acf647c7, type: 3}
@@ -52,6 +83,7 @@ MonoBehaviour:
   ready: 0
   readyOnStart: 1
   visible: 1
+  controllerData: {fileID: 0}
   possessedPawn: {fileID: 0}
   IID: 0
   possessedCamera: {fileID: 0}
@@ -60,6 +92,11 @@ MonoBehaviour:
     dictionary: []
     length: 0
     lockKey: 0
+  navMeshAgentDestination: {x: 0, y: 0, z: 0}
+  navMeshAgentDestionationTransform: {fileID: 0}
   player:
     ID: 0
     assignedController: {fileID: 0}
+  clickPosition: {x: 0, y: 0, z: 0}
+  clickedTransform: {fileID: 0}
+  lastMouseButton: 0
