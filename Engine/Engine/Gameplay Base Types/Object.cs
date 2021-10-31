@@ -24,7 +24,13 @@ namespace CCDKEngine
         [Tooltip("The Level the object is in.")]
         [ReadOnly] public Level level;
 
+        /**<summary>Whether this object is Reprecated with MLAPI.</summary>**/
+        public bool repricate;
 
+#if USING_NETCODE
+        /**<summary>The Networked Object Behavior added to this object to interface with MLAPI.</summary>**/
+        public NetworkedObject net;
+#endif
 
         //Gameplay Values
         /**The engine has told us play has begun, be ready!**/
@@ -62,14 +68,37 @@ namespace CCDKEngine
                     LevelManager.AcknowledgeObject(gameObject);
                 }
             }
+
+
+#if USING_NETCODE
+            if (repricate)
+            {
+                if(net == null)
+                {
+                    net = gameObject.AddComponent<NetworkedObject>();
+                }
+
+                
+                if(net.IsLocalPlayer)
+                {
+                    NetworkUpdate(); 
+                }
+            }
+#else
+            NetworkUpdate();
+#endif
         }
 
         public void AppendToLevel(GameObject levelObj)
         {
-
             this.levelObj = levelObj;
             level = levelObj.GetComponent<Level>();
         }
 
+        /**The Update is only called on "Local" Objects.**/
+        public virtual void NetworkUpdate()
+        {
+
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace FSM
         public FSM.Component component;
         public GameObject gameObject;
         public Dictionary<MethodInfo[]> stateMethods;
-        public Dictionary<State> stateInstances;
+        public Dictionary<object> stateInstances;
         public string curState;
         public string prevState;
         public object parent;
@@ -35,7 +35,7 @@ namespace FSM
             this.parent = component;
 
             stateMethods = new Dictionary<MethodInfo[]>();
-            stateInstances = new Dictionary<State>();
+            stateInstances = new Dictionary<object>();
 
             /** Loop through all the Types in our given SEMB, and add it to our State Type List **/
             foreach (Type type in component.GetType().GetNestedTypes())
@@ -44,7 +44,7 @@ namespace FSM
                 {
                     /** Set up the State Dictionary and Initialize States **/
                     stateMethods.Set(type.Name, type.GetMethods());
-                    stateInstances.Set(type.Name, (State) Activator.CreateInstance(type));
+                    stateInstances.Set(type.Name, (object) Activator.CreateInstance(type));
                     CallMethod(type.Name, "Init", new object[] { gameObject, parent, this });
 
                     /** If the current state hasn't been set yet, go to this one. **/

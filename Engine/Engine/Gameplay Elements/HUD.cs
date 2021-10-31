@@ -17,7 +17,6 @@ namespace CCDKGame
         public override void Start()
         {
             base.Start();
-
             Scene activeScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(data.scene,LoadSceneMode.Additive);
             SceneManager.SetActiveScene(activeScene);

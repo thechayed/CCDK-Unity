@@ -43,9 +43,8 @@ namespace CCDKGame
 
         /** A list of all the Items currently in the Pawn's inventory **/
         public List<CCDKObjects.InventoryItem> inventory;
-        public override void Start()
+        public void Start()
         {
-            base.Start();
 
             agentDestination = transform.position;
             pawnData = (CCDKObjects.Pawn)data;

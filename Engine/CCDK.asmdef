@@ -31,9 +31,9 @@
             "define": "INPUTSYSTEM"
         },
         {
-            "name": "com.unity.multiplayer.mlapi",
+            "name": "com.unity.netcode.gameobjects",
             "expression": "",
-            "define": "MLAPI"
+            "define": "USING_NETCODE"
         }
     ],
     "noEngineReferences": false

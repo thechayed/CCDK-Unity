@@ -29,10 +29,6 @@ namespace CCDKGame
 
         /** The array of states that the Inventory Item can have **/
         public string[] states = { "EnterWorld", "World", "Equipped", "Stashed" };
-        public override void Start()
-        {
-            base.Start();
-        }
 
         /** What to do with the Item when it's thrown **/
         public virtual void Thrown()

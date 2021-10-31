@@ -16,6 +16,10 @@ namespace CCDKGame
         public Transform clickedTransform;
         public int lastMouseButton = 0;
 
+        public override void Start()
+        {
+            base.Start();
+        }
         private void OnDestroy()
         {
             PlayerManager.RemovePC(this);

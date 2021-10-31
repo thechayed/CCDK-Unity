@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using CCDKGame;
+using System.Reflection;
 
 namespace FSM
 {
@@ -10,7 +11,8 @@ namespace FSM
     {
 
         [HideInInspector]
-        protected FSM.Machine stateMachine;
+        public object stateMachine;
+        public Type type;
 
         [HideInInspector]
         protected bool initialized = false;
@@ -19,27 +21,27 @@ namespace FSM
         [Tooltip("The State this Object is in.")]
         [ReadOnly] public string state;
 
-        /** When the Object Starts in the game, ask it to Initialize **/
         public virtual void Start()
+        {
+            CreateStateMachine();
+        }
+
+        public void CreateStateMachine()
         {
             stateMachine = new FSM.Machine(this, gameObject);
             Init();
-        }        
-
-        public void CreateStateMachine(Component component)
-        {
         }
 
         /** Update the active State in the State Machine **/
         public virtual void FixedUpdate()
         {
-            state = stateMachine.curState;
+            state = GetState();
 
             if (stateMachine != null)
             {
                 if (initialized)
                 {
-                    stateMachine.CallMethod(stateMachine.curState, "Update"); ;
+                    CallMethod(GetState(), "Update"); ;
                 }
             }
         }
@@ -47,7 +49,7 @@ namespace FSM
         /** Override the Initialize event to change the conditions for which the State Machine can be active **/
         public virtual void Init()
         {
-            if (stateMachine != null && stateMachine.stateMethods != null && stateMachine.stateMethods.length > 0)
+            if (stateMachine != null && GetMethods() != null && GetMethods().length > 0)
             {
                 if (!initialized)
                 {
@@ -59,13 +61,23 @@ namespace FSM
         /** Make the object go to the specified state **/
         public void GoToState(string state)
         {
-            this.stateMachine.GotoState(state);
+            stateMachine.GetType().GetMethod("GoToState").Invoke(stateMachine, new object[]{state});
         }
 
         /** Get this Component's current State **/
         public string GetState()
         {
-            return stateMachine.curState;
+            return (string)stateMachine.GetType().GetField("curState").GetValue(stateMachine);
+        }
+
+        public Dictionary<MethodInfo[]> GetMethods()
+        {
+            return (Dictionary<MethodInfo[]>)stateMachine.GetType().GetField("stateMethods").GetValue(stateMachine);
+        }
+
+        public void CallMethod(string state, string name)
+        {
+            stateMachine.GetType().GetMethod("CallMethod").Invoke(stateMachine,null);
         }
     }
 }

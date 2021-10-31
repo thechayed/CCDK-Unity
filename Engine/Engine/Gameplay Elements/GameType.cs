@@ -4,12 +4,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using CCDKEngine;
+#if USING_NETCODE
+using Unity.Netcode;
+#endif
 
 namespace CCDKGame
 {
     public class GameType : FSM.Component
     {
-        public bool init = false; 
+        public bool init = false;
+        public bool isHost = true;
 
         public bool gameplayStarted;
         public CCDKObjects.GameTypeInfo data;
@@ -24,6 +28,11 @@ namespace CCDKGame
             {
                 this.Invoke("LocalInitialization", 0f);
             }
+            /** If this game uses Netcode and we're not the host, disable the GameType behaviour **/
+#if USING_NETCODE
+            if (NetworkManager.Singleton.IsServer)
+                isHost = NetworkManager.Singleton.IsHost;
+#endif
         }
 
 
@@ -77,6 +86,9 @@ namespace CCDKGame
         /**Initialization called in this script only.**/
         private void LocalInitialization()
         {
+
+
+
             /**Set the Default Player Controller for currently active Players whenever the Game Type begins**/
             if (data.defaultPlayerController != null)
             {
@@ -85,8 +97,8 @@ namespace CCDKGame
                     PlayerManager.SetPlayerController(player.ID, data.defaultPlayerController);
                 }
             }
-
-            this.Invoke("Init", 0f);
+            if(isHost)
+                this.Invoke("Init", 0f);
 
             init = true;
         }
@@ -108,7 +120,10 @@ namespace CCDKGame
         /**<summary>Spawns the default pawn into the game and returns it's Game Object</summary>**/
         public Pawn Spawn(Transform spawnTransform = null)
         {
-            if(spawnTransform == null)
+            if (!isHost)
+                return null;
+
+                if (spawnTransform == null)
             {
                 Transform spawnerTransform = LevelManager.FindSpawn();
                 if(spawnerTransform == null)
@@ -124,6 +139,9 @@ namespace CCDKGame
 
         public void SpawnForController(Controller controller, Pawn pawn = null, Transform spawnTransform = null)
         {
+            if (!isHost)
+                return;
+
             if (controller == null)
                 return;
 
@@ -148,5 +166,16 @@ namespace CCDKGame
 
             return controller;
         }
+
+        public void MultiplayerStart()
+        {
+            bool success = NetworkManager.Singleton.StartHost();
+            if(!success)
+            {
+                NetworkManager.Singleton.StartClient();
+            }
+        }
+
+
     }
 }

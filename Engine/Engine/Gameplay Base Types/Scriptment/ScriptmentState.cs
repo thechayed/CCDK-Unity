@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CCDKEngine
 {
-    public class ScriptmentState : FSM.State
+    public class ScriptmentState : FSM.State<ScriptmentState>
     {
         public int progress;
         public bool next;

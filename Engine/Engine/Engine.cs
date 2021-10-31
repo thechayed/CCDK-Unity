@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System;
 
-#if MLAPI
-using MLAPI;
+#if USING_NETCODE
+using Unity.Netcode;
 #endif
 
 namespace CCDKEngine
@@ -66,7 +66,7 @@ namespace CCDKEngine
 
         private bool usingMLAPI = false;
 
-#if MLAPI
+#if USING_NETCODE
         public static NetworkManager networkManager;
 #endif
 
@@ -76,7 +76,7 @@ namespace CCDKEngine
             running = true;
             initCalled = true;
 
-#if MLAPI
+#if USING_NETCODE
             usingMLAPI = true;
 #endif
         }

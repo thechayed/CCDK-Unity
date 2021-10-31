@@ -6,18 +6,19 @@ using UnityEngine;
 
 namespace FSM
 {
-    public class State
+    public class State<T>
     {
         protected bool enabled;
         protected GameObject gameObject;
         protected object selfObj;
+        public T self;
         protected Machine machine;
 
         /** When the State is added to the game, it must be initialized with a GameObject **/
         public void Init(GameObject gameObject, object parent, Machine machine)
         {
             this.gameObject = gameObject;
-            this.selfObj = parent;
+            this.self = (T)parent;
             this.machine = machine;
         }
 
