@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -18,6 +18,8 @@ namespace CCDKObjects
 
         [ReadOnly] public GameObject lastPrefab;
 
+        [Tooltip("Whether this object should be replicated. A NetworkBehavior will be automatically added to the object when it is created..")]
+        public bool replicate = true;
 
         [ReadOnly] public bool updated = false;
 
