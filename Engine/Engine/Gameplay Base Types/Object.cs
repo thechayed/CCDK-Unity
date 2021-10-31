@@ -25,7 +25,7 @@ namespace CCDKEngine
         [ReadOnly] public Level level;
 
         /**<summary>Whether this object is Reprecated with MLAPI.</summary>**/
-        public bool repricate;
+        public bool replicate;
 
 #if USING_NETCODE
         /**<summary>The Networked Object Behavior added to this object to interface with MLAPI.</summary>**/
@@ -68,10 +68,14 @@ namespace CCDKEngine
                     LevelManager.AcknowledgeObject(gameObject);
                 }
             }
-
+            
+            if(data!=null)
+            {
+              replicate=data.replicate;
+            }
 
 #if USING_NETCODE
-            if (repricate)
+            if (replicate)
             {
                 if(net == null)
                 {
