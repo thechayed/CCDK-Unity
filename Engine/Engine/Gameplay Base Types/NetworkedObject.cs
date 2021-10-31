@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 #if USING_NETCODE
@@ -8,6 +8,7 @@ namespace CCDKGame
 {
     public class NetworkedObject : NetworkBehaviour
     {
+      
     }
 }
 
