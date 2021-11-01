@@ -9,6 +9,9 @@ namespace CCDKObjects
 {
     public class PrefabSO : ScriptableObject
     {
+        /**The amount of attempts to check for the prefab before **/
+        [HideInInspector] public int attempts;
+
         [HideInInspector] public string objectName = "Default";
 
         [HideInInspector] public GameObject defaultObjectPrefab;

@@ -77,8 +77,21 @@ namespace CCDKEditor
 
         public static void UpdateObject(CCDKObjects.PrefabSO scriptable)
         {
-            //Debug.Log(scriptable.objectName);
+            /**If the PrefabSO's path can't be found, do nothing. Sometimes Update will be called at a point that Asset Paths cannot be used.**/
+            if (scriptable.path == "")
+                return;
+            /**If using ParrelSync, and is a Clone, do nothing. Clones cannot modify original assets.**/
+            if("ParrelSync.ClonesManager".GetAssemblyType() != null)
+            {
+                if ((bool) "ParrelSync.ClonesManager".GetAssemblyType().GetMethod("IsClone").Invoke(null, null))
+                {
+                    scriptable.updated = false;
+                    return;
+                }
+            }
 
+            //Debug.Log(scriptable.objectName);
+            /**If the Scriptable Object lost it's Prefab, check for a reference to an old prefab, and use that instead.**/
             if (scriptable.prefab == null && scriptable.lastPrefab != null)
                 scriptable.prefab = scriptable.lastPrefab;
 
@@ -125,11 +138,32 @@ namespace CCDKEditor
                     Debug.Log("Deleted old object after rename");
                     AssetDatabase.DeleteAsset(PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(scriptable.prefab));
                 }
+
+                bool create = true;
+                /**Check each component to see if it has the same Base type as the PrefabSO's class, if it does, destroy it**/
                 foreach (Component item in gameObject.GetComponents(typeof(CCDKEngine.Object)))
                 {
-                    Component.DestroyImmediate(item, true);
+                    if (item.GetType().Name != scriptable.className.GetAssemblyType().Name && item.GetType().BaseType.Name == scriptable.className.GetAssemblyType().BaseType.Name)
+                        Component.DestroyImmediate(item, true);
+                    else
+                    {
+                        create = false;
+                    }
+
+                    if (item.GetType().Name == scriptable.className.GetAssemblyType().BaseType.Name|| item.GetType().BaseType.Name == scriptable.className.GetAssemblyType().Name)
+                    {
+                        Component.DestroyImmediate(item, true);
+                        create = true;
+                    }
                 }
-                CCDKEngine.Object component = (CCDKEngine.Object)gameObject.AddComponent(scriptable.className.GetAssemblyType());
+                /**Get the component for the class given to the PrefabSO's prefab**/
+                CCDKEngine.Object component;
+                if (create)
+                    component = (CCDKEngine.Object)gameObject.AddComponent(scriptable.className.GetAssemblyType());
+                else
+                    component = (CCDKEngine.Object)gameObject.GetComponent(scriptable.className.GetAssemblyType());
+
+                /**If the component was successful recieved, add the PrefabSO to it's data value**/
                 if (component != null)
                 {
                     component.data = scriptable;

@@ -72,7 +72,7 @@ namespace CCDKEngine
             {
                 if(player.ID == ID)
                 {
-                    GameObject.DestroyImmediate(player.assignedController.gameObject);
+                    Engine.TryDestroy(player.assignedController.gameObject);
                     player.assignedController = CreatePC(controller);
                 }
             }
@@ -93,17 +93,17 @@ namespace CCDKEngine
             }
         }
 
-#if MLAPI
-        /**<summary>Prep the Player Controllers for Networking</summary>**/
-        public static void PrepForNetworking()
-        {
-            foreach(Controller controller in playerControllers)
-            {
-                NetworkPrefab thisNetworkObject = new NetworkPrefab() { Prefab = controller.gameObject };
-                NetworkManager.Singleton.NetworkConfig.NetworkPrefabs.Add(thisNetworkObject);
-            }
-        }
-#endif
+//#if USING_NETCODE
+//        /**<summary>Prep the Player Controllers for Networking</summary>**/
+//        public static void PrepForNetworking()
+//        {
+//            foreach(Controller controller in playerControllers)
+//            {
+//                NetworkPrefab thisNetworkObject = new NetworkPrefab() { Prefab = controller.gameObject };
+//                NetworkManager.Singleton.NetworkConfig.NetworkPrefabs.Add(thisNetworkObject);
+//            }
+//        }
+//#endif
 
     }
 }

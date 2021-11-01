@@ -289,5 +289,17 @@ namespace CCDKEngine
             }
             return null;
         }
+
+        /**<summary>Shorthand for Unity's Game Object Destroy function that checks if the object is valid first, instead of writing that same darn condition over and over again.</summary>**/
+        public static bool TryDestroy(GameObject objectToDestroy)
+        {
+            if (objectToDestroy == null)
+                return false;
+            else
+            {
+                GameObject.Destroy(objectToDestroy);
+                return true;
+            }
+        }
     }
 }

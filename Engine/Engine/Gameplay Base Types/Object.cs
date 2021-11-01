@@ -8,6 +8,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using CCDKGame;
 
+#if USING_NETCODE
+using Unity.Netcode;
+#endif
+
 namespace CCDKEngine
 {
     public class Object : FSM.Component
@@ -29,7 +33,7 @@ namespace CCDKEngine
 
 #if USING_NETCODE
         /**<summary>The Networked Object Behavior added to this object to interface with MLAPI.</summary>**/
-        public NetworkedObject net;
+        public NetworkObject net;
 #endif
 
         //Gameplay Values
@@ -69,17 +73,18 @@ namespace CCDKEngine
                 }
             }
             
-            if(data!=null)
+            if(data!=null&&((CCDKObjects.PrefabSO)data)!=null)
             {
-              replicate=data.replicate;
+              replicate=((CCDKObjects.PrefabSO)data).replicate;
             }
 
 #if USING_NETCODE
+
             if (replicate)
             {
                 if(net == null)
                 {
-                    net = gameObject.AddComponent<NetworkedObject>();
+                    net = gameObject.AddComponent<NetworkObject>();
                 }
 
                 
@@ -102,7 +107,6 @@ namespace CCDKEngine
         /**The Update is only called on "Local" Objects.**/
         public virtual void NetworkUpdate()
         {
-
         }
     }
 }

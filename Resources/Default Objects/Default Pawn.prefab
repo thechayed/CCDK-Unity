@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2061729895568071580
+--- !u!1 &2584404415101038498
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3971176064750632549}
-  - component: {fileID: 5690345532547753700}
+  - component: {fileID: 6033752000787009684}
+  - component: {fileID: 3681125775771821276}
   m_Layer: 0
   m_Name: Default Pawn
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3971176064750632549
+--- !u!4 &6033752000787009684
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061729895568071580}
+  m_GameObject: {fileID: 2584404415101038498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5690345532547753700
+--- !u!114 &3681125775771821276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061729895568071580}
+  m_GameObject: {fileID: 2584404415101038498}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1c530328329f5244b266e1f7a070a4e, type: 3}
@@ -49,7 +49,7 @@ MonoBehaviour:
   Independent: 0
   levelObj: {fileID: 0}
   level: {fileID: 0}
-  repricate: 0
+  replicate: 0
   net: {fileID: 0}
   ready: 0
   readyOnStart: 1

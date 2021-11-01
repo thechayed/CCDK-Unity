@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4493334470623493624
+--- !u!1 &4534617705046139415
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8797226308185573619}
-  - component: {fileID: 6240191603671876133}
-  - component: {fileID: 5860674377770851906}
+  - component: {fileID: 5004837529105037388}
+  - component: {fileID: 571406929746475299}
+  - component: {fileID: 6783048698323149386}
   m_Layer: 0
   m_Name: Default Player Controller Object
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8797226308185573619
+--- !u!4 &5004837529105037388
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4493334470623493624}
+  m_GameObject: {fileID: 4534617705046139415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,13 +32,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6240191603671876133
+--- !u!114 &571406929746475299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4493334470623493624}
+  m_GameObject: {fileID: 4534617705046139415}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
@@ -60,15 +60,15 @@ MonoBehaviour:
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
-  m_SplitScreenIndex: -1
+  m_SplitScreenIndex: 1
   m_Camera: {fileID: 0}
---- !u!114 &5860674377770851906
+--- !u!114 &6783048698323149386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4493334470623493624}
+  m_GameObject: {fileID: 4534617705046139415}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45937a9aed7ce794b8d41970acf647c7, type: 3}
@@ -80,7 +80,7 @@ MonoBehaviour:
   Independent: 0
   levelObj: {fileID: 0}
   level: {fileID: 0}
-  repricate: 0
+  replicate: 0
   net: {fileID: 0}
   ready: 0
   readyOnStart: 1

@@ -19,6 +19,7 @@ namespace CCDKObjects
     [CreateAssetMenu(menuName = "Game Objects/Pawn")]
     public class Pawn : PrefabSO
     {
+
         private GameObject gameObjectPrefab;
         /** The C# Pawn class **/
         [MonoScript(type = typeof(CCDKGame.Pawn))] public string pawnClass = "CCDKGame.Pawn";
