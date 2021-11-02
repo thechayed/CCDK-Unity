@@ -152,67 +152,71 @@ namespace CCDKEngine
             }
 
 #if USING_NETCODE
-            if (NetworkManager.Singleton.IsHost)
+            if(NetworkManager.Singleton!=null)
             {
-                /**If their are less registered Clients than exist in the game, add those that aren't registered**/
-                if (registeredClients.Count < NetworkManager.Singleton.ConnectedClientsIds.Count)
-                {
-                    ulong client = 0;
-                    foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
-                    {
-                        bool found = true;
-                        foreach (ulong nextItem in registeredClients)
-                        {
-                            if (nextItem == item)
-                            {
-                                found = false;
-                            }
-                        }
-                        if (found)
-                        {
-                            registeredClients.Add(client);
-                            PlayerJoined.Invoke(client);
-                            break;
-                        }
-                    }
-                }
 
-                /**If their are more registered Clients than exist in the game, Remove those that no longer exist**/
-                if (registeredClients.Count > NetworkManager.Singleton.ConnectedClientsIds.Count)
+                if (NetworkManager.Singleton.IsHost)
                 {
-                    ulong client = 0;
-                    foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
+                    /**If their are less registered Clients than exist in the game, add those that aren't registered**/
+                    if (registeredClients.Count < NetworkManager.Singleton.ConnectedClientsIds.Count)
                     {
-                        bool found = true;
-                        foreach (ulong nextItem in registeredClients)
+                        ulong client = 0;
+                        foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
                         {
-                            if (nextItem == item)
+                            bool found = true;
+                            foreach (ulong nextItem in registeredClients)
                             {
-                                found = false;
+                                if (nextItem == item)
+                                {
+                                    found = false;
+                                }
                             }
-                        }
-                        if (found)
-                        {
-                            registeredClients.Remove(client);
-                            PlayerLeft.Invoke(client);
-                            break;
+                            if (found)
+                            {
+                                registeredClients.Add(client);
+                                PlayerJoined.Invoke(client);
+                                break;
+                            }
                         }
                     }
 
-                }
-            }
+                    /**If their are more registered Clients than exist in the game, Remove those that no longer exist**/
+                    if (registeredClients.Count > NetworkManager.Singleton.ConnectedClientsIds.Count)
+                    {
+                        ulong client = 0;
+                        foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
+                        {
+                            bool found = true;
+                            foreach (ulong nextItem in registeredClients)
+                            {
+                                if (nextItem == item)
+                                {
+                                    found = false;
+                                }
+                            }
+                            if (found)
+                            {
+                                registeredClients.Remove(client);
+                                PlayerLeft.Invoke(client);
+                                break;
+                            }
+                        }
 
-            if (NetworkManager.Singleton != null)
-            {
-                if (!NetworkManager.Singleton.IsClient && singleton.localNetState != 0)
-                {
-                    singleton.localNetState = 0;
-                    NetworkDisconnect();
+                    }
                 }
-                if (NetworkManager.Singleton.IsClient&& singleton.localNetState != 1)
+
+                if (NetworkManager.Singleton != null)
                 {
-                    singleton.localNetState = 1;
-                    NetworkConnect();
+                    if (!NetworkManager.Singleton.IsClient && singleton.localNetState != 0)
+                    {
+                        singleton.localNetState = 0;
+                        NetworkDisconnect();
+                    }
+                    if (NetworkManager.Singleton.IsClient && singleton.localNetState != 1)
+                    {
+                        singleton.localNetState = 1;
+                        NetworkConnect();
+                    }
                 }
             }
 #endif

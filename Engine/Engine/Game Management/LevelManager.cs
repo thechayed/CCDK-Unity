@@ -97,7 +97,7 @@ namespace CCDKEngine
                 levelObj.AddComponent(level.levelData.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
                 GameType gameType = levelObj.GetComponent<GameType>();
 
-                gameType.data = level.levelData.compatibleGameTypes[0];
+                gameType.gameTypeData = level.levelData.compatibleGameTypes[0];
             }
 
             ReturnToGameplay();

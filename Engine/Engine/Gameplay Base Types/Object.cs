@@ -96,8 +96,9 @@ namespace CCDKEngine
                 else
                 {
                     net.AutoObjectParentSync = false;
-                    if(NetworkManager.Singleton.IsHost)
-                        NetworkManager.Singleton.PrefabHandler.RegisterHostGlobalObjectIdHashValues(gameObject, new List<GameObject>() { gameObject });
+                    if(NetworkManager.Singleton!=null)
+                        if(NetworkManager.Singleton.IsHost)
+                            NetworkManager.Singleton.PrefabHandler.RegisterHostGlobalObjectIdHashValues(gameObject, new List<GameObject>() { gameObject });
                 }
 
                 
