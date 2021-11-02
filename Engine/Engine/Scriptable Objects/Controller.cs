@@ -29,6 +29,7 @@ namespace CCDKObjects
 
         public bool mouseToNavMesh = false;
 
+#if UNITY_EDITOR
         public override void OnEnable()
         {
             className = controllerClass;
@@ -48,5 +49,6 @@ namespace CCDKObjects
             className = controllerClass;
             base.OnValidate();
         }
+#endif
     }
 }

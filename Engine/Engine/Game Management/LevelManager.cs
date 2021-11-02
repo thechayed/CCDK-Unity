@@ -54,8 +54,8 @@ namespace CCDKEngine
             /**If we haven't already requested a game type when going to the Level, add the first Game Type in the Level Info's list of compatible Game Types.**/
             if(Engine.singleton.requestedGameType == null)
             {
-                newLevel.AddComponent(newLevel.GetComponent<Level>().data.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
-                newLevel.GetComponent<GameType>().data = newLevel.GetComponent<Level>().data.compatibleGameTypes[0];
+                newLevel.AddComponent(newLevel.GetComponent<Level>().levelData.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
+                newLevel.GetComponent<GameType>().data = newLevel.GetComponent<Level>().levelData.compatibleGameTypes[0];
             }
 
             SceneManager.SetActiveScene(newLevel.scene);
@@ -94,10 +94,10 @@ namespace CCDKEngine
             /**If we haven't already requested a game type when going to the Level, add the first Game Type in the Level Info's list of compatible Game Types.**/
             if (Engine.singleton.requestedGameType == null)
             {
-                levelObj.AddComponent(level.data.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
+                levelObj.AddComponent(level.levelData.compatibleGameTypes[0].gameTypeClass.GetAssemblyType());
                 GameType gameType = levelObj.GetComponent<GameType>();
 
-                gameType.data = level.data.compatibleGameTypes[0];
+                gameType.data = level.levelData.compatibleGameTypes[0];
             }
 
             ReturnToGameplay();

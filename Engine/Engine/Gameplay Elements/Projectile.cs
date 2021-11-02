@@ -24,8 +24,9 @@ namespace CCDKGame
         /** The object we collided with**/
         public GameObject ImapactedObject;
         
-        private void Start()
+        public override void Start()
         {
+            base.Start();
             speed = projectileData.initialSpeed;
         }
         

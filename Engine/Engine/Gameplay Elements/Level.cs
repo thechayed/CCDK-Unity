@@ -13,10 +13,11 @@ namespace CCDKGame
 {
     public class Level : FSM.Component
     {
+        [Header(" - Level - ")]
         /** The Level Game Object this Level belongs to **/
         public GameObject levelObj;
 
-        public CCDKObjects.Level data;
+        public CCDKObjects.Level levelData;
 
         /** The scene that belongs to this level **/
         public Scene scene;
@@ -29,6 +30,8 @@ namespace CCDKGame
 
         public bool setActiveWhenLoaded;
 
+
+        [Header(" - Level Children - ")]
         public List<GameObject> Objects = new List<GameObject>();
 
         public List<GameObject> spawnPoints = new List<GameObject>();

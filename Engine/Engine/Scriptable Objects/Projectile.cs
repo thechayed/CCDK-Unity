@@ -50,8 +50,9 @@ namespace CCDKObjects
 
         [Header(" - Physics Properties - ")]
         public float gravity;
-        
 
+
+#if UNITY_EDITOR
         public override void OnEnable()
         {
             className = projectileClass;
@@ -71,5 +72,7 @@ namespace CCDKObjects
             className = projectileClass;
             base.OnValidate();
         }
+#endif
     }
+
 }

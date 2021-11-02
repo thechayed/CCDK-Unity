@@ -11,7 +11,7 @@ namespace CCDKObjects
     public class HUD : ScriptableObject
     {
         /** The name of this HUD **/
-        public string name;
+        public string hudName;
         /** The scene that should be created/destroyed with this HUD object **/
         [Scene]
         public string scene;
@@ -33,7 +33,7 @@ namespace CCDKObjects
 
 
         /**List of scale modes for drawing**/
-        public enum scaleModes
+        public enum ScaleModes
         {
             Pixel,
             Physical,
@@ -42,7 +42,7 @@ namespace CCDKObjects
         [Header("Sizing")]
         /**<summary>What Scale mode to use for this HUD's canvas</summary>**/
         [Tooltip("What Scale mode to use for this HUD's canvas")]
-        public scaleModes scaleMode;
+        public ScaleModes scaleMode;
         /**<summary>Scale the canvas in with the cinematic black bars. Default behavior.</summary>**/
         [Tooltip("Scale the canvas in with the cinematic black bars. Default behavior.")]
         public bool scaleCanvasForCinematicMode;

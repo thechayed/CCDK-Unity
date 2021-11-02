@@ -29,7 +29,7 @@ namespace FSM
         public void CreateStateMachine()
         {
             stateMachine = new FSM.Machine(this, gameObject);
-            Init();
+            StateMachineInit();
         }
 
         /** Update the active State in the State Machine **/
@@ -47,7 +47,7 @@ namespace FSM
         }
 
         /** Override the Initialize event to change the conditions for which the State Machine can be active **/
-        public virtual void Init()
+        public virtual void StateMachineInit()
         {
             if (stateMachine != null && GetMethods() != null && GetMethods().length > 0)
             {

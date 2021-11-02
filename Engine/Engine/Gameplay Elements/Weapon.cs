@@ -8,6 +8,7 @@ namespace CCDKGame
 {
     public class Weapon : InventoryItem
     {
+        [Header(" - Weapon - ")]
         public CCDKObjects.Weapon weaponData;
         public Pawn pawn;
         public override void Start()

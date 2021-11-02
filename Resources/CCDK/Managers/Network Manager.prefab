@@ -50,42 +50,23 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1340101364185984629}
-    RegisteredScenes:
-    - Test
-    AllowRuntimeSceneChanges: 0
-    NetworkPrefabs:
-    - Prefab: {fileID: 5734174383894798934, guid: 2d4aea6cb0f20724c8af360a6f904704, type: 3}
-      PlayerPrefab: 1
-    PlayerPrefabHash:
-      id: 0
-    CreatePlayerPrefab: 0
-    ReceiveTickrate: 64
-    NetworkTickIntervalSec: 0.05
-    MaxReceiveEventsPerTickRate: 500
-    EventTickrate: 64
+    PlayerPrefab: {fileID: 0}
+    NetworkPrefabs: []
+    TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
-    EnableNetworkVariable: 1
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
     ForceSamePrefabs: 1
-    UsePrefabSync: 0
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
     RpcHashSize: 0
     LoadSceneTimeOut: 120
-    EnableMessageBuffering: 1
     MessageBufferTimeout: 20
     EnableNetworkLogs: 1
-  references:
-    version: 1
-    00000000:
-      type: {class: NullableBoolSerializable, ns: MLAPI.Configuration, asm: Unity.Multiplayer.MLAPI.Runtime}
-      data:
-        Value: 0
 --- !u!114 &1340101364185984629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,10 +85,4 @@ MonoBehaviour:
   ConnectAddress: 127.0.0.1
   ConnectPort: 7777
   ServerListenPort: 7777
-  ServerWebsocketListenPort: 8887
-  SupportWebsocket: 0
-  Channels: []
-  UseMLAPIRelay: 0
-  MLAPIRelayAddress: 184.72.104.138
-  MLAPIRelayPort: 8888
   MessageSendMode: 0

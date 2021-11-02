@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6033752000787009684}
   - component: {fileID: 3681125775771821276}
+  - component: {fileID: 7750568946605782288}
+  - component: {fileID: 8233669594504139853}
   m_Layer: 0
   m_Name: Default Pawn
   m_TagString: Untagged
@@ -50,7 +52,8 @@ MonoBehaviour:
   levelObj: {fileID: 0}
   level: {fileID: 0}
   replicate: 0
-  net: {fileID: 0}
+  net: {fileID: 7750568946605782288}
+  netTransform: {fileID: 0}
   ready: 0
   readyOnStart: 1
   visible: 1
@@ -58,14 +61,56 @@ MonoBehaviour:
   isControlled: 0
   pawnData: {fileID: 0}
   pawnCamera: {fileID: 0}
-  constructed: 0
+  inventory: []
   equipedWeapons: []
   activeWeaponSlot: 0
   automateWeaponSlot: 1
   activeWeapons: []
+  characterController: {fileID: 0}
   agent: {fileID: 0}
   agentDestination: {x: 0, y: 0, z: 0}
   agentFollowTransform: {fileID: 0}
   agentFollow: 0
-  characterController: {fileID: 0}
-  inventory: []
+--- !u!114 &7750568946605782288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2584404415101038498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &8233669594504139853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2584404415101038498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
+  CanCommitToTransform: 0

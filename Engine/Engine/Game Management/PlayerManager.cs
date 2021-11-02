@@ -5,9 +5,8 @@ using UnityEngine;
 using CCDKGame;
 using UnityEngine.SceneManagement;
 
-#if MLAPI
-using MLAPI;
-using MLAPI.Configuration;
+#if USING_NETCODE
+using Unity.Netcode;
 #endif
 
 
@@ -30,6 +29,8 @@ namespace CCDKEngine
         private void Awake()
         {
             PlayerManager.singleton = this;
+            Engine.NetworkConnect += NetworkStart;
+            Engine.NetworkDisconnect += NetworkEnd;
         }
 
         /** Create a record of a created Player Controller in the Manager **/
@@ -72,7 +73,8 @@ namespace CCDKEngine
             {
                 if(player.ID == ID)
                 {
-                    Engine.TryDestroy(player.assignedController.gameObject);
+                    if (player.assignedController != null)
+                        GameObject.Destroy(player.assignedController.gameObject);
                     player.assignedController = CreatePC(controller);
                 }
             }
@@ -91,6 +93,25 @@ namespace CCDKEngine
 
                 singleton.controllerPossessions.Set(controller.name, pawn);
             }
+        }
+
+
+        public void NetworkStart()
+        {
+#if USING_NETCODE
+            foreach(Controller controller in PlayerManager.controllers.ToList())
+            {
+                if(controller.GetComponent<NetworkObject>()!=null)
+                    if (controller.GetComponent<NetworkObject>().IsOwner)
+                        RemovePC(controller);
+            }
+            
+#endif
+        }
+
+        public void NetworkEnd()
+        {
+
         }
 
 //#if USING_NETCODE

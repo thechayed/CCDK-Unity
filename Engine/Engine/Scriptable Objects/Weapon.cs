@@ -23,11 +23,11 @@ namespace CCDKObjects
         /** How long does it take to put this weapon down */
         float PutDownTime;
 
-        [SerializeField]
 
         /**The list of Fire types for this weapon**/
         public List<WeaponFireType> fireTypes;
 
+#if UNITY_EDITOR
         public override void OnEnable()
         {
             className = weaponClass;
@@ -47,6 +47,7 @@ namespace CCDKObjects
             className = weaponClass;
             base.OnValidate();
         }
+#endif
     }
 
 

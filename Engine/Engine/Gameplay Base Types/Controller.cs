@@ -13,28 +13,21 @@ namespace CCDKEngine
 {
     public class Controller : Object
     {
+        [Header(" - Controller Properties - ")]
+        /** The ID of this Controller **/
+        public int IID;
         public CCDKObjects.Controller controllerData;
+
+        [Header(" - Possession Properties - ")]
         /** The Pawn that the controller has possessed **/
         public Pawn possessedPawn;
+        /**The Camera that this Player Controller is using*/
+        public Camera possessedCamera;
         /** Call this when the Pawn has been possessed **/
         public delegate void OnPossess();
         public OnPossess Possessed;
-        /** The ID of this Controller **/
-        public int IID;
 
-        /**The Camera that this Player Controller is using*/
-        public Camera possessedCamera;
-        /**Class of the Camera assigned to the Player Controller*/
-        public CameraClass cameraClass;
-
-        /** A dictionary storing all the Component Classes that have been added to this object **/
-        public Dictionary<Type> classes;
-
-        [HideInInspector]
-        public ControllerInput input = new ControllerInput();
-
-        public ComponentConstructor<Script.ControllerClass> componentConstructor;
-
+        [Header(" - Pawn Navmesh Agent Properties - ")]
         /**Tells the Pawn where to go if it is using the Nav Mesh Agent.**/
         public Vector3 navMeshAgentDestination;
         public Transform navMeshAgentDestionationTransform;
@@ -43,18 +36,16 @@ namespace CCDKEngine
         {
             base.Start();
             controllerData = (CCDKObjects.Controller)data;
-        }
-
-        public void PCConstructor()
-        {
-            input.controller = this;
+            replicate = true;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (possessedPawn.pawnCamera != null)
-                possessedCamera = possessedPawn.pawnCamera;
+
+            if (possessedPawn != null)
+                if (possessedPawn.pawnCamera != null)
+                    possessedCamera = possessedPawn.pawnCamera;
         }
 
         public bool Possess(Pawn pawn)
@@ -75,5 +66,18 @@ namespace CCDKEngine
             return false;
         }
 
+        /**<summary>Send Commands to the possessed Pawn.</summary>**/
+        public void Command(string commandName, object[] parameters = null)
+        {
+            if (possessedPawn != null)
+                possessedPawn.BroadcastMessage(commandName, parameters);
+        }
+
+        /**<summary>Send Commands to the possessed Pawn.</summary>**/
+        public void Command(string commandName, object parameter = null)
+        {
+            if (possessedPawn != null)
+                possessedPawn.BroadcastMessage(commandName, parameter);
+        }
     }
 }

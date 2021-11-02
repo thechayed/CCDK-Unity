@@ -12,7 +12,6 @@ namespace CCDKObjects
         [MonoScript(type = typeof(CCDKGame.GameType))] public string gameTypeClass = "CCDKGame.GameType";
 
         [Header(" - Defaults - ")]
-
         [Tooltip("Game Type's default objects.")]
         public Controller defaultPlayerController;
         public Controller defualtAIController;
@@ -20,10 +19,14 @@ namespace CCDKObjects
         public HUD defaultHUD;
 
         [Header(" - Gameplay - ")]
+        [Tooltip("Starts Multiplayer at the beginning of the game if true.")]
+        public bool startInMultiplayer = false;
+        [Tooltip("The Network Manager to spawn to use Multiplayer.")]
+        public GameObject networkManager;
         [Tooltip("If this is set to false, the user must communicate game state to the Game Type. (in the case of using the Runtime State Graph to handle game state, it is typically best to omit Game Type entirely.)")]
         public bool useOwnGameState = true;
         [Tooltip("Should the Game Type handle the existence of Player Controllers?")]
-        public bool managePlayerControler = true;
+        public bool managePlayerController = true;
         [Tooltip("Should Player Input be handled by the Player Manager. Set per Game Type to enable/disable split screens, important for certain kinds of games.")]
         public bool usePlayerManager = false;
         [Tooltip("Should the Game Type handle the existence of Pawns?")]

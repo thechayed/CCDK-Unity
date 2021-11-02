@@ -10,6 +10,7 @@ using CCDKGame;
 
 #if USING_NETCODE
 using Unity.Netcode;
+using Unity.Netcode.Components;
 #endif
 
 namespace CCDKEngine
@@ -28,12 +29,14 @@ namespace CCDKEngine
         [Tooltip("The Level the object is in.")]
         [ReadOnly] public Level level;
 
+        [Header(" - Multiplayer - ")]
         /**<summary>Whether this object is Reprecated with MLAPI.</summary>**/
         public bool replicate;
 
 #if USING_NETCODE
         /**<summary>The Networked Object Behavior added to this object to interface with MLAPI.</summary>**/
         public NetworkObject net;
+        public NetworkTransform netTransform;
 #endif
 
         //Gameplay Values
@@ -60,6 +63,9 @@ namespace CCDKEngine
                     ready = true;
                 }
             }
+
+            Engine.NetworkConnect += NetworkStart;
+            Engine.NetworkDisconnect += NetworkEnd;
         }
 
         public override void FixedUpdate()
@@ -82,9 +88,16 @@ namespace CCDKEngine
 
             if (replicate)
             {
+
                 if(net == null)
                 {
-                    net = gameObject.AddComponent<NetworkObject>();
+                    AddNetworkComponents();
+                }
+                else
+                {
+                    net.AutoObjectParentSync = false;
+                    if(NetworkManager.Singleton.IsHost)
+                        NetworkManager.Singleton.PrefabHandler.RegisterHostGlobalObjectIdHashValues(gameObject, new List<GameObject>() { gameObject });
                 }
 
                 
@@ -93,6 +106,9 @@ namespace CCDKEngine
                     NetworkUpdate(); 
                 }
             }
+
+
+
 #else
             NetworkUpdate();
 #endif
@@ -107,6 +123,53 @@ namespace CCDKEngine
         /**The Update is only called on "Local" Objects.**/
         public virtual void NetworkUpdate()
         {
+
         }
+
+        public virtual void NetworkStart()
+        {
+            net = gameObject.GetComponent<NetworkObject>();
+            netTransform = gameObject.GetComponent<NetworkTransform>();
+
+            if (net == null)
+                return;
+
+            net.enabled = true;
+            netTransform.enabled = true;
+            net.Spawn();
+        }
+
+        public virtual void NetworkEnd()
+        {
+            net = gameObject.GetComponent<NetworkObject>();
+            netTransform = gameObject.GetComponent<NetworkTransform>();
+
+            if (net == null)
+                return;
+
+            net.enabled = false;
+            netTransform.enabled = false;
+        }
+
+        public void AddNetworkComponents()
+        {
+#if USING_NETCODE
+            net = gameObject.GetComponent<NetworkObject>();
+            if (net != null)
+                return;
+
+            net = gameObject.AddComponent<NetworkObject>();
+            net.AutoObjectParentSync = false;
+            netTransform = gameObject.AddComponent<NetworkTransform>();
+
+#endif
+        }
+
+        private void OnDestroy()
+        {
+            Engine.NetworkConnect -= NetworkStart;
+            Engine.NetworkDisconnect -= NetworkEnd;
+        }
+
     }
 }

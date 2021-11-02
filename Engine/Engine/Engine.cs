@@ -66,8 +66,22 @@ namespace CCDKEngine
 
         private bool usingMLAPI = false;
 
+        public delegate void NetworkConnectAction();
+        public static event NetworkConnectAction NetworkConnect;
+        public delegate void NetworkDisconnectAction();
+        public static event NetworkDisconnectAction NetworkDisconnect;
+        public delegate void PlayerJoinedAction(ulong client);
+        public static event PlayerJoinedAction PlayerJoined;
+        public delegate void PlayerLeftAction(ulong client);
+        public static event PlayerLeftAction PlayerLeft;
+        public List<ulong> registeredClients = new List<ulong>();
+
+        public bool enableNetworking = false;
+        public int localNetState = 0;
+
 #if USING_NETCODE
         public static NetworkManager networkManager;
+        public static NetworkPrefabHandler networkPrefabHandler;
 #endif
 
         private void Start()
@@ -97,7 +111,9 @@ namespace CCDKEngine
 
         private void Update()
         {
-            if(data == null)
+
+
+            if (data == null)
             {
                 data = (CCDKObjects.Engine)Resources.Load<ScriptableObject>("CCDK/Engine");
                 data.startingLevelLoaded = false;
@@ -134,6 +150,72 @@ namespace CCDKEngine
                 PlayerManager.NewPlayer(PlayerManager.CreatePC(data.defaultPlayerController));
                 GameObject.DestroyImmediate(data.defaultPlayerController.prefab);
             }
+
+#if USING_NETCODE
+            if (NetworkManager.Singleton.IsHost)
+            {
+                /**If their are less registered Clients than exist in the game, add those that aren't registered**/
+                if (registeredClients.Count < NetworkManager.Singleton.ConnectedClientsIds.Count)
+                {
+                    ulong client = 0;
+                    foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
+                    {
+                        bool found = true;
+                        foreach (ulong nextItem in registeredClients)
+                        {
+                            if (nextItem == item)
+                            {
+                                found = false;
+                            }
+                        }
+                        if (found)
+                        {
+                            registeredClients.Add(client);
+                            PlayerJoined.Invoke(client);
+                            break;
+                        }
+                    }
+                }
+
+                /**If their are more registered Clients than exist in the game, Remove those that no longer exist**/
+                if (registeredClients.Count > NetworkManager.Singleton.ConnectedClientsIds.Count)
+                {
+                    ulong client = 0;
+                    foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
+                    {
+                        bool found = true;
+                        foreach (ulong nextItem in registeredClients)
+                        {
+                            if (nextItem == item)
+                            {
+                                found = false;
+                            }
+                        }
+                        if (found)
+                        {
+                            registeredClients.Remove(client);
+                            PlayerLeft.Invoke(client);
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            if (NetworkManager.Singleton != null)
+            {
+                if (!NetworkManager.Singleton.IsClient && singleton.localNetState != 0)
+                {
+                    singleton.localNetState = 0;
+                    NetworkDisconnect();
+                }
+                if (NetworkManager.Singleton.IsClient&& singleton.localNetState != 1)
+                {
+                    singleton.localNetState = 1;
+                    NetworkConnect();
+                }
+            }
+#endif
         }
 
         private void InitEngineTools()
@@ -149,21 +231,9 @@ namespace CCDKEngine
                 GameObject[] Managers = Resources.LoadAll<GameObject>("CCDK/Managers");
                 foreach (GameObject manager in Managers)
                 {
-                    if (manager.name == "NetworkManager")
-                    {
-                        if (usingMLAPI)
-                        {
-                            GameObject managerInstance = GameObject.Instantiate(manager);
-                            managerInstance.name = manager.name;
-                            SceneManager.MoveGameObjectToScene(managerInstance,LevelManager.engineScene);
-                        }
-                    }
-                    else
-                    {
-                        GameObject managerInstance = GameObject.Instantiate(manager);
-                        managerInstance.name = manager.name;
-                        SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
-                    }
+                    GameObject managerInstance = GameObject.Instantiate(manager);
+                    managerInstance.name = manager.name;
+                    SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
                 }
 
                 /** Initialize the Level Manager for Scene control **/
@@ -203,6 +273,11 @@ namespace CCDKEngine
                 }
             }
 
+
+#if USING_NETCODE
+            
+            //networkPrefabHandler
+#endif
         }
 
         public static void AddPawn(GameObject pawn)
@@ -267,11 +342,11 @@ namespace CCDKEngine
         {
             foreach(CCDKObjects.Level level in Engine.singleton.levelInfos)
             {
-                if(level.name == name)
+                if(level.levelName == name)
                 {
                     return level;
                 }
-                if(level.name == "Default")
+                if(level.levelName == "Default")
                 {
                     Engine.singleton.defaultLevel = level;
                 }
@@ -291,15 +366,25 @@ namespace CCDKEngine
         }
 
         /**<summary>Shorthand for Unity's Game Object Destroy function that checks if the object is valid first, instead of writing that same darn condition over and over again.</summary>**/
-        public static bool TryDestroy(GameObject objectToDestroy)
+        public static bool TryDestroy(object objectToDestroy)
         {
             if (objectToDestroy == null)
                 return false;
             else
             {
-                GameObject.Destroy(objectToDestroy);
+                if (((Component)objectToDestroy) == null)
+                    GameObject.Destroy((GameObject)objectToDestroy);
+                else
+                    GameObject.Destroy(((Component)objectToDestroy).gameObject);
                 return true;
             }
+        }
+
+        public static void CreateNetworkManager(GameObject managerObject)
+        { 
+            GameObject managerInstance = GameObject.Instantiate(managerObject);
+            managerInstance.name = managerObject.name;
+            SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
         }
     }
 }

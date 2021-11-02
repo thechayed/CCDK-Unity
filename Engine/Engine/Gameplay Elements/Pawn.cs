@@ -10,19 +10,14 @@ namespace CCDKGame
 {
     public class Pawn : PossessableObject
     {
+        [Header(" - Pawn - ")]
         [ReadOnly] public CCDKObjects.Pawn pawnData;
-
         /**The Pawn's Camera**/
         public Camera pawnCamera;
 
-        /** Whether the Constructor method has already been called **/
-        [HideInInspector]
-        public bool constructed;
-
-        public ComponentConstructor<Script.PawnClass> componentConstructor;
-
-
-        private string[] children = new string[] { "movement", "audio", "costume", "input", "inventory", "stats" };
+        [Header(" - Iventory - ")]
+        /** A list of all the Items currently in the Pawn's inventory **/
+        public List<CCDKObjects.InventoryItem> inventory;
 
         public List<CCDKObjects.Weapon> equipedWeapons;
         /**Active Weapon Slot is useful when needing an index to replace a weapon, for example, replacing the equiped one with one from the world.**/
@@ -32,19 +27,19 @@ namespace CCDKGame
 
         public List<Weapon> activeWeapons;
 
+        [Header(" - Movement - ")]
+        public CharacterController characterController;
+        Vector3 speed;
+
+        [Header(" - Navmesh Agent - ")]
         public NavMeshAgent agent;
         public Vector3 agentDestination;
         public Transform agentFollowTransform;
         public bool agentFollow = false;
 
-        public CharacterController characterController;
-
-        Vector3 speed;
-
-        /** A list of all the Items currently in the Pawn's inventory **/
-        public List<CCDKObjects.InventoryItem> inventory;
-        public void Start()
+        public override void Start()
         {
+            base.Start();
 
             agentDestination = transform.position;
             pawnData = (CCDKObjects.Pawn)data;
@@ -124,7 +119,7 @@ namespace CCDKGame
         //    componentConstructor.RemovePreviousClasses();
         //}
 
-        public bool SetController(Controller controller)
+        public override bool SetController(Controller controller)
         {
             if (pawnData.possessable)
             {

@@ -112,6 +112,11 @@ namespace CCDKEditor
                 if (scriptable.objectName == "")
                     scriptable.objectName = "Default";
 
+                if (scriptable.replicate)
+                {
+                    component.AddNetworkComponents();
+                }
+
                 scriptable.prefab = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, scriptable.path + scriptable.objectName + ".prefab", InteractionMode.AutomatedAction);
                 GameObject.DestroyImmediate(gameObject);
                 //Debug.Log("Remade from original prefab");
@@ -167,6 +172,11 @@ namespace CCDKEditor
                 if (component != null)
                 {
                     component.data = scriptable;
+
+                    if (scriptable.replicate)
+                    {
+                        component.AddNetworkComponents();
+                    }
                 }
 
                 if(name==null)

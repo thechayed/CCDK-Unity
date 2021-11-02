@@ -7,8 +7,9 @@ namespace CCDKGame
     public class PawnCamera : CCDKEngine.Object
     {
         // Use this for initialization
-        public void Start()
+        public override void Start()
         {
+            base.Start();
             transform.parent.SendMessageUpwards("SetCamera", gameObject.GetComponent<Camera>());
         }
     }

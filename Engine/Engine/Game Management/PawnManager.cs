@@ -28,7 +28,7 @@ namespace CCDKEngine
         public static List<Pawn> PawnsInGame = new List<Pawn>();
 
         /**<summary>Create a pawn in the current Level</summary> **/
-        public static Pawn CreatePawn(CCDKObjects.Pawn data, Transform spawnTransform = default(Transform))
+        public static Pawn CreatePawn(CCDKObjects.Pawn data, Transform spawnTransform = default)
         {
             GameObject pawnObject = GameObject.Instantiate(data.prefab);
             pawnObject.name = data.prefab.name;
@@ -40,7 +40,7 @@ namespace CCDKEngine
             return pawn;
         }
 
-        public static Transform CreatePawnAndGetRoot(CCDKObjects.Pawn data, Transform spawnTransform = default(Transform))
+        public static Transform CreatePawnAndGetRoot(CCDKObjects.Pawn data, Transform spawnTransform = default)
         {
             return CreatePawn(data, spawnTransform).transform.root;
         }

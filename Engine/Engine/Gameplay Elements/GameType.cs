@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using CCDKEngine;
+using System;
 #if USING_NETCODE
 using Unity.Netcode;
 #endif
@@ -12,14 +13,13 @@ namespace CCDKGame
 {
     public class GameType : FSM.Component
     {
+        [Header(" - GameType - ")]
         public bool init = false;
         public bool isHost = true;
+        public bool allowMultiplayer = true;
 
         public bool gameplayStarted;
-        public CCDKObjects.GameTypeInfo data;
-
-        /**The GameType class of the Game Type that is being played.**/
-        public static GameType currentGame;
+        public CCDKObjects.GameTypeInfo gameTypeData;
 
         /**<summary>When the Game Type is starting, initialize it.</summary>**/
         private void Update()
@@ -28,11 +28,7 @@ namespace CCDKGame
             {
                 this.Invoke("LocalInitialization", 0f);
             }
-            /** If this game uses Netcode and we're not the host, disable the GameType behaviour **/
-#if USING_NETCODE
-            if (NetworkManager.Singleton.IsServer)
-                isHost = NetworkManager.Singleton.IsHost;
-#endif
+
         }
 
 
@@ -53,17 +49,48 @@ namespace CCDKGame
         }
 
         /**<summary>A Callback for when a Player Joins the game.</summary>**/
-        public virtual void PlayerJoined()
+        public virtual void PlayerJoined(ulong clientId)
         {
+            Debug.Log(clientId+" joined");
+            PlayerController newController = PlayerManager.CreatePC(gameTypeData.defaultPlayerController);
+            SetControllerID(newController, clientId);
+            SetUpPlayer(newController);
         }
 
+
         /**<summary>A Callback for when a Player Leaves the game.</summary>**/
-        public virtual void PlayerLeft()
+        public virtual void PlayerLeft(ulong clientId)
         {
+            Debug.Log(clientId + " left.");
+        }
+
+
+        /**<summary>Controls what happens to a Player when they join the Game.</summary>**/
+        public virtual void SetUpPlayer(PlayerController controller)
+        {
+
+        }
+
+        /**<summary>Undo any SetUp modifications when the Player leaves the game.</summary>**/
+        public virtual void RemovePlayer(PlayerController controller)
+        {
+
+        }
+
+        public virtual void NetworkStart()
+        {
+#if USING_NETCODE
+                isHost = NetworkManager.Singleton.IsHost;
+#endif
+        }
+
+        public virtual void NetworkEnd()
+        {
+
         }
 
         /**<summary>Another class can request the spawning of a pawn in the Game using this method. Override to add additional conditions for possessing a pawn.</summary>**/
-        public virtual Pawn TrySpawn(CCDKObjects.Pawn pawnToSpawn, Transform spawnTransform = default(Transform))
+        public virtual Pawn TrySpawn(CCDKObjects.Pawn pawnToSpawn, Transform spawnTransform = default)
         {
             return PawnManager.CreatePawn(pawnToSpawn, spawnTransform);
         }
@@ -87,18 +114,37 @@ namespace CCDKGame
         private void LocalInitialization()
         {
 
+#if USING_NETCODE
+            Engine.PlayerJoined += PlayerJoined;
+            Engine.PlayerLeft += PlayerLeft;
+            Engine.NetworkConnect += NetworkStart;
+            Engine.NetworkDisconnect += NetworkEnd;
 
+            if (gameTypeData.networkManager != null)
+            {
+                Engine.CreateNetworkManager(gameTypeData.networkManager);
+            }
+            else
+            {
+                allowMultiplayer = false;
+                Debug.Log("No Network Manager prefab has been given to the active Game Type, Multiplayer is not supported.");
+            }
+#endif
 
             /**Set the Default Player Controller for currently active Players whenever the Game Type begins**/
-            if (data.defaultPlayerController != null)
+            if (gameTypeData.defaultPlayerController != null)
             {
                 foreach (Player player in PlayerManager.singleton.players)
                 {
-                    PlayerManager.SetPlayerController(player.ID, data.defaultPlayerController);
+                    PlayerManager.SetPlayerController(player.ID, gameTypeData.defaultPlayerController);
+                    SetUpPlayer((PlayerController)GetControllerWithoutPawn());
                 }
             }
             if(isHost)
                 this.Invoke("Init", 0f);
+
+            if (gameTypeData.startInMultiplayer)
+                MultiplayerStart();
 
             init = true;
         }
@@ -118,6 +164,7 @@ namespace CCDKGame
         #endregion
 
         /**<summary>Spawns the default pawn into the game and returns it's Game Object</summary>**/
+        //Add For Multiplayer: GameObject.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
         public Pawn Spawn(Transform spawnTransform = null)
         {
             if (!isHost)
@@ -129,12 +176,12 @@ namespace CCDKGame
                 if(spawnerTransform == null)
                 {
                     Debug.LogError("No spawn point or Spawn Position was given in GameType.Spawn(), please make a Spawn Point!");
-                    return PawnManager.CreatePawn(data.defaultPawn, default(Transform));
+                    return PawnManager.CreatePawn(gameTypeData.defaultPawn, default);
                 }
 
-                return PawnManager.CreatePawn(data.defaultPawn, spawnerTransform);
+                return PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnerTransform);
             }
-            return PawnManager.CreatePawn(data.defaultPawn, spawnTransform);
+            return PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnTransform);
         }
 
         public void SpawnForController(Controller controller, Pawn pawn = null, Transform spawnTransform = null)
@@ -169,13 +216,46 @@ namespace CCDKGame
 
         public void MultiplayerStart()
         {
-            bool success = NetworkManager.Singleton.StartHost();
-            if(!success)
+#if USING_NETCODE
+
+            if (allowMultiplayer)
             {
-                NetworkManager.Singleton.StartClient();
+                /**Delete local Player Controllers at the beginning of the game.**/
+                /**Replace this with total Replicated Object Deletion instead.**/
+                foreach (Controller controller in PlayerManager.controllers)
+                {
+                    PlayerManager.RemovePC(controller);
+                }
+                /**Check if we can Start as a Host given our current values, otherwise Start the client.**/
+                bool success = NetworkManager.Singleton.StartHost();
+                if (!success)
+                {
+                    NetworkManager.Singleton.StartClient();
+                }
+
+                /**If we became the host, Create a new Player Controller and assign it to ourself.**/
+                if (NetworkManager.Singleton.IsHost)
+                {
+                    SetControllerID(PlayerManager.CreatePC(gameTypeData.defaultPlayerController), NetworkManager.Singleton.LocalClientId);
+                }
             }
+#endif
         }
 
+#if USING_NETCODE
+        /**<summary>Sets the Controller as owned by the ClientID.</summary>**/
+        public void SetControllerID(PlayerController controller, ulong clientID)
+        {
+            controller.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientID);
+        }
+#endif
 
+        //// A ClientRpc can be invoked by the server to be executed on a client
+        //[ClientRpc]
+        //private void SpawnClientRpc(ulong objectId)
+        //{
+        //    NetworkSpawnManager
+        //    NetworkObject player = NetworkSpawnManager.SpawnedObjects[objectId];
+        //}
     }
 }

@@ -11,14 +11,14 @@ namespace CCDKGame
 {
     public class HUD : PossessableObject
     {
-        public CCDKObjects.HUD data;
+        public CCDKObjects.HUD hudData;
 
         // Use this for initialization
         public override void Start()
         {
             base.Start();
             Scene activeScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(data.scene,LoadSceneMode.Additive);
+            SceneManager.LoadScene(hudData.scene,LoadSceneMode.Additive);
             SceneManager.SetActiveScene(activeScene);
             
             /** If the HUD does not have a Canvas to draw on set from the editor, create a new one **/
@@ -45,13 +45,13 @@ namespace CCDKGame
         {
             if (font == null)
             {
-                font = data.defaultFont;
+                font = hudData.defaultFont;
             }
 
             GameObject myText;
 
             myText = new GameObject();
-            myText.transform.parent = data.canvasGameObject.transform;
+            myText.transform.parent = hudData.canvasGameObject.transform;
             myText.name = "wibble";
 
             Text textC = myText.AddComponent<Text>();

@@ -17,8 +17,9 @@ namespace CCDKGame
 
 
         // Use this for initialization
-        public void Start()
+        public override void Start()
         {
+            base.Start();
             audioSource = GetComponent<AudioSource>();
         }
     }

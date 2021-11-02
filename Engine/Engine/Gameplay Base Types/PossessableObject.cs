@@ -17,10 +17,11 @@ namespace CCDKEngine
 
 
         /* Set the object's Player Controller (This should typically be done in the editor!) */
-        public void setController(Controller controller)
+        public virtual bool SetController(Controller controller)
         {
             this.controller = controller;
             isControlled = true;
+            return true;
         }
     }
 }
