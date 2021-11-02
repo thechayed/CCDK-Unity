@@ -89,7 +89,7 @@ namespace CCDKEngine
             level.scene = scene;
             level.levelName = scene.name;
 
-            level.data = Engine.GetLevelInfoByName(scene.name);
+            level.levelData = Engine.GetLevelInfoByName(scene.name);
 
             /**If we haven't already requested a game type when going to the Level, add the first Game Type in the Level Info's list of compatible Game Types.**/
             if (Engine.singleton.requestedGameType == null)
