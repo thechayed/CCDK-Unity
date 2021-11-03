@@ -33,6 +33,8 @@ namespace CCDKEngine
         /** This dictionary stores references to generated Pawn Object Prefabs **/
         public static List<CCDKObjects.PrefabSO> editorObjects = new List<CCDKObjects.PrefabSO>();
 
+        public static GameType currentGameType;
+
         /**<summary> Whether the Runtime has started </summary>**/
         public static bool running;
 
@@ -43,7 +45,6 @@ namespace CCDKEngine
         public static GameObject runtimeObj;
 
         public static StateMachine runtime;
-
 
 
         /**<summary>The Game Type that is requested for a Level that is to be loaded.</summary>**/
@@ -64,7 +65,7 @@ namespace CCDKEngine
         private static int ticksToWaitForData = 5;
         private static int ticks = 0;
 
-        private bool usingMLAPI = false;
+        public bool enableNetworking = false;
 
         public delegate void NetworkConnectAction();
         public static event NetworkConnectAction NetworkConnect;
@@ -76,12 +77,10 @@ namespace CCDKEngine
         public static event PlayerLeftAction PlayerLeft;
         public List<ulong> registeredClients = new List<ulong>();
 
-        public bool enableNetworking = false;
-        public int localNetState = 0;
-
 #if USING_NETCODE
         public static NetworkManager networkManager;
         public static NetworkPrefabHandler networkPrefabHandler;
+        public int localNetState = 0;
 #endif
 
         private void Start()
@@ -89,10 +88,6 @@ namespace CCDKEngine
             /*Begin play!*/
             running = true;
             initCalled = true;
-
-#if USING_NETCODE
-            usingMLAPI = true;
-#endif
         }
 
         /** Initialize the engine loop **/
@@ -385,10 +380,14 @@ namespace CCDKEngine
         }
 
         public static void CreateNetworkManager(GameObject managerObject)
-        { 
-            GameObject managerInstance = GameObject.Instantiate(managerObject);
-            managerInstance.name = managerObject.name;
-            SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
+        {
+            if (NetworkManager.Singleton == null)
+            {
+                GameObject managerInstance = GameObject.Instantiate(managerObject);
+                managerInstance.name = managerObject.name;
+                SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
+            }
         }
+
     }
 }

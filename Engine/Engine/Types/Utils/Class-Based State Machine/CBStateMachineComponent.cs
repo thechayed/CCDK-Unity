@@ -3,12 +3,20 @@ using System.Collections;
 using UnityEngine;
 using CCDKGame;
 using System.Reflection;
+#if USING_NETCODE
+using Unity.Netcode;
+#endif
 
 namespace FSM
 {
-
-    public class Component : DataDependentMonobehavior
+#if USING_NETCODE
+    public class Component : NetworkBehaviour
+#else
+    public class Component : MonoBehaviour
+#endif
     {
+        [Header(" - Data - ")]
+        public ScriptableObject data;
 
         [HideInInspector]
         public object stateMachine;

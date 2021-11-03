@@ -62,7 +62,7 @@ MonoBehaviour:
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
-  m_SplitScreenIndex: 0
+  m_SplitScreenIndex: 6
   m_Camera: {fileID: 0}
 --- !u!114 &6783048698323149386
 MonoBehaviour:
@@ -95,8 +95,10 @@ MonoBehaviour:
   navMeshAgentDestination: {x: 0, y: 0, z: 0}
   navMeshAgentDestionationTransform: {fileID: 0}
   player:
-    ID: 0
     assignedController: {fileID: 0}
+    playerID:
+      ID: 0
+      clientID: 0
   clickPosition: {x: 0, y: 0, z: 0}
   clickedTransform: {fileID: 0}
   lastMouseButton: 0

@@ -51,7 +51,6 @@ namespace CCDKEngine
         public bool visible = true;
 
 
-
         public virtual void Awake()
         {
 
@@ -129,6 +128,11 @@ namespace CCDKEngine
 
         public virtual void NetworkStart()
         {
+            if (gameObject == null)
+            {
+                Engine.NetworkConnect -= NetworkStart;
+                return;
+            }
             net = gameObject.GetComponent<NetworkObject>();
             netTransform = gameObject.GetComponent<NetworkTransform>();
 
@@ -142,6 +146,11 @@ namespace CCDKEngine
 
         public virtual void NetworkEnd()
         {
+            if (gameObject == null)
+            {
+                Engine.NetworkDisconnect -= NetworkEnd;
+                return;
+            }
             net = gameObject.GetComponent<NetworkObject>();
             netTransform = gameObject.GetComponent<NetworkTransform>();
 

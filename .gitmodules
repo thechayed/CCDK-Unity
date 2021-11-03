@@ -1,3 +1,10 @@
 [submodule "Engine/SubModules/UnityNEAT"]
 	path = Engine/SubModules/UnityNEAT
 	url = https://github.com/lordjesus/UnityNEAT.git
+[submodule "Engine/SubModules/SerializableCollections"]
+	path = Engine/SubModules/SerializableCollections
+	url = https://github.com/DameonL/Serializable-Collections-For-Unity
+[submodule "Engine/SubModules/SaveSystem"]
+	path = Engine/SubModules/SaveSystem
+	url = https://github.com/IntoTheDev/Save-System-for-Unity
+

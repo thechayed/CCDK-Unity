@@ -113,6 +113,7 @@ namespace CCDKGame
         /**Initialization called in this script only.**/
         private void LocalInitialization()
         {
+            Engine.currentGameType = this;
 
 #if USING_NETCODE
             Engine.PlayerJoined += PlayerJoined;
@@ -134,10 +135,11 @@ namespace CCDKGame
             /**Set the Default Player Controller for currently active Players whenever the Game Type begins**/
             if (gameTypeData.defaultPlayerController != null)
             {
-                foreach (Player player in PlayerManager.singleton.players)
+                foreach (Player player in PlayerManager.singleton.players.ToArray())
                 {
-                    PlayerManager.SetPlayerController(player.ID, gameTypeData.defaultPlayerController);
+                    PlayerManager.SetPlayerController(player.playerID.ID, gameTypeData.defaultPlayerController);
                     SetUpPlayer((PlayerController)GetControllerWithoutPawn());
+                    Debug.Log("New Player Controller for Host, and spawned a pawn for it.");
                 }
             }
             if(isHost)
@@ -222,16 +224,16 @@ namespace CCDKGame
             {
                 /**Delete local Player Controllers at the beginning of the game.**/
                 /**Replace this with total Replicated Object Deletion instead.**/
-                foreach (Controller controller in PlayerManager.controllers)
+                foreach (Controller controller in PlayerManager.controllers.ToArray())
                 {
                     PlayerManager.RemovePC(controller);
                 }
-                /**Check if we can Start as a Host given our current values, otherwise Start the client.**/
-                bool success = NetworkManager.Singleton.StartHost();
-                if (!success)
-                {
-                    NetworkManager.Singleton.StartClient();
-                }
+                ///**Check if we can Start as a Host given our current values, otherwise Start the client.**/
+                //bool success = NetworkManager.Singleton.StartHost();
+                //if (!success)
+                //{
+                //    NetworkManager.Singleton.StartClient();
+                //}
 
                 /**If we became the host, Create a new Player Controller and assign it to ourself.**/
                 if (NetworkManager.Singleton.IsHost)
