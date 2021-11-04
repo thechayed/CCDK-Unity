@@ -9,7 +9,7 @@
 
 ## Future Plans: 
 After completing all the systems in the Outline, the next steps will be to implement these tools to extend the Toolkit's functionality:
--UnityNEAT
--Yarn (The programming language for writing stories)
+* UnityNEAT
+* Yarn (The programming language for writing stories)
 
 ### If you have any feature requests that don't seem to already be included, please make an issue and I'll look into implementing it!
