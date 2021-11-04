@@ -1,7 +1,6 @@
 # Chayed Creates Development Kit-Unity
 
-  ![enter image description
-       here](https://media.giphy.com/media/pXJvRVdjkpkws6tZGr/giphy.gif)
+![image](https://user-images.githubusercontent.com/38384626/140410613-3954ff37-8fa0-4d9a-aa39-a9532227bf61.png)
 
 - To use the Toolkit, download the latest release and extract the .zip within your project folder.
 
