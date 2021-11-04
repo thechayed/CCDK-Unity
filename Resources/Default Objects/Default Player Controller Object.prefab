@@ -62,7 +62,7 @@ MonoBehaviour:
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
-  m_SplitScreenIndex: 6
+  m_SplitScreenIndex: 0
   m_Camera: {fileID: 0}
 --- !u!114 &6783048698323149386
 MonoBehaviour:
@@ -80,6 +80,8 @@ MonoBehaviour:
   state: 
   UID: 0
   Independent: 0
+  originMethod: Unknown
+  originLine: 0
   levelObj: {fileID: 0}
   level: {fileID: 0}
   replicate: 0

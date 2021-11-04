@@ -79,5 +79,13 @@ namespace CCDKEngine
             if (possessedPawn != null)
                 possessedPawn.BroadcastMessage(commandName, parameter);
         }
+
+        public void Destroy()
+        {
+            if (possessedPawn != null)
+                GameObject.DestroyImmediate(possessedPawn.gameObject);
+
+            GameObject.DestroyImmediate(gameObject);
+        }
     }
 }

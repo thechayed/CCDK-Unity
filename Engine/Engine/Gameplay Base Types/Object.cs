@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using CCDKGame;
+using System.Runtime.CompilerServices;
 
 #if USING_NETCODE
 using Unity.Netcode;
@@ -23,6 +24,10 @@ namespace CCDKEngine
         [ReadOnly] public int UID;
         [Tooltip("The Object does not belong to a Level.")]
         [ReadOnly] public bool Independent = false;
+
+        /**<summary>An option value to pass to an Object to keep track of where it was created from in script.</summary>**/
+        public string originMethod = "Unknown";
+        public int originLine = 0;
 
         /**<summary>The Level that this Game Object belongs to</summary>**/
         [HideInInspector] public GameObject levelObj;
@@ -128,20 +133,7 @@ namespace CCDKEngine
 
         public virtual void NetworkStart()
         {
-            if (gameObject == null)
-            {
-                Engine.NetworkConnect -= NetworkStart;
-                return;
-            }
-            net = gameObject.GetComponent<NetworkObject>();
-            netTransform = gameObject.GetComponent<NetworkTransform>();
-
-            if (net == null)
-                return;
-
-            net.enabled = true;
-            netTransform.enabled = true;
-            net.Spawn();
+            
         }
 
         public virtual void NetworkEnd()
@@ -175,11 +167,17 @@ namespace CCDKEngine
 #endif
         }
 
-        private void OnDestroy()
+        private new void OnDestroy()
         {
             Engine.NetworkConnect -= NetworkStart;
             Engine.NetworkDisconnect -= NetworkEnd;
         }
 
+        public void SetOrigin([CallerLineNumber] int lineNumber = 0, [CallerFilePath] string caller = "Unknown", [CallerMemberName] string method = "Unknown")
+        {
+            originLine = lineNumber-1;
+            string[] nameWords = caller.Split('\\');
+            originMethod = nameWords[nameWords.Length-1]+": "+method;
+        }
     }
 }

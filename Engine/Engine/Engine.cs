@@ -136,13 +136,16 @@ namespace CCDKEngine
                 }
             }
 
-            if(PlayerManager.PCCount == 0)
+            if(PlayerManager.PCCount == 0&&!enableNetworking)
             {
                 data.defaultPlayerController = CCDKObjects.Controller.CreateInstance<CCDKObjects.Controller>();
                 data.defaultPlayerController.prefab = new GameObject();
                 data.defaultPlayerController.prefab.name = "Default Player Controller Object";
                 data.defaultPlayerController.prefab.AddComponent<PlayerController>();
-                PlayerManager.NewPlayer(PlayerManager.CreatePC(data.defaultPlayerController));
+                PlayerController newPlayerController = PlayerManager.CreatePC(data.defaultPlayerController);
+                newPlayerController.SetOrigin();
+                PlayerManager.NewPlayer(newPlayerController);
+
                 GameObject.DestroyImmediate(data.defaultPlayerController.prefab);
             }
 
@@ -202,11 +205,19 @@ namespace CCDKEngine
 
                 if (NetworkManager.Singleton != null)
                 {
+                    /**The Network Manager connected to a Game.**/
                     if (!NetworkManager.Singleton.IsClient && singleton.localNetState != 0)
                     {
                         singleton.localNetState = 0;
                         NetworkDisconnect();
+                        /**Once disconnected from the Network, create a new Player Manager**/
+                        GameObject Manager = Resources.Load<GameObject>("CCDK/Managers/PlayerManager");
+                        GameObject managerInstance = GameObject.Instantiate(Manager);
+                        managerInstance.name = Manager.name;
+                        SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
                     }
+
+                    /**The Network Manager has Disconnected from a Game.**/
                     if (NetworkManager.Singleton.IsClient && singleton.localNetState != 1)
                     {
                         singleton.localNetState = 1;

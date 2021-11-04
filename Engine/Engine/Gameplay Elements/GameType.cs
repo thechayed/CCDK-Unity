@@ -52,9 +52,9 @@ namespace CCDKGame
         public virtual void PlayerJoined(ulong clientId)
         {
             Debug.Log(clientId+" joined");
-            PlayerController newController = PlayerManager.CreatePC(gameTypeData.defaultPlayerController);
-            SetControllerID(newController, clientId);
-            SetUpPlayer(newController);
+            //PlayerController newController = PlayerManager.CreatePC(gameTypeData.defaultPlayerController);
+            //newController.SetOrigin();
+            //SetControllerID(newController, clientId);
         }
 
 
@@ -135,9 +135,10 @@ namespace CCDKGame
             /**Set the Default Player Controller for currently active Players whenever the Game Type begins**/
             if (gameTypeData.defaultPlayerController != null)
             {
-                foreach (Player player in PlayerManager.singleton.players.ToArray())
+                foreach (Player player in PlayerManager.managers[0].pool.players.ToArray())
                 {
-                    PlayerManager.SetPlayerController(player.playerID.ID, gameTypeData.defaultPlayerController);
+                    PlayerController playerController = PlayerManager.managers[0].SetPlayerController(0, gameTypeData.defaultPlayerController);
+                    Debug.Log("bar");
                     SetUpPlayer((PlayerController)GetControllerWithoutPawn());
                     Debug.Log("New Player Controller for Host, and spawned a pawn for it.");
                 }
@@ -238,7 +239,10 @@ namespace CCDKGame
                 /**If we became the host, Create a new Player Controller and assign it to ourself.**/
                 if (NetworkManager.Singleton.IsHost)
                 {
-                    SetControllerID(PlayerManager.CreatePC(gameTypeData.defaultPlayerController), NetworkManager.Singleton.LocalClientId);
+                    PlayerController newController = PlayerManager.CreatePC(gameTypeData.defaultPlayerController);
+                    newController.SetOrigin();
+                    SetControllerID(newController, NetworkManager.Singleton.LocalClientId);
+                    newController.SetOrigin();
                 }
             }
 #endif

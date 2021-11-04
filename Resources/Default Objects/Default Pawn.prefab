@@ -49,6 +49,8 @@ MonoBehaviour:
   state: 
   UID: 0
   Independent: 0
+  originMethod: Unknown
+  originLine: 0
   levelObj: {fileID: 0}
   level: {fileID: 0}
   replicate: 0

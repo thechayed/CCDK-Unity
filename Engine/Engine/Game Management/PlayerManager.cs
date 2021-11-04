@@ -13,31 +13,53 @@ using Unity.Netcode;
 
 namespace CCDKEngine
 {
+    /**<summary>A Player Manager is the Manager of all Local Players (Players from this instance of the game). And is the Player Prefab in Netcode, allowing split screen players to play online.</summary>**/
     public class PlayerManager : Object
     {
+        /**Replace this with Managers. The Player Managers no longer use the singleton pattern.**/
         public static PlayerManager singleton;
+        /**All the Player Managers that exist in the game.**/
+        public static List<PlayerManager> managers = new List<PlayerManager>();
+        public List<PlayerManager> localmanagersref;
 
-        /**<summary>List of all the Players in the game and their information.</summary>**/
-        public List<Player> players = new List<Player>();
+        /**<summary>The ID of the client this Player Manager belongs to.</summary>**/
+        public ulong clientID = 0;
+
+        /**<summary>Pool of all the Players in the game and their information.</summary>**/
         public PlayerPool pool = new PlayerPool();
 
         /**<summary>The list of Player Controllers in the game</summary>**/
         public static List<Controller> controllers = new List<Controller>();
 
-        public Dictionary<Pawn> controllerPossessions = new Dictionary<Pawn>();
-
         /**The count of Player Controllers in the game**/
         public static int PCCount;
 
+
         public override void Awake()
         {
+            managers.Add(this);
+
             PlayerManager.singleton = this;
             Engine.NetworkConnect += NetworkStart;
             Engine.NetworkDisconnect += NetworkEnd;
             Engine.PlayerLeft += PlayerLeft;
 
+            replicate = true;
+
+#if USING_NETCODE
+            //gameObject.AddComponent<NetworkObject>();
+#endif
+
             /**Tell the engine not to handle this as a Level Object**/
             Independent = true;
+        }
+
+        public void Update()
+        {
+            if(PlayerManager.singleton == null)
+                PlayerManager.singleton = this;
+
+            localmanagersref = PlayerManager.managers;
         }
 
         /** Create a record of a created Player Controller in the Manager **/
@@ -70,7 +92,37 @@ namespace CCDKEngine
         {
             Player newPlayer = new Player(controller, new PlayerID(), clientID);
             PlayerManager.singleton.pool.playerIDs.Add(newPlayer.playerID.clientID);
+            PlayerManager.singleton.pool.players.Add(newPlayer);
             return newPlayer;
+        }
+
+        /**Used in Networking to Remove an Player by it's Client ID**/
+        public static void RemovePlayerByClientID(ulong clientID = 0)
+        {
+            foreach(Player player in PlayerManager.singleton.pool.players.ToArray())
+            {
+                if(player.playerID.clientID == clientID)
+                {
+                    GameObject.Destroy(player.assignedController);
+                    PlayerManager.singleton.pool.players.Remove(player);
+                }
+            }
+        }
+        /**Removes a Player Manager from the game. We must first destroy all Player Controller objects associated with the Manager.**/
+        public static void RemovePlayerManager(ulong clientID = 0)
+        {
+            foreach(PlayerManager playerManager in managers)
+            {
+                if(playerManager.clientID == clientID)
+                {
+                    foreach (Player player in playerManager.pool.players.ToArray())
+                    {
+                        GameObject.Destroy(player.assignedController);
+                    }
+
+                    GameObject.Destroy(playerManager.gameObject);
+                }
+            }
         }
 
         public static void RegisterPlayers()
@@ -79,17 +131,13 @@ namespace CCDKEngine
         }
 
         /**<summary>Replaces a Player's Controller with a new one.</summary>**/
-        public static void SetPlayerController(int ID, CCDKObjects.Controller controller)
+        public PlayerController SetPlayerController(int ID, CCDKObjects.Controller controller)
         {
-            foreach(Player player in PlayerManager.singleton.pool.players)
-            {
-                if(player.playerID.ID == ID)
-                {
-                    if (player.assignedController != null)
-                        GameObject.Destroy(player.assignedController.gameObject);
-                    player.assignedController = CreatePC(controller);
-                }
-            }
+            PlayerController newController = CreatePC(controller);
+            pool.players[ID].assignedController.Destroy();
+            GameObject.Destroy(pool.players[ID].assignedController);
+            pool.players[ID].assignedController = newController;
+            return newController;
         }
 
         /**<summary>Try to make a Player Controller possess a pawn.</summary>**/
@@ -102,8 +150,6 @@ namespace CCDKEngine
                 {
                     controller.possessedPawn = pawn;
                 }
-
-                singleton.controllerPossessions.Set(controller.name, pawn);
             }
         }
 
@@ -114,35 +160,50 @@ namespace CCDKEngine
         {
             base.NetworkStart();
 
-            foreach(Controller controller in PlayerManager.controllers.ToList())
-            {
-                if(controller.GetComponent<NetworkObject>()!=null)
-                    if (controller.GetComponent<NetworkObject>().IsOwner)
-                        RemovePC(controller);
-            }
+            //foreach(Controller controller in PlayerManager.controllers.ToList())
+            //{
+            //    if(controller.GetComponent<NetworkObject>()!=null)
+            //        if (controller.GetComponent<NetworkObject>().IsOwner)
+            //            RemovePC(controller);
+            //}
 
+            //if (!net.IsSpawned)
+            //{
+            //    GameObject.Destroy(gameObject);
+            //}
 
             if (NetworkManager.Singleton.IsHost)
+            {
                 LogLocalPlayersAsClient();
+            }
             else
             {
-                LogClientServerRPC(pool.players.Count, NetworkManager.Singleton.LocalClientId);
+                if (net.IsLocalPlayer)
+                {
+                    LogClientServerRPC(pool.players.Count, NetworkManager.Singleton.LocalClientId);
+                }
             }
 
         }
 
         public override void NetworkEnd()
         {
-            base.NetworkStart();
+            base.NetworkEnd();
 
         }
 
         /**<summary>When the Player joins a game as a client, it is commanded to log it's Local Players as the client.</summary>**/
         public void LogLocalPlayersAsClient()
         {
-            foreach(ulong cliendID in pool.playerIDs.ToArray())
+            //managers[0].GetComponent<NetworkObject>().Despawn();
+            //managers[0].GetComponent<NetworkObject>().SpawnAsPlayerObject(NetworkManager.Singleton.LocalClientId);
+            foreach (Player player in pool.players.ToArray())
             {
-                NewPlayer(CreatePC(Engine.currentGameType.gameTypeData.defaultPlayerController), NetworkManager.Singleton.LocalClientId);
+                PlayerController newController = managers[0].SetPlayerController(0, Engine.currentGameType.gameTypeData.defaultPlayerController);
+                Debug.Log("foo");
+                newController.SetOrigin();
+                newController.GetComponent<NetworkObject>().SpawnAsPlayerObject(NetworkManager.Singleton.LocalClientId);
+                Engine.currentGameType.SetUpPlayer(newController);
             }
         }
 
@@ -152,7 +213,9 @@ namespace CCDKEngine
         {
             for(var i = 0; i<playerCount; i++)
             {
-                NewPlayer(CreatePC(Engine.currentGameType.gameTypeData.defaultPlayerController), clientID);
+                PlayerController newController = CreatePC(Engine.currentGameType.gameTypeData.defaultPlayerController);
+                newController.SetOrigin();
+                NewPlayer(newController, clientID);
             }
 
             
@@ -178,6 +241,7 @@ namespace CCDKEngine
             this.pool.playerIDs = DataSerializer.Deserialize<List<ulong>>(bytes); 
             //this.pool.LoadPlayers(Engine.currentGameType.gameTypeData.defaultPlayerController, null);
         }
+
 
 #endif
 

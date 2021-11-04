@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5734174383894798932}
   - component: {fileID: 5734174383894798933}
   - component: {fileID: -6378159518022355656}
+  - component: {fileID: -7594160119181550990}
   m_Layer: 0
   m_Name: Player Manager
   m_TagString: Untagged
@@ -87,4 +88,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0271772e5536ea4da50824c9ba7a68a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singleton: {fileID: 0}
+  data: {fileID: 0}
+  state: 
+  UID: 0
+  Independent: 0
+  originMethod: Unknown
+  originLine: 0
+  levelObj: {fileID: 0}
+  level: {fileID: 0}
+  replicate: 0
+  net: {fileID: 0}
+  netTransform: {fileID: 0}
+  ready: 0
+  readyOnStart: 1
+  visible: 1
+  players: []
+  pool:
+    playerIDs: 
+    players: []
+  controllerPossessions:
+    dictionary: []
+    length: 0
+    lockKey: 0
+--- !u!114 &-7594160119181550990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5734174383894798934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 0
