@@ -1,4 +1,4 @@
-# CCDK4UNITY ~ The Game Engine Lovechild (Toolkit) for Unity
+# CCDK4UNITY
 
 **To use the Toolkit, download the Latest Release and drag'n'drop the UnityPackage into your project.**
 
