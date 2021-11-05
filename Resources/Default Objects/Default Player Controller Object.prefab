@@ -62,7 +62,7 @@ MonoBehaviour:
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
-  m_SplitScreenIndex: 0
+  m_SplitScreenIndex: 1
   m_Camera: {fileID: 0}
 --- !u!114 &6783048698323149386
 MonoBehaviour:
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4534617705046139415}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45937a9aed7ce794b8d41970acf647c7, type: 3}
   m_Name: 
@@ -80,6 +80,9 @@ MonoBehaviour:
   state: 
   UID: 0
   Independent: 0
+  engineObject: 0
+  clientID: 0
+  spawnAsClientObject: 0
   originMethod: Unknown
   originLine: 0
   levelObj: {fileID: 0}
@@ -87,6 +90,7 @@ MonoBehaviour:
   replicate: 0
   net: {fileID: 1114986540206486561}
   netTransform: {fileID: 0}
+  netInitialized: 0
   ready: 0
   readyOnStart: 1
   visible: 1
@@ -98,11 +102,12 @@ MonoBehaviour:
   navMeshAgentDestionationTransform: {fileID: 0}
   player:
     assignedController: {fileID: 0}
-    playerID:
-      ID: 0
-      clientID: 0
   clickPosition: {x: 0, y: 0, z: 0}
   clickedTransform: {fileID: 0}
+  networkClickPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkClickTransformPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
   lastMouseButton: 0
 --- !u!114 &1114986540206486561
 MonoBehaviour:

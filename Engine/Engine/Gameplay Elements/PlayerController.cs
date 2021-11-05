@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CCDKEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 namespace CCDKGame
 {
@@ -16,15 +17,26 @@ namespace CCDKGame
         [Header(" - Player Input - ")]
         public Vector3 clickPosition = default;
         public Transform clickedTransform = default;
+#if USING_NETCODE
+        public NetworkVariable<Vector3> networkClickPosition = default;
+        public NetworkVariable<Vector3> networkClickTransformPosition = default;
+#endif
         public int lastMouseButton = 0;
 
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
             PlayerManager.RemovePC(this);
         }
 
-        public virtual void Update()
+        public override void Update()
+        {
+            base.Update();
+
+            clickPosition = networkClickPosition.Value;
+        }
+
+        public override void NetworkUpdate()
         {
             if (Mouse.current.leftButton.IsPressed())
             {
@@ -32,12 +44,17 @@ namespace CCDKGame
 
                 if (possessedCamera != null)
                 {
+                    possessedCamera.gameObject.SetActive(true);
+
                     Ray ray = possessedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
                         clickPosition = hit.point;
                         clickedTransform = hit.transform;
+#if USING_NETCODE
+                        networkClickPosition.Value = hit.point;
+#endif
                     }
                 }
             }
@@ -54,6 +71,9 @@ namespace CCDKGame
                     {
                         clickPosition = hit.point;
                         clickedTransform = hit.transform;
+#if USING_NETCODE
+                        networkClickPosition.Value = hit.point;
+#endif
                     }
                 }
             }
@@ -64,6 +84,11 @@ namespace CCDKGame
                     navMeshAgentDestination = clickPosition;
                     navMeshAgentDestionationTransform = clickedTransform;
                 }
+
+#if USING_NETCODE
+            if (clickedTransform != null)
+                networkClickTransformPosition.Value = clickedTransform.position;
+#endif
         }
 
 

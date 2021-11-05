@@ -72,9 +72,9 @@ namespace CCDKEngine
         public delegate void NetworkDisconnectAction();
         public static event NetworkDisconnectAction NetworkDisconnect;
         public delegate void PlayerJoinedAction(ulong client);
-        public static event PlayerJoinedAction PlayerJoined;
+        public static event PlayerJoinedAction NetworkClientJoined;
         public delegate void PlayerLeftAction(ulong client);
-        public static event PlayerLeftAction PlayerLeft;
+        public static event PlayerLeftAction NetworkClientLeft;
         public List<ulong> registeredClients = new List<ulong>();
 
 #if USING_NETCODE
@@ -162,6 +162,7 @@ namespace CCDKEngine
                         foreach (ulong item in NetworkManager.Singleton.ConnectedClientsIds)
                         {
                             bool found = true;
+                            client = item;
                             foreach (ulong nextItem in registeredClients)
                             {
                                 if (nextItem == item)
@@ -172,7 +173,7 @@ namespace CCDKEngine
                             if (found)
                             {
                                 registeredClients.Add(client);
-                                PlayerJoined.Invoke(client);
+                                NetworkClientJoined.Invoke(client);
                                 break;
                             }
                         }
@@ -195,7 +196,7 @@ namespace CCDKEngine
                             if (found)
                             {
                                 registeredClients.Remove(client);
-                                PlayerLeft.Invoke(client);
+                                NetworkClientLeft.Invoke(client);
                                 break;
                             }
                         }
@@ -203,26 +204,24 @@ namespace CCDKEngine
                     }
                 }
 
-                if (NetworkManager.Singleton != null)
-                {
-                    /**The Network Manager connected to a Game.**/
-                    if (!NetworkManager.Singleton.IsClient && singleton.localNetState != 0)
-                    {
-                        singleton.localNetState = 0;
-                        NetworkDisconnect();
-                        /**Once disconnected from the Network, create a new Player Manager**/
-                        GameObject Manager = Resources.Load<GameObject>("CCDK/Managers/PlayerManager");
-                        GameObject managerInstance = GameObject.Instantiate(Manager);
-                        managerInstance.name = Manager.name;
-                        SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
-                    }
 
-                    /**The Network Manager has Disconnected from a Game.**/
-                    if (NetworkManager.Singleton.IsClient && singleton.localNetState != 1)
-                    {
-                        singleton.localNetState = 1;
-                        NetworkConnect();
-                    }
+                /**The Network Manager connected to a Game.**/
+                if (!NetworkManager.Singleton.IsClient && singleton.localNetState != 0)
+                {
+                    singleton.localNetState = 0;
+                    NetworkDisconnect();
+                    /**Once disconnected from the Network, create a new Player Manager**/
+                    GameObject Manager = Resources.Load<GameObject>("CCDK/Managers/PlayerManager");
+                    GameObject managerInstance = GameObject.Instantiate(Manager);
+                    managerInstance.name = Manager.name;
+                    SceneManager.MoveGameObjectToScene(managerInstance, LevelManager.engineScene);
+                }
+
+                /**The Network Manager has Disconnected from a Game.**/
+                if (NetworkManager.Singleton.IsClient && singleton.localNetState != 1)
+                {
+                    singleton.localNetState = 1;
+                    NetworkConnect();
                 }
             }
 #endif

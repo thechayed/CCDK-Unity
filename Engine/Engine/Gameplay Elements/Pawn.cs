@@ -31,15 +31,23 @@ namespace CCDKGame
         public CharacterController characterController;
         Vector3 speed;
 
+        [Header(" - Built Components - ")]
+        public Transform baseTransform = null;
         [Header(" - Navmesh Agent - ")]
         public NavMeshAgent agent;
         public Vector3 agentDestination;
         public Transform agentFollowTransform;
         public bool agentFollow = false;
+        
 
         public override void Start()
         {
             base.Start();
+
+            baseTransform = transform.Find(pawnData.linkedChild);
+
+            if (baseTransform == null)
+                baseTransform = transform;
 
             agentDestination = transform.position;
             pawnData = (CCDKObjects.Pawn)data;
@@ -50,20 +58,17 @@ namespace CCDKGame
 
             if (pawnData.NavMeshAgent)
             {
-                agent = gameObject.GetComponent<NavMeshAgent>();
-                if (agent == null)
-                {
-                    agent = gameObject.AddComponent<NavMeshAgent>();
-                }
+                SetUpNavAgent();
             }
-
+            
             characterController = gameObject.GetComponent<CharacterController>();
 
 
         }
 
-        public virtual void Update()
+        public override void Update()
         {
+            base.Update();
             //Loop through the inventory to fill any empty weapon slots
             foreach (CCDKObjects.InventoryItem item in inventory)
             {
@@ -81,13 +86,17 @@ namespace CCDKGame
                 }
             }
 
-            foreach(Weapon weapon in activeWeapons)
-            {
-                if(weapon.transform.parent != transform)
-                {
-                    weapon.transform.SetParent(transform);
-                }
-            }
+            //foreach(Weapon weapon in activeWeapons)
+            //{
+            //    if(weapon.transform.parent != transform)
+            //    {
+            //        weapon.transform.SetParent(transform);
+            //    }
+            //}
+
+            if (agent == null)
+                if (pawnData.NavMeshAgent)
+                    SetUpNavAgent();
 
             if (agentFollow)
             {
@@ -138,7 +147,7 @@ namespace CCDKGame
             DestroyImmediate(this,true);
         }
 
-        private void OnDestroy()
+        private new void OnDestroy()
         {
             Engine.RemovePawn(gameObject);
             PawnManager.RemovePawn(this);
@@ -189,6 +198,15 @@ namespace CCDKGame
         public void SetCamera(Camera camera)
         {
             pawnCamera = camera;
+        }
+
+        public void SetUpNavAgent()
+        {
+                agent = baseTransform.gameObject.GetComponent<NavMeshAgent>();
+                if (agent == null)
+                {
+                    agent = baseTransform.gameObject.AddComponent<NavMeshAgent>();
+                }
         }
     }
 }

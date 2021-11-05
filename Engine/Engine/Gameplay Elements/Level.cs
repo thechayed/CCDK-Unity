@@ -43,7 +43,7 @@ namespace CCDKGame
             LevelManager.AddLevel(gameObject);
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
             LevelManager.RemoveLevel(gameObject);
         }

@@ -17,7 +17,7 @@ namespace CCDKGame
             weaponData = (CCDKObjects.Weapon)data;
         }
 
-        public void Update()
+        public override void Update()
         {
             //if(weaponData.autoAttach)
             //{

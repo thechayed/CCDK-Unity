@@ -37,6 +37,7 @@ namespace CCDKEngine
             base.Start();
             controllerData = (CCDKObjects.Controller)data;
             replicate = true;
+            engineObject = true;
         }
 
         public override void FixedUpdate()

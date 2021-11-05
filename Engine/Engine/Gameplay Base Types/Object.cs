@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using CCDKGame;
 using System.Runtime.CompilerServices;
+using UnityEngine.SceneManagement;
 
 #if USING_NETCODE
 using Unity.Netcode;
@@ -24,6 +25,12 @@ namespace CCDKEngine
         [ReadOnly] public int UID;
         [Tooltip("The Object does not belong to a Level.")]
         [ReadOnly] public bool Independent = false;
+        [Tooltip("Whether this Object should automatically move to the Engine scene if it isn't currently there.")]
+        [ReadOnly] public bool engineObject = false;
+
+        /**<summary>The ID of the client this Player Manager belongs to.</summary>**/
+        public ulong clientID = 0;
+        public bool spawnAsClientObject = false;
 
         /**<summary>An option value to pass to an Object to keep track of where it was created from in script.</summary>**/
         public string originMethod = "Unknown";
@@ -39,9 +46,10 @@ namespace CCDKEngine
         public bool replicate;
 
 #if USING_NETCODE
-        /**<summary>The Networked Object Behavior added to this object to interface with MLAPI.</summary>**/
+        /**<summary>The Networked Object Component added to this object to interface with MLAPI.</summary>**/
         public NetworkObject net;
         public NetworkTransform netTransform;
+        public bool netInitialized = false;
 #endif
 
         //Gameplay Values
@@ -56,6 +64,7 @@ namespace CCDKEngine
         public bool visible = true;
 
 
+
         public virtual void Awake()
         {
 
@@ -68,12 +77,33 @@ namespace CCDKEngine
                 }
             }
 
-            Engine.NetworkConnect += NetworkStart;
             Engine.NetworkDisconnect += NetworkEnd;
+            Engine.NetworkClientJoined += NetworkClientJoined;
+            Engine.NetworkClientLeft += NetworkClientLeft;
+
+
+        }
+
+        /**<summary>Try not to use the built in Update method for most things.</summary>**/
+        public virtual void Update()
+        {
+#if USING_NETCODE
+            if(net!=null&& NetworkManager!=null)
+                if (net.IsOwner|!NetworkManager.IsClient)
+                {
+                    NetworkUpdate();
+                }
+#else
+            NetworkUpdate();
+#endif
         }
 
         public override void FixedUpdate()
         {
+            if (engineObject)
+                if (gameObject.scene != LevelManager.engineScene)
+                    SceneManager.MoveGameObjectToScene(gameObject,LevelManager.engineScene);
+
             if (Engine.singleton.initialized&&Engine.singleton.data.startingLevelLoaded)
             {
                 /** If an Object has been Created outside of the Engine, references won't be automatically created between it and the Level, fix this now. **/
@@ -90,32 +120,44 @@ namespace CCDKEngine
 
 #if USING_NETCODE
 
+
             if (replicate)
             {
 
-                if(net == null)
+                if (net == null)
                 {
                     AddNetworkComponents();
                 }
                 else
                 {
                     net.AutoObjectParentSync = false;
-                    if(NetworkManager.Singleton!=null)
-                        if(NetworkManager.Singleton.IsHost)
+
+                    if (NetworkManager.Singleton != null)
+                        if (NetworkManager.Singleton.IsHost && NetworkManager.GetNetworkPrefabOverride(gameObject) != gameObject)
                             NetworkManager.Singleton.PrefabHandler.RegisterHostGlobalObjectIdHashValues(gameObject, new List<GameObject>() { gameObject });
+
                 }
 
-                
-                if(net.IsLocalPlayer)
+                if (NetworkManager.Singleton)
                 {
-                    NetworkUpdate(); 
+
+                    if (NetworkManager.Singleton.IsClient)
+                    {
+                        if (!netInitialized)
+                            NetworkStart();
+
+                        if(NetworkManager.Singleton.IsHost)
+                            if (!net.IsSpawned)
+                            {
+                                if(!spawnAsClientObject)
+                                    net.Spawn();
+                                else
+                                    GetComponent<NetworkObject>().SpawnAsPlayerObject(clientID);
+                            }
+                                
+                    }
                 }
             }
-
-
-
-#else
-            NetworkUpdate();
 #endif
         }
 
@@ -125,7 +167,7 @@ namespace CCDKEngine
             level = levelObj.GetComponent<Level>();
         }
 
-        /**The Update is only called on "Local" Objects.**/
+        /**<summary>The Update is only called on "Owned" Objects. This includes all Objects in Singleplayer and Server Set Owned objects in Netcode.</summary>**/
         public virtual void NetworkUpdate()
         {
 
@@ -133,7 +175,7 @@ namespace CCDKEngine
 
         public virtual void NetworkStart()
         {
-            
+            netInitialized = true;
         }
 
         public virtual void NetworkEnd()
@@ -151,6 +193,18 @@ namespace CCDKEngine
 
             net.enabled = false;
             netTransform.enabled = false;
+        }
+
+        public virtual void NetworkClientJoined(ulong clientID)
+        {
+
+        }
+
+        public virtual void NetworkClientLeft(ulong clientID)
+        {
+            if (spawnAsClientObject)
+                if (this.clientID == clientID)
+                    Destroy(gameObject);
         }
 
         public void AddNetworkComponents()

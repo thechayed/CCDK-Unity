@@ -27,6 +27,7 @@ namespace CCDKGame
             if (Engine.singleton.initialized&&!init)
             {
                 this.Invoke("LocalInitialization", 0f);
+                init = true;
             }
 
         }
@@ -49,9 +50,11 @@ namespace CCDKGame
         }
 
         /**<summary>A Callback for when a Player Joins the game.</summary>**/
-        public virtual void PlayerJoined(ulong clientId)
+        public virtual void NetworkClientJoined(ulong clientId)
         {
             Debug.Log(clientId+" joined");
+
+
             //PlayerController newController = PlayerManager.CreatePC(gameTypeData.defaultPlayerController);
             //newController.SetOrigin();
             //SetControllerID(newController, clientId);
@@ -59,11 +62,10 @@ namespace CCDKGame
 
 
         /**<summary>A Callback for when a Player Leaves the game.</summary>**/
-        public virtual void PlayerLeft(ulong clientId)
+        public virtual void NetworkClientLeft(ulong clientId)
         {
             Debug.Log(clientId + " left.");
         }
-
 
         /**<summary>Controls what happens to a Player when they join the Game.</summary>**/
         public virtual void SetUpPlayer(PlayerController controller)
@@ -116,8 +118,8 @@ namespace CCDKGame
             Engine.currentGameType = this;
 
 #if USING_NETCODE
-            Engine.PlayerJoined += PlayerJoined;
-            Engine.PlayerLeft += PlayerLeft;
+            Engine.NetworkClientJoined += NetworkClientJoined;
+            Engine.NetworkClientLeft += NetworkClientLeft;
             Engine.NetworkConnect += NetworkStart;
             Engine.NetworkDisconnect += NetworkEnd;
 
@@ -138,8 +140,7 @@ namespace CCDKGame
                 foreach (Player player in PlayerManager.managers[0].pool.players.ToArray())
                 {
                     PlayerController playerController = PlayerManager.managers[0].SetPlayerController(0, gameTypeData.defaultPlayerController);
-                    Debug.Log("bar");
-                    SetUpPlayer((PlayerController)GetControllerWithoutPawn());
+                    SetUpPlayer(player.assignedController);
                     Debug.Log("New Player Controller for Host, and spawned a pawn for it.");
                 }
             }
@@ -189,6 +190,9 @@ namespace CCDKGame
 
         public void SpawnForController(Controller controller, Pawn pawn = null, Transform spawnTransform = null)
         {
+            
+
+
             if (!isHost)
                 return;
 
@@ -197,7 +201,10 @@ namespace CCDKGame
 
             if (pawn == null)
             {
-                controller.Possess(Spawn(spawnTransform));
+                Pawn newPawn = Spawn(spawnTransform);
+                newPawn.spawnAsClientObject = true;
+                newPawn.clientID = controller.clientID;
+                controller.Possess(newPawn);
             }
         }
 

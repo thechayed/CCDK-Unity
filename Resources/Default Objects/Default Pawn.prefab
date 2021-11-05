@@ -40,7 +40,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4547363188784735442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1c530328329f5244b266e1f7a070a4e, type: 3}
   m_Name: 
@@ -49,6 +49,9 @@ MonoBehaviour:
   state: 
   UID: 0
   Independent: 0
+  engineObject: 0
+  clientID: 0
+  spawnAsClientObject: 0
   originMethod: Unknown
   originLine: 0
   levelObj: {fileID: 0}
@@ -56,6 +59,7 @@ MonoBehaviour:
   replicate: 0
   net: {fileID: 4547363188784735441}
   netTransform: {fileID: 6905796583623801190}
+  netInitialized: 0
   ready: 0
   readyOnStart: 1
   visible: 1
@@ -69,6 +73,7 @@ MonoBehaviour:
   automateWeaponSlot: 1
   activeWeapons: []
   characterController: {fileID: 0}
+  baseTransform: {fileID: 0}
   agent: {fileID: 0}
   agentDestination: {x: 0, y: 0, z: 0}
   agentFollowTransform: {fileID: 0}

@@ -26,6 +26,10 @@ namespace CCDKObjects
 
         public bool possessable = true;
 
+        [Header(" - Build Components - ")]
+        [Tooltip("Setting this will tell the Pawn to pick a child (With this NAme) to add Components to, instead of the Prefab root.")]
+        public string linkedChild = "";
+
         public bool NavMeshAgent = true;
         public bool NavMeshAgentMove = false;
 
