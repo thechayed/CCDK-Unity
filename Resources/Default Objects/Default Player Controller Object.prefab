@@ -82,6 +82,8 @@ MonoBehaviour:
   Independent: 0
   engineObject: 0
   clientID: 0
+  MID:
+    m_InternalValue: 0
   spawnAsClientObject: 0
   originMethod: Unknown
   originLine: 0
@@ -91,6 +93,9 @@ MonoBehaviour:
   net: {fileID: 1114986540206486561}
   netTransform: {fileID: 0}
   netInitialized: 0
+  netEnabled: 0
+  spawned:
+    m_InternalValue: 0
   ready: 0
   readyOnStart: 1
   visible: 1

@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System;
 using CCDKGame;
 using UnityEngine.SceneManagement;
+#if USING_NETCODE
+using Unity.Netcode;
+#endif
 
 namespace CCDKEngine
 {
@@ -57,6 +60,13 @@ namespace CCDKEngine
                 /** If the Pawn can set this Controller as it's Controller, update this Controller's Pawn value **/
                 if (pawn.SetController(this))
                 {
+#if USING_NETCODE
+                    /**If net is enabled**/
+                    if (Engine.enableNetworking)
+                        if (NetworkManager.Singleton.IsHost)
+                            PossessClientRPC(pawn.GetComponent<NetworkObject>().NetworkObjectId);
+#endif
+
                     possessedPawn = pawn;
                     possessedCamera = pawn.pawnCamera;
                 }
@@ -65,6 +75,14 @@ namespace CCDKEngine
 
             SceneManager.MoveGameObjectToScene(gameObject, LevelManager.engineScene);
             return false;
+        }
+
+        [ClientRpc]
+        /**<summary>Possess the Pawn on the client side by it's Network Object ID.</summary>**/
+        public void PossessClientRPC(ulong pawnNetworkObjectID)
+        {
+            possessedPawn = NetworkManager.SpawnManager.SpawnedObjects[pawnNetworkObjectID].GetComponent<Pawn>();
+            possessedCamera = NetworkManager.SpawnManager.SpawnedObjects[pawnNetworkObjectID].GetComponent<Pawn>().pawnCamera;
         }
 
         /**<summary>Send Commands to the possessed Pawn.</summary>**/

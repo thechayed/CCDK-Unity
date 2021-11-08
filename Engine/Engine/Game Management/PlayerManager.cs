@@ -22,7 +22,6 @@ namespace CCDKEngine
         public static List<PlayerManager> managers = new List<PlayerManager>();
         public List<PlayerManager> localmanagersref;
 
-
         /**<summary>Pool of all the Players in the game and their information.</summary>**/
         public PlayerPool pool = new PlayerPool();
 
@@ -33,7 +32,6 @@ namespace CCDKEngine
 
         /**The count of Player Controllers in the game**/
         public static int PCCount;
-
 
         public override void Awake()
         {
@@ -225,7 +223,7 @@ namespace CCDKEngine
                 PlayerController newController = manager.SetPlayerController(0, Engine.currentGameType.gameTypeData.defaultPlayerController);
                 newController.SetOrigin();
                 newController.GetComponent<NetworkObject>().SpawnAsPlayerObject(NetworkManager.Singleton.LocalClientId);
-                Engine.currentGameType.SetUpPlayer(newController);
+                Engine.currentGameType.PrepController(newController);
             }
         }
 

@@ -28,9 +28,13 @@ namespace CCDKEngine
         [Tooltip("Whether this Object should automatically move to the Engine scene if it isn't currently there.")]
         [ReadOnly] public bool engineObject = false;
 
+#if USING_NETCODE
         /**<summary>The ID of the client this Player Manager belongs to.</summary>**/
         public ulong clientID = 0;
+        /**<summary>The Multiplayer ID of this object.</summary>**/
+        public NetworkVariable<int> MID = default;
         public bool spawnAsClientObject = false;
+#endif
 
         /**<summary>An option value to pass to an Object to keep track of where it was created from in script.</summary>**/
         public string originMethod = "Unknown";
@@ -50,6 +54,9 @@ namespace CCDKEngine
         public NetworkObject net;
         public NetworkTransform netTransform;
         public bool netInitialized = false;
+        public bool netEnabled = false;
+        /**Whether this Object has spawned yet.**/
+        public NetworkVariable<bool> spawned = default;
 #endif
 
         //Gameplay Values
@@ -217,7 +224,7 @@ namespace CCDKEngine
             net = gameObject.AddComponent<NetworkObject>();
             net.AutoObjectParentSync = false;
             netTransform = gameObject.AddComponent<NetworkTransform>();
-
+            netEnabled = true;
 #endif
         }
 

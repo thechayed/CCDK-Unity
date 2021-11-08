@@ -35,7 +35,8 @@ namespace CCDKObjects
         [Header(" - Common Properties - ")]
         public Dictionary<int> Stats =  new Dictionary<int>(){dictionary = new List<DictionaryItem<int>>()
         {
-            new DictionaryItem<int>("MaxPlayers", 16),
+            new DictionaryItem<int>("TeamSize", 4),
+            new DictionaryItem<int>("MaxPlayers", 8),
             new DictionaryItem<int>("MaxPlayersAllowed", 16),
             new DictionaryItem<int>("GoalScore", 25),
             new DictionaryItem<int>("TimeLimit", 30)

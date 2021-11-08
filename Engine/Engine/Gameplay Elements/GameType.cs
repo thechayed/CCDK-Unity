@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using CCDKEngine;
 using System;
+using System.Collections.Generic;
 #if USING_NETCODE
 using Unity.Netcode;
 #endif
@@ -21,6 +22,17 @@ namespace CCDKGame
         public bool gameplayStarted;
         public CCDKObjects.GameTypeInfo gameTypeData;
 
+        public Queue<Controller> controllerInitQueue = new Queue<Controller>();
+        public Queue<Controller> controllerPossessionQueue = new Queue<Controller>();
+        public Queue<Pawn> pawnInitQueue = new Queue<Pawn>();
+        public Queue<Pawn> pawnFreeQueue = new Queue<Pawn>();
+
+        /**The amount of Teams in the game.**/
+        public int teamCount;
+        /**The size of an individual team.**/
+        public int maxTeamSize = 1;
+
+
         /**<summary>When the Game Type is starting, initialize it.</summary>**/
         private void Update()
         {
@@ -30,10 +42,42 @@ namespace CCDKGame
                 init = true;
             }
 
+            /**If using Netcode, and it's enabled, wait until Pawns and Controllers are Spawned before using them.**/
+#if USING_NETCODE
+            if (Engine.enableNetworking)
+            {
+                if (controllerInitQueue.Count > 0)
+                    /**Once the Player Controller is ready, call the SetUpPlayer method for extending a Player's Start functionality**/
+                    if (controllerInitQueue.Peek().GetComponent<NetworkObject>().IsSpawned)
+                        SetUpPlayer(controllerInitQueue.Dequeue());
+
+
+                if (pawnInitQueue.Count > 0)
+                    /**Once the Pawn is ready, pass it to the Free Queue to be possessed later.**/
+                    if (pawnInitQueue.Peek().GetComponent<NetworkObject>().IsSpawned)
+                        pawnFreeQueue.Enqueue(pawnInitQueue.Dequeue());
+            }
+            else
+            {
+                if (controllerInitQueue.Count > 0)
+                    SetUpPlayer(controllerInitQueue.Dequeue());
+                if(pawnInitQueue.Count>0)
+                    pawnFreeQueue.Enqueue(pawnInitQueue.Dequeue());
+            }
+#else
+                if (controllerInitQueue.Count > 0)
+                    SetUpPlayer(controllerInitQueue.Dequeue());
+                if(pawnInitQueue.Count>0)
+                    pawnFreeQueue.Enqueue(pawnInitQueue.Dequeue());
+#endif
+
+            /**If there is a Controller wait for a Pawn to Possess and there is a Pawn Free to Possess.**/
+            if (controllerPossessionQueue.Count > 0 && pawnFreeQueue.Count > 0)
+                controllerPossessionQueue.Dequeue().Possess(pawnFreeQueue.Dequeue());
         }
 
 
-        #region Game Type Overrides
+#region Game Type Overrides
         /**<summary>Override to add extra Initialization functionality.</summary>**/
         public virtual void Init()
         {
@@ -67,10 +111,23 @@ namespace CCDKGame
             Debug.Log(clientId + " left.");
         }
 
+        public void PrepController(Controller controller)
+        {
+            controllerInitQueue.Enqueue(controller);
+        }
+
         /**<summary>Controls what happens to a Player when they join the Game.</summary>**/
-        public virtual void SetUpPlayer(PlayerController controller)
+        public virtual void SetUpPlayer(Controller controller)
         {
 
+        }
+
+        /**<summary>Enqueue Controller for Posession and Spawn a Pawn to be Possessed. 
+         * The Controller will automatically possess the Pawn once both their Network Objects are Spawned.</summary>**/
+        public void QueueControllerAndSpawn(Controller controller)
+        {
+            controllerPossessionQueue.Enqueue(controller);
+            Spawn();
         }
 
         /**<summary>Undo any SetUp modifications when the Player leaves the game.</summary>**/
@@ -108,9 +165,9 @@ namespace CCDKGame
         {
             return true;
         }
-        #endregion
+#endregion
 
-        #region Absolute Methods
+#region Absolute Methods
 
         /**Initialization called in this script only.**/
         private void LocalInitialization()
@@ -165,7 +222,7 @@ namespace CCDKGame
             }
             return null;
         }
-        #endregion
+#endregion
 
         /**<summary>Spawns the default pawn into the game and returns it's Game Object</summary>**/
         //Add For Multiplayer: GameObject.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
@@ -180,19 +237,19 @@ namespace CCDKGame
                 if(spawnerTransform == null)
                 {
                     Debug.LogError("No spawn point or Spawn Position was given in GameType.Spawn(), please make a Spawn Point!");
-                    return PawnManager.CreatePawn(gameTypeData.defaultPawn, default);
+                    pawnInitQueue.Enqueue(PawnManager.CreatePawn(gameTypeData.defaultPawn, default));
+                    return pawnInitQueue.Peek();
                 }
 
-                return PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnerTransform);
+                pawnInitQueue.Enqueue(PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnerTransform));
+                return pawnInitQueue.Peek();
             }
-            return PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnTransform);
+            pawnInitQueue.Enqueue(PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnTransform));
+            return pawnInitQueue.Peek();
         }
 
         public void SpawnForController(Controller controller, Pawn pawn = null, Transform spawnTransform = null)
         {
-            
-
-
             if (!isHost)
                 return;
 
@@ -204,6 +261,7 @@ namespace CCDKGame
                 Pawn newPawn = Spawn(spawnTransform);
                 newPawn.spawnAsClientObject = true;
                 newPawn.clientID = controller.clientID;
+
                 controller.Possess(newPawn);
             }
         }

@@ -65,7 +65,7 @@ namespace CCDKEngine
         private static int ticksToWaitForData = 5;
         private static int ticks = 0;
 
-        public bool enableNetworking = false;
+        public static bool enableNetworking = false;
 
         public delegate void NetworkConnectAction();
         public static event NetworkConnectAction NetworkConnect;
@@ -152,7 +152,8 @@ namespace CCDKEngine
 #if USING_NETCODE
             if(NetworkManager.Singleton!=null)
             {
-
+                if(NetworkManager.Singleton.IsClient)
+                    enableNetworking = true;
                 if (NetworkManager.Singleton.IsHost)
                 {
                     /**If their are less registered Clients than exist in the game, add those that aren't registered**/

@@ -18,6 +18,7 @@ namespace CCDKGame
         public Vector3 clickPosition = default;
         public Transform clickedTransform = default;
 #if USING_NETCODE
+        
         public NetworkVariable<Vector3> networkClickPosition = default;
         public NetworkVariable<Vector3> networkClickTransformPosition = default;
 #endif
@@ -33,7 +34,8 @@ namespace CCDKGame
         {
             base.Update();
 
-            clickPosition = networkClickPosition.Value;
+            if (Engine.enableNetworking)
+                clickPosition = networkClickPosition.Value;
         }
 
         public override void NetworkUpdate()
@@ -53,7 +55,11 @@ namespace CCDKGame
                         clickPosition = hit.point;
                         clickedTransform = hit.transform;
 #if USING_NETCODE
-                        networkClickPosition.Value = hit.point;
+                        if (NetworkManager.IsHost)
+                            networkClickPosition.Value = hit.point;
+                        else
+                            SetClickPositionServerRpc(clickPosition);
+
 #endif
                     }
                 }
@@ -72,7 +78,10 @@ namespace CCDKGame
                         clickPosition = hit.point;
                         clickedTransform = hit.transform;
 #if USING_NETCODE
-                        networkClickPosition.Value = hit.point;
+                        if(NetworkManager.IsHost)
+                            networkClickPosition.Value = hit.point;
+                        else
+                            SetClickPositionServerRpc(clickPosition);
 #endif
                     }
                 }
@@ -86,11 +95,19 @@ namespace CCDKGame
                 }
 
 #if USING_NETCODE
-            if (clickedTransform != null)
+            if (clickedTransform != null && NetworkManager.Singleton.IsHost)
                 networkClickTransformPosition.Value = clickedTransform.position;
 #endif
         }
 
+
+#if USING_NETCODE
+        [ServerRpc]
+        public void SetClickPositionServerRpc(Vector3 clickPosition)
+        {
+            this.networkClickPosition.Value = clickPosition;
+        }
+#endif
 
     }
 

@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using CCDKEngine;
 using UnityEngine.AI;
+using Unity.Netcode;
 
 namespace CCDKGame
 {
@@ -38,19 +39,18 @@ namespace CCDKGame
         public Vector3 agentDestination;
         public Transform agentFollowTransform;
         public bool agentFollow = false;
-        
 
         public override void Start()
         {
             base.Start();
 
+            agentDestination = transform.position;
+            pawnData = (CCDKObjects.Pawn)data;
+
             baseTransform = transform.Find(pawnData.linkedChild);
 
             if (baseTransform == null)
                 baseTransform = transform;
-
-            agentDestination = transform.position;
-            pawnData = (CCDKObjects.Pawn)data;
 
             Engine.AddPawn(gameObject);
 
@@ -94,6 +94,9 @@ namespace CCDKGame
             //    }
             //}
 
+            if(pawnData == null)
+                pawnData = (CCDKObjects.Pawn)data;
+
             if (agent == null)
                 if (pawnData.NavMeshAgent)
                     SetUpNavAgent();
@@ -136,11 +139,14 @@ namespace CCDKGame
                 {
                     this.controller = controller;
 
+                    //base.SetControllerClientRPC(controller.GetComponent<NetworkObject>().NetworkObjectId);
+
                     return true;
                 }
             }
             return false;
         }
+
 
         public void DestroySelf()
         {

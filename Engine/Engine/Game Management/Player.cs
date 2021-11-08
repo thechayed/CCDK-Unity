@@ -11,6 +11,9 @@ namespace CCDKEngine
     {
         public PlayerController assignedController;
 
+        /**<summary>The team the player is on.</summary>**/
+        public Team team;
+
         public Player(PlayerController assignedController = null)
         {
             this.assignedController = assignedController;

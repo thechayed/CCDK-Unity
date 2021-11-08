@@ -51,6 +51,8 @@ MonoBehaviour:
   Independent: 0
   engineObject: 0
   clientID: 0
+  MID:
+    m_InternalValue: 0
   spawnAsClientObject: 0
   originMethod: Unknown
   originLine: 0
@@ -60,11 +62,18 @@ MonoBehaviour:
   net: {fileID: 4547363188784735441}
   netTransform: {fileID: 6905796583623801190}
   netInitialized: 0
+  netEnabled: 0
+  spawned:
+    m_InternalValue: 0
   ready: 0
   readyOnStart: 1
   visible: 1
   controller: {fileID: 0}
   isControlled: 0
+  possessed:
+    m_InternalValue: 0
+  controllerID:
+    m_InternalValue: 0
   pawnData: {fileID: 0}
   pawnCamera: {fileID: 0}
   inventory: []
