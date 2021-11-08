@@ -131,21 +131,21 @@ namespace CCDKGame
         //    componentConstructor.RemovePreviousClasses();
         //}
 
-        public override bool SetController(Controller controller)
-        {
-            if (pawnData.possessable)
-            {
-                if(this.controller == null)
-                {
-                    this.controller = controller;
+        //public override bool SetController(Controller controller)
+        //{
+        //    if (pawnData.possessable)
+        //    {
+        //        if(this.controller == null)
+        //        {
+        //            this.controller = controller;
 
-                    //base.SetControllerClientRPC(controller.GetComponent<NetworkObject>().NetworkObjectId);
+        //            base.SetControllerClientRPC(controller.GetComponent<NetworkObject>().NetworkObjectId);
 
-                    return true;
-                }
-            }
-            return false;
-        }
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
 
         public void DestroySelf()

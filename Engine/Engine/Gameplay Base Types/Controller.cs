@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using CCDKGame;
 using UnityEngine.SceneManagement;
+using ToolBox.Serialization;
 #if USING_NETCODE
 using Unity.Netcode;
 #endif
@@ -86,18 +87,45 @@ namespace CCDKEngine
         }
 
         /**<summary>Send Commands to the possessed Pawn.</summary>**/
-        public void Command(string commandName, object[] parameters = null)
+        public void Command(string commandName, object[] parameters = default)
         {
             if (possessedPawn != null)
                 possessedPawn.BroadcastMessage(commandName, parameters);
+
+#if USING_NETCODE
+            if (Engine.enableNetworking)
+                if(!NetworkManager.IsHost&&net.IsOwner)
+                    SendCommandServerRPC(commandName, DataSerializer.Serialize<object>(parameters));
+#endif
         }
 
         /**<summary>Send Commands to the possessed Pawn.</summary>**/
-        public void Command(string commandName, object parameter = null)
+        public void Command(string commandName, object parameter = default)
         {
             if (possessedPawn != null)
                 possessedPawn.BroadcastMessage(commandName, parameter);
+
+#if USING_NETCODE
+            if (Engine.enableNetworking)
+                if (!NetworkManager.IsHost&&net.IsOwner)
+                    SendCommandServerRPC(commandName, DataSerializer.Serialize<object>(parameter));
+#endif
         }
+
+#if USING_NETCODE
+        [ServerRpc]
+        /**<summary>Sends the command to the Host when the instance is a Network Connected Client.</summary>**/
+        public void SendCommandServerRPC(string commandName, byte[] parameter = default)
+        {
+            var paramData = DataSerializer.Deserialize<object>(parameter);
+            if(paramData==null)
+                paramData = DataSerializer.Deserialize<object[]>(parameter);
+
+            Debug.Log("message: " + commandName + " params: " + paramData);
+
+            Command(commandName, paramData);
+        }
+#endif
 
         public void Destroy()
         {

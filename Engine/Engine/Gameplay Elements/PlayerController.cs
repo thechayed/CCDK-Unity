@@ -34,8 +34,8 @@ namespace CCDKGame
         {
             base.Update();
 
-            if (Engine.enableNetworking)
-                clickPosition = networkClickPosition.Value;
+            //if (Engine.enableNetworking)
+            //    clickPosition = networkClickPosition.Value;
         }
 
         public override void NetworkUpdate()
@@ -55,10 +55,10 @@ namespace CCDKGame
                         clickPosition = hit.point;
                         clickedTransform = hit.transform;
 #if USING_NETCODE
-                        if (NetworkManager.IsHost)
-                            networkClickPosition.Value = hit.point;
-                        else
-                            SetClickPositionServerRpc(clickPosition);
+                        //if (NetworkManager.IsHost)
+                        //    networkClickPosition.Value = hit.point;
+                        //else
+                        //    SetClickPositionServerRpc(clickPosition);
 
 #endif
                     }
@@ -78,10 +78,10 @@ namespace CCDKGame
                         clickPosition = hit.point;
                         clickedTransform = hit.transform;
 #if USING_NETCODE
-                        if(NetworkManager.IsHost)
-                            networkClickPosition.Value = hit.point;
-                        else
-                            SetClickPositionServerRpc(clickPosition);
+                        //if(NetworkManager.IsHost)
+                        //    networkClickPosition.Value = hit.point;
+                        //else
+                        //    SetClickPositionServerRpc(clickPosition);
 #endif
                     }
                 }

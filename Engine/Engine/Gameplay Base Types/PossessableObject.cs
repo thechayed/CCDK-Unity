@@ -43,6 +43,7 @@ namespace CCDKEngine
                     NetworkObject controllerObject = controller.GetComponent<NetworkObject>();
                     SetControllerClientRPC(controllerObject.NetworkObjectId);
                     net.ChangeOwnership(controllerObject.OwnerClientId);
+                    clientID = controllerObject.OwnerClientId;
                     controllerID.Value = controllerObject.NetworkObjectId;
                     possessed.Value = true;
                 }

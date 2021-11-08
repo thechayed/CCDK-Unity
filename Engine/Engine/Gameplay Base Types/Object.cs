@@ -161,7 +161,10 @@ namespace CCDKEngine
                                 else
                                     GetComponent<NetworkObject>().SpawnAsPlayerObject(clientID);
                             }
-                                
+
+                        if (clientID != net.OwnerClientId&&spawnAsClientObject)
+                            net.ChangeOwnership(clientID);
+
                     }
                 }
             }
