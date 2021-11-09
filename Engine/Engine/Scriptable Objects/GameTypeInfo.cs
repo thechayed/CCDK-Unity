@@ -1,4 +1,4 @@
-﻿using B83.Unity.Attributes;
+using B83.Unity.Attributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,47 +19,22 @@ namespace CCDKObjects
         public HUD defaultHUD;
 
         [Header(" - Gameplay - ")]
-        [Tooltip("Starts Multiplayer at the beginning of the game if true.")]
+        public bool teamGame = true;
+        public bool pausable = false;
+        [Tooltip("The max team size for the game.")]
+        public int teamSize = 4;
+        [Tooltip("How many players are allowed to join the game.")]
+        public int maxPlayers = 8;
+        [Tooltip("When this score is reached by a team, that team wins.")]
+        public int goalScore
+        [Tooltip("Themaximum amount of time a game lasts ")]
+        public int timeLimit = 20;
+        
+        [Header(" - Netcode - ")]
+       [Tooltip("Starts Multiplayer at the beginning of the game if true.")]
         public bool startInMultiplayer = false;
         [Tooltip("The Network Manager to spawn to use Multiplayer.")]
         public GameObject networkManager;
-        [Tooltip("If this is set to false, the user must communicate game state to the Game Type. (in the case of using the Runtime State Graph to handle game state, it is typically best to omit Game Type entirely.)")]
-        public bool useOwnGameState = true;
-        [Tooltip("Should the Game Type handle the existence of Player Controllers?")]
-        public bool managePlayerController = true;
-        [Tooltip("Should Player Input be handled by the Player Manager. Set per Game Type to enable/disable split screens, important for certain kinds of games.")]
-        public bool usePlayerManager = false;
-        [Tooltip("Should the Game Type handle the existence of Pawns?")]
-        public bool managePawn = true;
-
-        [Header(" - Common Properties - ")]
-        public Dictionary<int> Stats =  new Dictionary<int>(){dictionary = new List<DictionaryItem<int>>()
-        {
-            new DictionaryItem<int>("TeamSize", 4),
-            new DictionaryItem<int>("MaxPlayers", 8),
-            new DictionaryItem<int>("MaxPlayersAllowed", 16),
-            new DictionaryItem<int>("GoalScore", 25),
-            new DictionaryItem<int>("TimeLimit", 30)
-        }};
-        public Dictionary<bool> Flags = new Dictionary<bool>(){dictionary = new List<DictionaryItem<bool>>()
-        {
-            new DictionaryItem<bool>("RestartLevel", false),
-            new DictionaryItem<bool>("TeamGame", true)
-        }};
-
-        [Header(" - unused - ")]
-
-        private bool RestartLevel,         // Level should be restarted when player dies
-                 Pauseable,               // Whether the game is pauseable.
-                 TeamGame,            // This is a team game.
-                 GameEnded,               // set when game ends
-                 OverTime,
-                 DelayedStart,
-                 WaitingToStartMatch,
-                 ChangeLevels,
-                 AlreadyChanged,
-                 GameRestarted,
-                 LevelChange;          // level transition in progress
-
+      
     }
 }
