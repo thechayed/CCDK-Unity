@@ -1,4 +1,4 @@
-﻿/* When a Level is set at the current Level, it is given the Game Type component to control
+/* When a Level is set at the current Level, it is given the Game Type component to control
  Game Type information identically to Unreal's Game Info system.*/
 using System.Collections;
 using UnityEngine;
@@ -29,6 +29,8 @@ namespace CCDKGame
 
         /**The amount of Teams in the game.**/
         public int teamCount;
+        public List<Team> teams = new List<team>();
+        
         /**The size of an individual team.**/
         public int maxTeamSize = 1;
 
@@ -41,6 +43,16 @@ namespace CCDKGame
                 this.Invoke("LocalInitialization", 0f);
                 init = true;
             }
+            
+           if(gameTypeData.teamGame)
+              foreach(Team team in teams)
+              {
+                if(team.score >= gameTypeData.goalScore)
+                {
+                  DeclareWin(team);
+                }
+              }
+           
 
             /**If using Netcode, and it's enabled, wait until Pawns and Controllers are Spawned before using them.**/
 #if USING_NETCODE
