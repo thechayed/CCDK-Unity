@@ -26,7 +26,7 @@ namespace CCDKObjects
         [Tooltip("How many players are allowed to join the game.")]
         public int maxPlayers = 8;
         [Tooltip("When this score is reached by a team, that team wins.")]
-        public int goalScore
+        public int goalScore;
         [Tooltip("Themaximum amount of time a game lasts ")]
         public int timeLimit = 20;
         

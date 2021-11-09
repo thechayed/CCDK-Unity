@@ -13,17 +13,16 @@ namespace CCDKGame
     {
         [Header(" - Pawn - ")]
         [ReadOnly] public CCDKObjects.Pawn pawnData;
-        /**The Pawn's Camera**/
         public Camera pawnCamera;
 
-        [Header(" - Iventory - ")]
-        /** A list of all the Items currently in the Pawn's inventory **/
+        [Header(" - Inventory - ")]
+        [Tooltip("A list of all the Items currently in the Pawn's inventory.")]
         public List<CCDKObjects.InventoryItem> inventory;
-
+        [Tooltip("A list of all the Weapons currently in the Pawn's inventory.")]
         public List<CCDKObjects.Weapon> equipedWeapons;
-        /**Active Weapon Slot is useful when needing an index to replace a weapon, for example, replacing the equiped one with one from the world.**/
+        [Tooltip("Active Weapon Slot is useful when needing an index to replace a weapon, for example, replacing the equiped one with one from the world.")]
         public int activeWeaponSlot = 0;
-        /**<summary>Whether the Pawn should use only one Item slot and automatically pick it</summary>**/
+        [Tooltip("Whether the Pawn should use only one Item slot and automatically pick it.")]
         public bool automateWeaponSlot = true;
 
         public List<Weapon> activeWeapons;
@@ -32,8 +31,9 @@ namespace CCDKGame
         public CharacterController characterController;
         Vector3 speed;
 
-        [Header(" - Built Components - ")]
+        [Header(" - Components - ")]
         public Transform baseTransform = null;
+
         [Header(" - Navmesh Agent - ")]
         public NavMeshAgent agent;
         public Vector3 agentDestination;
@@ -63,7 +63,11 @@ namespace CCDKGame
             
             characterController = gameObject.GetComponent<CharacterController>();
 
-
+            /**If the Pawn is State Enabled, Add it to the Game Type's StateObjectPairing.**/
+            if(pawnData.stateEnabled)
+            {
+                stateEnabled = true;
+            }
         }
 
         public override void Update()
@@ -112,6 +116,14 @@ namespace CCDKGame
             {
                 agent.destination = agentDestination;
             }
+
+            /**If no local Players own this pawn, disable it's Audio Listener.**/
+            if (pawnCamera != null)
+                if (net != null)
+                    if (net.IsOwner)
+                        pawnCamera.GetComponent<AudioListener>().enabled = true;
+                    else
+                        pawnCamera.GetComponent<AudioListener>().enabled = false;
         }
 
 
@@ -180,8 +192,24 @@ namespace CCDKGame
             activeWeapons[activeWeapons.Count - 1].transform.SetParent(transform);
         }
 
-        public void Fire(Transform direction = null, int weapon = 0, int fireType = 0)
+        public void FireWeapon(object[] fireInfo)
         {
+            Debug.Log((Transform)fireInfo[0]);
+            Transform direction = (Transform)fireInfo[0];
+            int weapon = (int)fireInfo[1];
+            int fireType = (int)fireInfo[2];
+
+            if (direction == null)
+            {
+                direction = transform;
+            }
+            activeWeapons[weapon].Fire(direction, fireType);
+        }
+
+        public void FireWeapon(Transform direction = null, int weapon = 0, int fireType = 0)
+        {
+            Debug.Log("Firehasbeencalled!");
+
             if(direction == null)
             {
                 direction = transform;
@@ -214,5 +242,6 @@ namespace CCDKGame
                     agent = baseTransform.gameObject.AddComponent<NavMeshAgent>();
                 }
         }
+
     }
 }

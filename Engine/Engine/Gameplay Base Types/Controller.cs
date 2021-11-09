@@ -25,8 +25,10 @@ namespace CCDKEngine
         [Header(" - Possession Properties - ")]
         /** The Pawn that the controller has possessed **/
         public Pawn possessedPawn;
-        /**The Camera that this Player Controller is using*/
+        [Tooltip("The Camera that this Player Controller is using. Unity Cameras are not CCDKEngine Possessable objects, so they must be treated differently.")]
         public Camera possessedCamera;
+        [Tooltip("List of the Possessable Objects the Controller has possessed and can communicate with.")]
+        public List<PossessableObject> possessedObjects = new List<PossessableObject>();
         /** Call this when the Pawn has been possessed **/
         public delegate void OnPossess();
         public OnPossess Possessed;
@@ -35,6 +37,12 @@ namespace CCDKEngine
         /**Tells the Pawn where to go if it is using the Nav Mesh Agent.**/
         public Vector3 navMeshAgentDestination;
         public Transform navMeshAgentDestionationTransform;
+
+        public override void Awake()
+        {
+            base.Awake();
+            controllerData = (CCDKObjects.Controller)data;
+        }
 
         public override void Start()
         {
@@ -48,49 +56,62 @@ namespace CCDKEngine
         {
             base.FixedUpdate();
 
-            if (possessedPawn != null)
-                if (possessedPawn.pawnCamera != null)
-                    possessedCamera = possessedPawn.pawnCamera;
+            foreach(PossessableObject possessableObject in possessedObjects)
+            {
+                Pawn pawn = (Pawn)possessableObject;
+
+                /**Get the Possessed Pawn's Camera.**/
+                if (pawn!=null)
+                    if (pawn.pawnCamera != null && pawn.ccdkEnabled)
+                        possessedCamera = pawn.pawnCamera;
+            }
         }
 
-        public bool Possess(Pawn pawn)
+        public bool Possess(PossessableObject possessableObject, bool calledFromRPC = false)
         {
-
-            if (possessedPawn == null)
-            {
-                /** If the Pawn can set this Controller as it's Controller, update this Controller's Pawn value **/
-                if (pawn.SetController(this))
+            /**If we're forcing one Pawn for the Controller, Remove the previously possessed Pawn.**/
+            if(controllerData.forceOnePawn)
+                foreach(PossessableObject possessable in possessedObjects.ToArray())
                 {
-#if USING_NETCODE
-                    /**If net is enabled**/
-                    if (Engine.enableNetworking)
-                        if (NetworkManager.Singleton.IsHost)
-                            PossessClientRPC(pawn.GetComponent<NetworkObject>().NetworkObjectId);
-#endif
-
-                    possessedPawn = pawn;
-                    possessedCamera = pawn.pawnCamera;
+                    if(possessable.gameTypeState == possessableObject.gameTypeState)
+                    {
+                        possessedObjects.Remove(possessable);
+                    }
                 }
-                return true;
-            }
 
-            SceneManager.MoveGameObjectToScene(gameObject, LevelManager.engineScene);
-            return false;
+
+            /** If the Pawn can set this Controller as it's Controller, update this Controller's Pawn value **/
+            if (possessableObject.SetController(this))
+            {
+#if USING_NETCODE
+                /**If net is enabled**/
+                if (Engine.enableNetworking)
+                    if (NetworkManager.Singleton.IsHost&&!calledFromRPC)
+                        PossessClientRPC(possessableObject.GetComponent<NetworkObject>().NetworkObjectId);
+#endif
+                if(NetworkManager.Singleton.IsHost&&!calledFromRPC)
+                    possessedObjects.Add(possessableObject);
+                if(!NetworkManager.Singleton.IsHost)
+                    possessedObjects.Add(possessableObject);
+            }
+            return true;
         }
 
         [ClientRpc]
         /**<summary>Possess the Pawn on the client side by it's Network Object ID.</summary>**/
         public void PossessClientRPC(ulong pawnNetworkObjectID)
         {
-            possessedPawn = NetworkManager.SpawnManager.SpawnedObjects[pawnNetworkObjectID].GetComponent<Pawn>();
-            possessedCamera = NetworkManager.SpawnManager.SpawnedObjects[pawnNetworkObjectID].GetComponent<Pawn>().pawnCamera;
+            Possess(NetworkManager.SpawnManager.SpawnedObjects[pawnNetworkObjectID].GetComponent<Pawn>(), true);
         }
 
         /**<summary>Send Commands to the possessed Pawn.</summary>**/
-        public void Command(string commandName, object[] parameters = default)
+        public void Command(string commandName, object[] parameters)
         {
-            if (possessedPawn != null)
-                possessedPawn.BroadcastMessage(commandName, parameters);
+            foreach(PossessableObject possessable in possessedObjects)
+            {
+                if(possessable.ccdkEnabled)
+                    possessable.BroadcastMessage(commandName, parameters);
+            }
 
 #if USING_NETCODE
             if (Engine.enableNetworking)
@@ -102,8 +123,11 @@ namespace CCDKEngine
         /**<summary>Send Commands to the possessed Pawn.</summary>**/
         public void Command(string commandName, object parameter = default)
         {
-            if (possessedPawn != null)
-                possessedPawn.BroadcastMessage(commandName, parameter);
+            foreach (PossessableObject possessable in possessedObjects)
+            {
+                if (possessable.ccdkEnabled)
+                    possessable.BroadcastMessage(commandName, parameter);
+            }
 
 #if USING_NETCODE
             if (Engine.enableNetworking)
@@ -129,10 +153,33 @@ namespace CCDKEngine
 
         public void Destroy()
         {
-            if (possessedPawn != null)
-                GameObject.DestroyImmediate(possessedPawn.gameObject);
+            foreach(PossessableObject possessable in possessedObjects)
+                GameObject.DestroyImmediate(possessable.gameObject);
+
 
             GameObject.DestroyImmediate(gameObject);
+        }
+
+        /**<summary>Gets the Player that this Controller belongs to.</summary>**/
+        public Player GetPlayer()
+        {
+
+            return null;
+        }
+
+        public Pawn GetPawn()
+        {
+            foreach (PossessableObject possessable in possessedObjects.ToArray())
+            {
+                if (possessable.gameTypeState == Engine.currentGameType.state)
+                {
+                    Pawn getPawn = (Pawn)possessable;
+
+                    if(getPawn != null)
+                        return getPawn;
+                }
+            }
+            return null;
         }
     }
 }

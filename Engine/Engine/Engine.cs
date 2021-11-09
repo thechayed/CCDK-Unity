@@ -21,10 +21,9 @@ namespace CCDKEngine
         /**<summary>An array of all Level Data found in the Resources folder.</summary>**/
         public CCDKObjects.Level[] levelInfos;
         private CCDKObjects.Level defaultLevel;
-
         public CCDKObjects.GameTypeInfo[] gameInfos;
-
         public CCDKObjects.Controller[] controllerInfos;
+        public bool initialControllerSpawned = false;
 
         /**<summary> The Engine Data, recieved from the last created Engine object </summary>**/
         public CCDKObjects.Engine data;
@@ -136,17 +135,20 @@ namespace CCDKEngine
                 }
             }
 
-            if(PlayerManager.PCCount == 0&&!enableNetworking)
+            if(!initialControllerSpawned)
             {
                 data.defaultPlayerController = CCDKObjects.Controller.CreateInstance<CCDKObjects.Controller>();
                 data.defaultPlayerController.prefab = new GameObject();
                 data.defaultPlayerController.prefab.name = "Default Player Controller Object";
                 data.defaultPlayerController.prefab.AddComponent<PlayerController>();
                 PlayerController newPlayerController = PlayerManager.CreatePC(data.defaultPlayerController);
+                newPlayerController.controllerData = data.defaultPlayerController;
                 newPlayerController.SetOrigin();
                 PlayerManager.NewPlayer(newPlayerController);
 
                 GameObject.DestroyImmediate(data.defaultPlayerController.prefab);
+
+                initialControllerSpawned = true;
             }
 
 #if USING_NETCODE

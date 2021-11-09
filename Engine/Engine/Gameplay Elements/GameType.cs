@@ -13,7 +13,7 @@ using Unity.Netcode;
 namespace CCDKGame
 {
     public class GameType : FSM.Component
-    {
+    { //<Class>
         [Header(" - GameType - ")]
         public bool init = false;
         public bool isHost = true;
@@ -29,8 +29,12 @@ namespace CCDKGame
 
         /**The amount of Teams in the game.**/
         public int teamCount;
-        public List<Team> teams = new List<team>();
-        
+        public List<Team> teams = new List<Team>();
+
+        /**<summary>When Objects are added to the game, they are referenced in this list to be enabled/disabled depending on the State the Game Type was in at the time of their creation.</summary>**/
+        public Dictionary<List<CCDKEngine.Object>> stateObjectPairs = new Dictionary<List<CCDKEngine.Object>>();
+        public bool stateObjectPairingEnabled = false;
+
         /**The size of an individual team.**/
         public int maxTeamSize = 1;
 
@@ -148,6 +152,12 @@ namespace CCDKGame
 
         }
 
+        /**<summary>Declare that the selected Team has won the match!</summary>**/
+        public virtual void DeclareWin(Team team)
+        {
+            
+        }
+
         public virtual void NetworkStart()
         {
 #if USING_NETCODE
@@ -183,7 +193,7 @@ namespace CCDKGame
 
         /**Initialization called in this script only.**/
         private void LocalInitialization()
-        {
+        {//<LocalInitialization>
             Engine.currentGameType = this;
 
 #if USING_NETCODE
@@ -210,7 +220,6 @@ namespace CCDKGame
                 {
                     PlayerController playerController = PlayerManager.managers[0].SetPlayerController(0, gameTypeData.defaultPlayerController);
                     SetUpPlayer(player.assignedController);
-                    Debug.Log("New Player Controller for Host, and spawned a pawn for it.");
                 }
             }
             if(isHost)
@@ -220,7 +229,15 @@ namespace CCDKGame
                 MultiplayerStart();
 
             init = true;
-        }
+
+            /**Initialize States for Object Pairing.**/
+            foreach(string stateName in stateList)
+            {
+                stateObjectPairs.Set(stateName, new List<CCDKEngine.Object>());
+            }
+            stateObjectPairingEnabled = true;
+
+        }//</LocalInitialization>
 
         /**<summary>Return an unpossessed Pawn in the game that is paired with the passed data type.</summary>**/
         public Pawn GetPawnFromDataType(CCDKObjects.Pawn pawnToPossess)
@@ -333,12 +350,11 @@ namespace CCDKGame
         }
 #endif
 
-        //// A ClientRpc can be invoked by the server to be executed on a client
-        //[ClientRpc]
-        //private void SpawnClientRpc(ulong objectId)
-        //{
-        //    NetworkSpawnManager
-        //    NetworkObject player = NetworkSpawnManager.SpawnedObjects[objectId];
-        //}
-    }
+        /**<summary>Add an Object to the State-Object pairing Dictionary.</summary>**/
+        public void AddObjectToState(CCDKEngine.Object objectToAdd, string stateName)
+        {
+            stateObjectPairs.Get(stateName).Add(objectToAdd);
+        }
+
+    } //</Class>
 }

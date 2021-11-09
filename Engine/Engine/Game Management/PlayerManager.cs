@@ -16,52 +16,26 @@ namespace CCDKEngine
     /**<summary>A Player Manager is the Manager of all Local Players (Players from this instance of the game). And is the Player Prefab in Netcode, allowing split screen players to play online.</summary>**/
     public class PlayerManager : CCDKEngine.Object
     {
-        /**Replace this with Managers. The Player Managers no longer use the singleton pattern.**/
-        public static PlayerManager singleton;
-        /**All the Player Managers that exist in the game.**/
+        /**<summary>All the Player Managers that exist in the game.</summary>**/
         public static List<PlayerManager> managers = new List<PlayerManager>();
-        public List<PlayerManager> localmanagersref;
 
         /**<summary>Pool of all the Players in the game and their information.</summary>**/
         public PlayerPool pool = new PlayerPool();
 
-        public PlayerPool poolBackup = new PlayerPool();
-
         /**<summary>The list of Player Controllers in the game</summary>**/
         public static List<Controller> controllers = new List<Controller>();
 
-        /**The count of Player Controllers in the game**/
-        public static int PCCount;
-
         public override void Awake()
         {
-            engineObject = true;
-
-            managers.Add(this);
-
-            PlayerManager.singleton = this;
-            //Engine.NetworkConnect += NetworkStart;
-            //Engine.NetworkDisconnect += NetworkEnd;
-            //.PlayerLeft += PlayerLeft;
-
-            if(managers[0]!=this)
-                replicate = true;
-
-#if USING_NETCODE
-            //gameObject.AddComponent<NetworkObject>();
-#endif
-
-            /**Tell the engine not to handle this as a Level Object**/
             Independent = true;
+            engineObject = true;
+            managers.Add(this);
+            if (managers[0] != this)
+                replicate = true;
         }
 
         public override void Update()
         {
-            if(PlayerManager.singleton == null)
-                PlayerManager.singleton = this;
-
-            localmanagersref = PlayerManager.managers;
-
             if (net != null)
             {
                 if (net.IsLocalPlayer)
@@ -72,11 +46,9 @@ namespace CCDKEngine
         }
 
         /** Create a record of a created Player Controller in the Manager **/
-        public static int AddPC(Controller controller)
+        public static void AddPC(Controller controller)
         {
             controllers.Add(controller);
-            PCCount += 1;
-            return PCCount += 1;
         }
 
         public static void RemovePC(Controller controller)

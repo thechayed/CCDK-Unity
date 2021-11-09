@@ -21,6 +21,8 @@ namespace CCDKObjects
 
         [ReadOnly] public GameObject lastPrefab;
 
+        [Tooltip("Should this Pawn only be enabled while it's Parent Game Type State is active?.")]
+        public bool stateEnabled = false;
         [Tooltip("Whether this object should be replicated. A NetworkBehavior will be automatically added to the object when it is created..")]
         public bool replicate = true;
 

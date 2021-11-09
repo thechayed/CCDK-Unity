@@ -15,6 +15,7 @@ namespace CCDKGame
         public float speed;
         /**The angle of motion of the projectile**/
         public Vector3 movingAngle;
+
         
         /**The target Transform of the object the parent was aiming at when the projectile was shot.**/
         public Transform target;
@@ -22,7 +23,7 @@ namespace CCDKGame
         public Pawn pawn;
 
         /** The object we collided with**/
-        public GameObject ImapactedObject;
+        public GameObject ImpactedObject;
         
         public override void Start()
         {
@@ -52,8 +53,9 @@ namespace CCDKGame
           {
                 speed = Mathf.Lerp(speed, projectileData.maxSpeed, projectileData.acceleration);
           }
-          
-          
+
+            if (life > projectileData.lifeSpan)
+                Destroy();
         }
 
     }

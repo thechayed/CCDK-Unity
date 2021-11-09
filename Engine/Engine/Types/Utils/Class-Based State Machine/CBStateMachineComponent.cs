@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using CCDKGame;
 using System.Reflection;
+using System.Collections.Generic;
 #if USING_NETCODE
 using Unity.Netcode;
 #endif
@@ -28,7 +29,8 @@ namespace FSM
         [Header(" - State Machine - ")]
         [Tooltip("The State this Object is in.")]
         [ReadOnly] public string state;
-
+        [ReadOnly] public List<string> stateList = new List<string>();
+ 
         public virtual void Start()
         {
             CreateStateMachine();
@@ -38,6 +40,13 @@ namespace FSM
         {
             stateMachine = new FSM.Machine(this, gameObject);
             StateMachineInit();
+
+            /**Add the names of the States in the Class to the StateList**/
+            var stateMachineAsMachine = (FSM.Machine)stateMachine;
+            foreach(object state in stateMachineAsMachine.stateInstances.dictionary)
+            {
+                stateList.Add(state.GetType().Name);
+            }
         }
 
         /** Update the active State in the State Machine **/

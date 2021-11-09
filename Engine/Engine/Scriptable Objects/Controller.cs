@@ -16,6 +16,9 @@ namespace CCDKObjects
     {
         [MonoScript(type = typeof(CCDKEngine.Controller))] public string controllerClass = "CCDKGame.PlayerController";
 
+        [Tooltip("While true, the Controller can only possess one Pawn at a time.")]
+        public bool forceOnePawn = true;
+
         public enum ControllerType
         {
             Player,

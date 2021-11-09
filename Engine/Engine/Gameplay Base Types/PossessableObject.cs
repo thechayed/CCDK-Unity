@@ -13,9 +13,9 @@ namespace CCDKEngine
     {
         [Header(" - Possessable Object Properties - ")]
 
-        /**This object's Player Controller **/
+        [Tooltip("The Controller that has possessed this Pawn.")]
         [ReadOnly] public Controller controller;
-        /**Whether this Object is currently being controlled**/
+        [Tooltip("Whether this Object is currently being controlled.")]
         [HideInInspector] public bool isControlled;
 #if USING_NETCODE
         bool enableNetworkedPossession = false;

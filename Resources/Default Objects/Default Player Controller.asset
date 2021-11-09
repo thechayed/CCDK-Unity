@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4416ae6533fbd2458b0ec7caa6daabd, type: 3}
   m_Name: Default Player Controller
   m_EditorClassIdentifier: 
+  attempts: 0
   objectName: Default Player Controller Object
   defaultObjectPrefab: {fileID: 6115489935246015158, guid: 7059c66fb25092c479b501bfde6e2c7a, type: 3}
-  prefab: {fileID: 1710986755084856957, guid: 7b00b492f6f01f04cacfc25ec3c3a40c, type: 3}
-  updated: 0
-  path: Assets/CCDK/Resources/Default Objects/
+  prefab: {fileID: 3763338560397086562, guid: 7b00b492f6f01f04cacfc25ec3c3a40c, type: 3}
+  lastPrefab: {fileID: 3763338560397086562, guid: 7b00b492f6f01f04cacfc25ec3c3a40c, type: 3}
+  stateEnabled: 0
+  replicate: 1
+  updated: 1
+  path: Assets/Engine/Modules/CCDK/Resources/Default Objects/
   className: CCDKGame.PlayerController
   lastName: 
   controllerClass: CCDKGame.PlayerController
+  forceOnePawn: 1
   controllerType: 0
   inputActionAsset: {fileID: 0}
+  mouseToNavMesh: 0

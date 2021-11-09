@@ -12,7 +12,6 @@ namespace CCDKEditor
         {
             if (Find(gameObject))
             {
-                gameObject.GetComponent<CCDKEngine.Object>().UID = gameObjects.length;
                 gameObjects.Set("" + gameObjects.length, gameObject);
             }
         }

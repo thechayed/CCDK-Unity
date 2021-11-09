@@ -11,8 +11,9 @@ namespace CCDKObjects
     {
         [MonoScript(type = typeof(CCDKGame.Weapon))] public string weaponClass = "CCDKGame.Weapon";
 
-        [Tooltip("A list of the kinds of projectiles this weapon can shoot depending on the Fire Type.")]
-        public List<Projectile> projectiles;
+        [Tooltip("A list of the different Fire Types, with their projectile Data and Shooting information.")]
+        /**The list of Fire types for this weapon**/
+        public List<WeaponFireType> fireTypes;
 
         /** How long does it take to Equip this weapon */
         float EquipTime;
@@ -24,8 +25,6 @@ namespace CCDKObjects
         float PutDownTime;
 
 
-        /**The list of Fire types for this weapon**/
-        public List<WeaponFireType> fireTypes;
 
 #if UNITY_EDITOR
         public override void OnEnable()
@@ -69,7 +68,7 @@ namespace CCDKObjects
         public Projectile projectile;
 
         /** Holds the amount of time a single shot takes */
-        public float fireInterval;
+        public float fireInterval = 1f;
 
         /** How much of a spread between shots */
         public float spread;

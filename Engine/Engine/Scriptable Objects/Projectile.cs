@@ -30,9 +30,11 @@ namespace CCDKObjects
         public bool tracking;
         public float baseTrackIntensity=0.01f;
         public float trackIntensityOnMoveMultiplier=0.1f;
-        
-        
+
+
         [Header(" - Base Properties - ")]
+        [Tooltip("The amount of time that must pass before this Projectile is destroyed.")]
+        public float lifeSpan = 0.5f;
         public float initialSpeed = 5f;
         public float maxSpeed;
         public float acceleration = 0.01f;

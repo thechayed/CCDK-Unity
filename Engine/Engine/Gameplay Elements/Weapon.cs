@@ -11,6 +11,8 @@ namespace CCDKGame
         [Header(" - Weapon - ")]
         public CCDKObjects.Weapon weaponData;
         public Pawn pawn;
+        public float lastShotTime = 0f;
+
         public override void Start()
         {
             base.Start();
@@ -25,15 +27,19 @@ namespace CCDKGame
             //    transform.rotation = pawnTransform.rotation;
             //}
         }
-        public void Fire(Transform direction, int fireType = 0)
+        public void Fire(Transform direction = default, int fireType = 0)
         {
-            GameObject projectileObject = Instantiate(weaponData.projectiles[fireType].prefab);
+            if ((life - lastShotTime) < weaponData.fireTypes[fireType].fireInterval)
+                return;
+            
+            GameObject projectileObject = Instantiate(weaponData.fireTypes[fireType].projectile.prefab);
             Projectile projectile = projectileObject.GetComponent<Projectile>();
             projectile.pawn = pawn;
-            projectile.projectileData = weaponData.projectiles[fireType];
+            projectile.projectileData = weaponData.fireTypes[fireType].projectile;
 
             projectileObject.transform.position = direction.position;
             projectileObject.transform.rotation = direction.rotation;
+            lastShotTime = life;
         }
     }
 }

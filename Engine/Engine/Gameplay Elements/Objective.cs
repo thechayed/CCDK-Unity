@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using CCDKEngine;
 using CCDKGame;
+using System.Collections.Generic;
 
 namespace CCDKGame
 {
@@ -11,11 +12,45 @@ namespace CCDKGame
         public CCDKObjects.Objective objectiveData;
         /**<summary>The collider to use for collision checks. Used most often with Zones.</summary>**/
         public Collider volume;
+        [Tooltip("The time that has been given to Acquiring this Objective. Each index is that of each active Team in the Game Type.")]
+        public List<float> timeGiven = new List<float>();
 
         public override void Start()
         {
             base.Start();
             objectiveData = (CCDKObjects.Objective)data;
+            health = objectiveData.health;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            switch (objectiveData.objectiveType.ToString())
+            {
+                /**Loop through all the current Colliders for this Objective, and update Time Given.**/
+                case "Zone":
+                    foreach(GameObject collider in currentCollisions)
+                    {
+                        Pawn pawn = collider.GetComponent<Pawn>();
+                        if (pawn != null)
+                            if (pawn.controller!=null)
+                            {
+
+                            }
+                    }
+                    break;
+
+                /**Call extendable methods for Captuing/Obtaining, Losing, etc., this Objective.**/
+                case "Item":
+
+                    break;
+
+                /**When this objective is Damaged completely, the team that damages it accumulates points.**/
+                case "Damage":
+                    
+                    break;
+            }
         }
     }
 }
