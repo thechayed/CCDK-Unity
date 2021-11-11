@@ -143,17 +143,18 @@ namespace CCDKGame
             if (moveWithCharacterController)
             {
                 Vector3 velocityTo = (characterController.velocity.Lerp(velocity, pawnData.movement.AccelRate)/2).Round()*2;
-                characterController.SimpleMove(velocityTo*Time.deltaTime);
+                velocityTo.y = pawnData.movement.MaxFallSpeed;
+                characterController.SimpleMove(velocityTo);
 #if USING_NETCODE
                 if(NetworkManager.Singleton != null)
                 {
                     if (NetworkManager.Singleton.IsHost)
                     {
-                        MovePlayerClientRPC(velocityTo * Time.deltaTime);
+                        MovePlayerClientRPC(velocityTo);
                     }
                     else
                         if (net.IsOwner)
-                            MovePlayerServerRPC(velocityTo * Time.deltaTime);
+                            MovePlayerServerRPC(velocityTo);
                 }
 #endif
             }
