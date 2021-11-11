@@ -1,4 +1,4 @@
-﻿using B83.Unity.Attributes;
+using B83.Unity.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -28,6 +28,12 @@ namespace CCDKObjects
 
         /**<summary>The amount of health the Objective has. Typically used for Damage Objectives, to determine how much damage needs to be done to destroy it.</summary>**/
         public float health = 100f;
+        
+        [Tooltip("Whether this objective should attach to the player that collects it.")]
+        public bool attachToCollector = false;
+        
+        [Tooltip("The item to pass to the Pawn when collecting from this Objective.")]
+        public IventoryItem itemToCollect;
 
 
 #if UNITY_EDITOR
