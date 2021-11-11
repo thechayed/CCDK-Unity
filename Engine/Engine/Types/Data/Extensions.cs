@@ -20,6 +20,11 @@ public static class Extensions
         return new Vector3(Mathf.Lerp(fromPosition.x, toPosition.x, alpha), Mathf.Lerp(fromPosition.y, toPosition.y, alpha), Mathf.Lerp(fromPosition.z,toPosition.z, alpha));
     }
 
+    public static Vector3 Round(this Vector3 fromPosition)
+    {
+        return new Vector3(Mathf.Round(fromPosition.x), Mathf.Round(fromPosition.y), Mathf.Round(fromPosition.z));
+    }
+
     public static Type GetAssemblyType(this string typeName)
     {
         var type = Type.GetType(typeName);

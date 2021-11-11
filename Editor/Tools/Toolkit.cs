@@ -13,11 +13,22 @@ namespace Assets.CCDK.Editor.Tools
             UnityEditor.Menu.SetChecked("Tools/Timed Autosave", TimedAutoSave);
         }
 
-        [MenuItem("Tools/CCDK/Create Spawn")]
+        [MenuItem("CCDK/Create Spawn")]
         static void DoIt()
         {
             GameObject spawnPoint = Instantiate(Resources.Load<GameObject>("CCDK/PrefabDefaults/Spawn Point"));
             spawnPoint.AddComponent<CCDKGame.SpawnPoint>();
+        }
+
+        [MenuItem("CCDK/Enable Editor")]
+        static void EnableEditor()
+        {
+            CCDKEngine.Engine.engineEditorsEnabled = true;
+        }
+        [MenuItem("CCDK/Disable Editor")]
+        static void DisableEditor()
+        {
+            CCDKEngine.Engine.engineEditorsEnabled = false;
         }
 
         [MenuItem("Tools/Timed Autosave")]

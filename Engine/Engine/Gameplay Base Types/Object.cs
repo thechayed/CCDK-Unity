@@ -77,6 +77,7 @@ namespace CCDKEngine
         [Tooltip("Whether this object is Reprecated with MLAPI.")]
         public bool replicate;
 
+
 #if USING_NETCODE
         [Tooltip("The Networked Object Component added to this object to interface with MLAPI.")]
         public NetworkObject net;
@@ -131,11 +132,14 @@ namespace CCDKEngine
             }
 
 #if USING_NETCODE
-            if(net!=null&& NetworkManager!=null)
-                if (net.IsOwner|!NetworkManager.IsClient)
+            if (net != null && NetworkManager != null)
+            {
+                if (net.IsOwner | !NetworkManager.IsClient)
                 {
                     NetworkUpdate();
+
                 }
+            }
 #else
             NetworkUpdate();
 #endif
@@ -193,9 +197,9 @@ namespace CCDKEngine
                 {
                     net.AutoObjectParentSync = false;
 
-                    if (NetworkManager.Singleton != null)
-                        if (NetworkManager.Singleton.IsHost && NetworkManager.GetNetworkPrefabOverride(gameObject) != gameObject)
-                            NetworkManager.Singleton.PrefabHandler.RegisterHostGlobalObjectIdHashValues(gameObject, new List<GameObject>() { gameObject });
+                    //if (NetworkManager.Singleton != null)
+                    //    if (NetworkManager.Singleton.IsHost && NetworkManager.GetNetworkPrefabOverride(gameObject) != gameObject)
+                    //        NetworkManager.Singleton.PrefabHandler.RegisterHostGlobalObjectIdHashValues(gameObject, new List<GameObject>() { gameObject });
 
                 }
 

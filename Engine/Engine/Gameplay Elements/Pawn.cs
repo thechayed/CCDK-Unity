@@ -29,6 +29,8 @@ namespace CCDKGame
 
         [Header(" - Movement - ")]
         public CharacterController characterController;
+        public bool moveWithCharacterController = false;
+        public Vector3 velocity = new Vector3(0,0,0);
         Vector3 speed;
 
         [Header(" - Components - ")]
@@ -60,8 +62,10 @@ namespace CCDKGame
             {
                 SetUpNavAgent();
             }
-            
+
             characterController = gameObject.GetComponent<CharacterController>();
+            if(characterController == null)
+                characterController = gameObject.AddComponent<CharacterController>();
 
             /**If the Pawn is State Enabled, Add it to the Game Type's StateObjectPairing.**/
             if(pawnData.stateEnabled)
@@ -105,17 +109,21 @@ namespace CCDKGame
                 if (pawnData.NavMeshAgent)
                     SetUpNavAgent();
 
-            if (agentFollow)
+            if (agent != null)
             {
-                if (agentFollowTransform != null)
+                if (agentFollow)
                 {
-                    agent.destination = agentFollowTransform.position;
+                    if (agentFollowTransform != null)
+                    {
+                        agent.destination = agentFollowTransform.position;
+                    }
+                }
+                else if (agentDestination != null)
+                {
+                    agent.destination = agentDestination;
                 }
             }
-            else if (agentDestination != null)
-            {
-                agent.destination = agentDestination;
-            }
+
 
             /**If no local Players own this pawn, disable it's Audio Listener.**/
             if (pawnCamera != null)
@@ -124,8 +132,32 @@ namespace CCDKGame
                         pawnCamera.GetComponent<AudioListener>().enabled = true;
                     else
                         pawnCamera.GetComponent<AudioListener>().enabled = false;
-        }
 
+            if(agent != null)
+            {
+                /**Set the Moving speed of the Pawn's NavMesh Agent**/
+                agent.speed = pawnData.movement.GroundSpeed;
+                agent.angularSpeed = pawnData.movement.rotationSpeed;
+            }
+
+            if (moveWithCharacterController)
+            {
+                Vector3 velocityTo = (characterController.velocity.Lerp(velocity, pawnData.movement.AccelRate)/2).Round()*2;
+                characterController.SimpleMove(velocityTo*Time.deltaTime);
+#if USING_NETCODE
+                if(NetworkManager.Singleton != null)
+                {
+                    if (NetworkManager.Singleton.IsHost)
+                    {
+                        MovePlayerClientRPC(velocityTo * Time.deltaTime);
+                    }
+                    else
+                        if (net.IsOwner)
+                            MovePlayerServerRPC(velocityTo * Time.deltaTime);
+                }
+#endif
+            }
+        }
 
         private void OnEnable()
         {
@@ -243,5 +275,42 @@ namespace CCDKGame
                 }
         }
 
+        public void SimpleMoveOnGround(Vector3 direction)
+        {
+            if(characterController != null)
+            {
+                velocity = direction*pawnData.movement.GroundSpeed;
+            }
+            else
+            {
+                Debug.Log("Tried to move the Pawn with Simple Move, but the Pawn doesn't have a Character Controller applied.");
+            }
+            moveWithCharacterController = true;
+        }
+
+
+#if USING_NETCODE
+
+        [ClientRpc]
+        public void MovePlayerClientRPC(Vector3 velocity)
+        {
+            if(characterController != null)
+                characterController.SimpleMove(velocity);
+            else
+                characterController = gameObject.GetComponent<CharacterController>();
+        }
+
+        [ServerRpc]
+        public void MovePlayerServerRPC(Vector3 velocity)
+        {
+            if (characterController != null)
+                characterController.SimpleMove(velocity);
+            else
+                characterController = gameObject.GetComponent<CharacterController>();
+            
+            MovePlayerClientRPC(velocity);
+        }
+
+#endif
     }
 }

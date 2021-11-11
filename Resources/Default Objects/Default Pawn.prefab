@@ -94,6 +94,8 @@ MonoBehaviour:
   automateWeaponSlot: 1
   activeWeapons: []
   characterController: {fileID: 0}
+  moveWithCharacterController: 0
+  velocity: {x: 0, y: 0, z: 0}
   baseTransform: {fileID: 0}
   agent: {fileID: 0}
   agentDestination: {x: 0, y: 0, z: 0}

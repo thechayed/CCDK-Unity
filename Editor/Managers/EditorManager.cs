@@ -27,7 +27,8 @@ namespace CCDKEditor
         [InitializeOnLoadMethod]
         private static async void InitEditorAsync()
         {
-
+            if(!ParrelSync.ClonesManager.IsClone())
+                CCDKEngine.Engine.engineEditorsEnabled = true;
 
             initialized = true;
             while (initialized && !EditorApplication.isPlayingOrWillChangePlaymode)

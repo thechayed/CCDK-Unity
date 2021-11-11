@@ -101,9 +101,10 @@ namespace CCDKObjects
                          WalkingPct,       // pct. of running speed that walking speed is
                          MovementSpeedModifier, // a modifier that can be used to override the movement speed.
                          CrouchedPct,  // pct. of running speed that crouched walking speed is
-                         MaxFallSpeed;  // max speed pawn can land without taking damage
+                         MaxFallSpeed,  // max speed pawn can land without taking damage
+                         rotationSpeed;
         }
-        public Movement movementInfo;
+        public Movement movement;
 
         [System.Serializable]
         public class Input

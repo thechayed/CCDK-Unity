@@ -76,6 +76,8 @@ namespace CCDKEngine
         public static event PlayerLeftAction NetworkClientLeft;
         public List<ulong> registeredClients = new List<ulong>();
 
+        public static bool engineEditorsEnabled = false;
+
 #if USING_NETCODE
         public static NetworkManager networkManager;
         public static NetworkPrefabHandler networkPrefabHandler;

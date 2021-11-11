@@ -41,23 +41,25 @@ namespace CCDKObjects
         /** When the Scriptable Object is created, add it to the Editor Window's list of managed objects **/
         public virtual void OnEnable()
         {
-
-            if (defaultObjectPrefab == null)
+            if (CCDKEngine.Engine.engineEditorsEnabled)
             {
-                defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
+                if (defaultObjectPrefab == null)
+                {
+                    defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
+                }
+
+                /** Set path to the Folder this object is in **/
+                path = AssetDatabase.GetAssetPath(this);
+                path = path.Replace(name + ".asset", "");
+
+                if (Application.isEditor)
+                {
+                    CCDKEngine.Engine.AddEdObject(this);
+                }
+
+                if (objectName == "")
+                    objectName = "Default";
             }
-
-            /** Set path to the Folder this object is in **/
-            path = AssetDatabase.GetAssetPath(this);
-            path = path.Replace(name + ".asset", "");
-
-            if (Application.isEditor)
-            {
-                CCDKEngine.Engine.AddEdObject(this);
-            }
-
-            if (objectName == "")
-                objectName = "Default";
 
             //if (AssetDatabase.LoadAssetAtPath<GameObject>(path + objectName + ".prefab") == null)
             //{
@@ -76,53 +78,60 @@ namespace CCDKObjects
 
         public virtual void Awake()
         {
-            /** Set path to the Folder this object is in **/
-            path = AssetDatabase.GetAssetPath(this);
-            path = path.Replace(name + ".asset", "");
-
-
-            if (objectName == "")
-                objectName = "Default";
-
-
-            if (defaultObjectPrefab == null)
+            if (CCDKEngine.Engine.engineEditorsEnabled)
             {
-                defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
-            }
+                /** Set path to the Folder this object is in **/
+                path = AssetDatabase.GetAssetPath(this);
+                path = path.Replace(name + ".asset", "");
 
-            if (AssetDatabase.LoadAssetAtPath<GameObject>(path + objectName + ".prefab") == null)
-            {
-                //Debug.Log("Original prefab was made");
-                GameObject gameObject = GameObject.Instantiate(defaultObjectPrefab);
-                CCDKEngine.Object component = (CCDKEngine.Object)gameObject.AddComponent(this.className.GetAssemblyType());
-                if (component != null)
+
+                if (objectName == "")
+                    objectName = "Default";
+
+
+                if (defaultObjectPrefab == null)
                 {
-                    component.data = this;
+                    defaultObjectPrefab = Resources.Load<GameObject>("CCDK/PrefabDefaults/Object");
                 }
-                prefab = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, path + objectName + ".prefab", InteractionMode.AutomatedAction);
-                //Debug.Log(path);
-                GameObject.DestroyImmediate(gameObject);
-                originalMade = true;
+
+                if (AssetDatabase.LoadAssetAtPath<GameObject>(path + objectName + ".prefab") == null)
+                {
+                    //Debug.Log("Original prefab was made");
+                    GameObject gameObject = GameObject.Instantiate(defaultObjectPrefab);
+                    CCDKEngine.Object component = (CCDKEngine.Object)gameObject.AddComponent(this.className.GetAssemblyType());
+                    if (component != null)
+                    {
+                        component.data = this;
+                    }
+                    prefab = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, path + objectName + ".prefab", InteractionMode.AutomatedAction);
+                    //Debug.Log(path);
+                    GameObject.DestroyImmediate(gameObject);
+                    originalMade = true;
+                }
             }
         }
 
         /** Whenever a change is made to the Object, update it **/
         public virtual void OnValidate()
         {
-            if (objectName == "")
-                objectName = this.name + "Object";
-
-            /** Set path to the Folder this object is in **/
-            path = AssetDatabase.GetAssetPath(this);
-            path = path.Replace(name + ".asset", "");
-
-            if (prefab != lastPrefab && prefab != null)
+            if (CCDKEngine.Engine.engineEditorsEnabled)
             {
-                objectName = prefab.name;
-                lastPrefab = prefab;
+                if (objectName == "")
+                    objectName = this.name + "Object";
+
+                /** Set path to the Folder this object is in **/
+                path = AssetDatabase.GetAssetPath(this);
+                path = path.Replace(name + ".asset", "");
+
+                if (prefab != lastPrefab && prefab != null)
+                {
+                    objectName = prefab.name;
+                    lastPrefab = prefab;
+                }
+
+                updated = true;
             }
 
-            updated = true;
         }
 #endif
     }
