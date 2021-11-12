@@ -52,5 +52,13 @@ namespace CCDKGame
                     break;
             }
         }
+
+        public void GiveToPawn(Pawn pawn)
+        {
+            if (!objectiveData.attachToCollector)
+            {
+                pawn.inventory.Add(objectiveData.itemToCollect);
+            }
+        }
     }
 }

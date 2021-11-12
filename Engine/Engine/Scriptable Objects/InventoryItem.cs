@@ -18,5 +18,10 @@ namespace CCDKObjects
         /** Whether the player can throw this Item **/
         public bool isThrowable;
 
+        public override void OnEnable()
+        {
+            className = "CCDKGame.InventoryItem";
+            base.OnEnable();
+        }
     }
 }

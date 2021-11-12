@@ -33,7 +33,7 @@ namespace CCDKObjects
         public bool attachToCollector = false;
         
         [Tooltip("The item to pass to the Pawn when collecting from this Objective.")]
-        public IventoryItem itemToCollect;
+        public InventoryItem itemToCollect;
 
 
 #if UNITY_EDITOR

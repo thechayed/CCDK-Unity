@@ -144,7 +144,7 @@ namespace CCDKGame
             {
                 Vector3 velocityTo = (characterController.velocity.Lerp(velocity, pawnData.movement.AccelRate)/2).Round()*2;
                 velocityTo.y = pawnData.movement.MaxFallSpeed;
-                characterController.SimpleMove(velocityTo);
+                characterController.Move(velocityTo*Time.deltaTime);
 #if USING_NETCODE
                 if(NetworkManager.Singleton != null)
                 {
@@ -296,7 +296,7 @@ namespace CCDKGame
         public void MovePlayerClientRPC(Vector3 velocity)
         {
             if(characterController != null)
-                characterController.SimpleMove(velocity);
+                characterController.SimpleMove(velocity*Time.deltaTime);
             else
                 characterController = gameObject.GetComponent<CharacterController>();
         }
@@ -305,7 +305,7 @@ namespace CCDKGame
         public void MovePlayerServerRPC(Vector3 velocity)
         {
             if (characterController != null)
-                characterController.SimpleMove(velocity);
+                characterController.SimpleMove(velocity * Time.deltaTime);
             else
                 characterController = gameObject.GetComponent<CharacterController>();
             
