@@ -25,7 +25,6 @@ namespace FSM
         public void Enable()
         {
             enabled = true;
-            Enter();
         }
 
         public void Disable()

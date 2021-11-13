@@ -34,13 +34,17 @@ namespace FSM
             this.gameObject = gameObject;
             this.parent = component;
 
+
+
             stateMethods = new Dictionary<MethodInfo[]>();
             stateInstances = new Dictionary<object>();
 
+
+            Debug.Log(parent.GetType().Name + ": " + parent.GetType().GetNestedTypes().Length);
             /** Loop through all the Types in our given SEMB, and add it to our State Type List **/
-            foreach (Type type in component.GetType().GetNestedTypes())
+            foreach (Type type in parent.GetType().GetNestedTypes())
             {
-                if(type.BaseType.Name == "State")
+                if (type.BaseType.Name == "State`1")
                 {
                     /** Set up the State Dictionary and Initialize States **/
                     stateMethods.Set(type.Name, type.GetMethods());

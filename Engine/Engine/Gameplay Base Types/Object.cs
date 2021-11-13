@@ -162,6 +162,8 @@ namespace CCDKEngine
 
         public override void FixedUpdate()
         {
+            base.FixedUpdate();
+
             if (engineObject)
                 if (gameObject.scene != LevelManager.engineScene)
                     SceneManager.MoveGameObjectToScene(gameObject,LevelManager.engineScene);

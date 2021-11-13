@@ -80,7 +80,8 @@ namespace CCDKGame
             //Loop through the inventory to fill any empty weapon slots
             foreach (CCDKObjects.InventoryItem item in inventory)
             {
-                if (((CCDKObjects.Weapon)item) != null)
+                var check = item as CCDKObjects.Weapon;
+                if(check != null)
                 {
                     if (equipedWeapons.Count < pawnData.inventoryInfo.weaponSlots)
                     {

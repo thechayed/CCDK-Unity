@@ -117,6 +117,7 @@ namespace CCDKEngine
         public PlayerController SetPlayerController(int ID, CCDKObjects.Controller controller)
         {
             PlayerController newController = CreatePC(controller);
+            newController.player = pool.players[ID];
             pool.players[ID].assignedController.Destroy();
             GameObject.Destroy(pool.players[ID].assignedController);
             pool.players[ID].assignedController = newController;
@@ -209,6 +210,7 @@ namespace CCDKEngine
                 Player newPlayer = new Player(CreatePC(Engine.currentGameType.gameTypeData.defaultPlayerController));
                 newPlayer.assignedController.clientID = net.OwnerClientId;
                 newPlayer.assignedController.spawnAsClientObject = true;
+                newPlayer.assignedController.player = newPlayer;
                 pool.players.Add(newPlayer);
                 Engine.currentGameType.SetUpPlayer(newPlayer.assignedController);
             }

@@ -8,6 +8,7 @@ using Unity.Netcode;
 
 namespace CCDKGame
 {
+
     public class Team 
     {
         public int score;

@@ -84,6 +84,10 @@ namespace FSM
         /** Get this Component's current State **/
         public string GetState()
         {
+            //Dictionary<object> localDic = (Dictionary<object>)stateMachine.GetType().GetField("stateInstances").GetValue(stateMachine);
+            //List<DictionaryItem<object>> localList = (List<DictionaryItem<object>>)localDic.GetType().GetField("dictionary").GetValue(localDic);
+            //Debug.Log(this.GetType());
+            
             return (string)stateMachine.GetType().GetField("curState").GetValue(stateMachine);
         }
 

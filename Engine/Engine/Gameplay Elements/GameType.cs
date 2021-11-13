@@ -51,12 +51,14 @@ namespace CCDKGame
            if(gameTypeData.teamGame)
               foreach(Team team in teams)
               {
-                if(team.score >= gameTypeData.goalScore)
+                if(team.score >= gameTypeData.goalScore&&gameTypeData.goalScore!=-1)
                 {
                   DeclareWin(team);
                 }
               }
-           
+
+           /**Check if a team won, yo**/
+            CheckWin();
 
             /**If using Netcode, and it's enabled, wait until Pawns and Controllers are Spawned before using them.**/
 #if USING_NETCODE
@@ -354,6 +356,12 @@ namespace CCDKGame
         public void AddObjectToState(CCDKEngine.Object objectToAdd, string stateName)
         {
             stateObjectPairs.Get(stateName).Add(objectToAdd);
+        }
+
+        /**<summary>Check for Custom win condition</summary>**/
+        public virtual Team CheckWin()
+        {
+            return null;
         }
 
     } //</Class>
