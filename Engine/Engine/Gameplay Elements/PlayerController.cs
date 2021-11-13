@@ -47,6 +47,7 @@ namespace CCDKGame
                 if (possessedCamera != null)
                 {
                     possessedCamera.gameObject.SetActive(true);
+                    Engine.activeCamera = possessedCamera;
 
                     Ray ray = possessedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
                     RaycastHit hit;

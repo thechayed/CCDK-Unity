@@ -16,6 +16,9 @@ namespace CCDKObjects
         public Controller defaultPlayerController;
         public Controller defualtAIController;
         public Pawn defaultPawn;
+        [Tooltip("Each posible Game Type state, paired with a List of Types that belong solely to that State. Used to Create/Destroy the correct objects for the current Game State.")]
+        public Dictionary<List<ObjectType>> stateObjectPairTypes;
+
         public HUD defaultHUD;
 
         [Header(" - Gameplay - ")]
@@ -36,5 +39,11 @@ namespace CCDKObjects
         [Tooltip("The Network Manager to spawn to use Multiplayer.")]
         public GameObject networkManager;
       
+    }
+
+    [System.Serializable]
+    public class ObjectType
+    {
+        [MonoScript(type = typeof(CCDKEngine.Object))] public string type = "";
     }
 }

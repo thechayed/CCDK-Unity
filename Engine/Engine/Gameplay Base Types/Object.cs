@@ -128,7 +128,21 @@ namespace CCDKEngine
             if(!setGameTypeState&&Engine.currentGameType!=null)
             {
                 gameTypeState = Engine.currentGameType.state;
-                setGameTypeState = true;
+
+                if (Engine.currentGameType.stateObjectPairingEnabled)
+                {
+                    if(Engine.currentGameType.gameTypeData.stateObjectPairTypes.length>0)
+                    {
+                        foreach (CCDKObjects.ObjectType objectType in Engine.currentGameType.gameTypeData.stateObjectPairTypes.Get(gameTypeState))
+                        {
+                            if (objectType.type == this.GetType().FullName)
+                            {
+                                Engine.currentGameType.stateObjectPairs.Get(gameTypeState).Add(this);
+                            }
+                        }
+                        setGameTypeState = true;
+                    }
+                }
             }
 
 #if USING_NETCODE

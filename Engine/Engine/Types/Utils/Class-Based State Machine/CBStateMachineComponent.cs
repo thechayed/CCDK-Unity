@@ -96,9 +96,15 @@ namespace FSM
             return (Dictionary<MethodInfo[]>)stateMachine.GetType().GetField("stateMethods").GetValue(stateMachine);
         }
 
-        public void CallMethod(string state, string name)
+        public void CallMethod(string state, string name, object[] parameters = null)
         {
-            stateMachine.GetType().GetMethod("CallMethod").Invoke(stateMachine,null);
+            stateMachine.GetType().GetMethod("CallMethod").Invoke(stateMachine,new object[] { state , name, parameters});
+        }
+
+        /**<summary>The state of the machine has finished changing.</summary>**/
+        public virtual void StateChanged(string prevState)
+        {
+
         }
     }
 }

@@ -79,6 +79,10 @@ namespace FSM
                     CallMethod(curState, "Enter");
                 }
             }
+
+            /**Tell the component that the State has finished changing.**/
+            component.StateChanged(prevState);
+            component.state = curState;
         }
 
         /* Reflection */

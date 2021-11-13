@@ -78,6 +78,8 @@ namespace CCDKEngine
 
         public static bool engineEditorsEnabled = false;
 
+        public static Camera activeCamera;
+
 #if USING_NETCODE
         public static NetworkManager networkManager;
         public static NetworkPrefabHandler networkPrefabHandler;
@@ -240,6 +242,7 @@ namespace CCDKEngine
                 levelInfos = Resources.LoadAll<CCDKObjects.Level>("");
                 gameInfos = Resources.LoadAll<CCDKObjects.GameTypeInfo>("");
                 controllerInfos = Resources.LoadAll<CCDKObjects.Controller>("");
+                defaultLevel = levelInfos[0]; 
 
                 /**Instantiate all Game Managers**/
                 GameObject[] Managers = Resources.LoadAll<GameObject>("CCDK/Managers");

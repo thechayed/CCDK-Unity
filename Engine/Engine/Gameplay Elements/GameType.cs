@@ -42,13 +42,16 @@ namespace CCDKGame
         /**<summary>When the Game Type is starting, initialize it.</summary>**/
         private void Update()
         {
+            /**Initialize the Game Type**/
             if (Engine.singleton.initialized&&!init)
             {
                 this.Invoke("LocalInitialization", 0f);
                 init = true;
             }
-            
-           if(gameTypeData.teamGame)
+
+            #region scoring
+            /**If this is a Game Type that uses the Default scoring system, declare a win when a Team reaches the Goal Score**/
+            if (gameTypeData.teamGame)
               foreach(Team team in teams)
               {
                 if(team.score >= gameTypeData.goalScore&&gameTypeData.goalScore!=-1)
@@ -57,9 +60,12 @@ namespace CCDKGame
                 }
               }
 
+           /**Always check if Win conditions have been met.**/
            /**Check if a team won, yo**/
             CheckWin();
+            #endregion
 
+            #region Possession
             /**If using Netcode, and it's enabled, wait until Pawns and Controllers are Spawned before using them.**/
 #if USING_NETCODE
             if (Engine.enableNetworking)
@@ -92,10 +98,11 @@ namespace CCDKGame
             /**If there is a Controller wait for a Pawn to Possess and there is a Pawn Free to Possess.**/
             if (controllerPossessionQueue.Count > 0 && pawnFreeQueue.Count > 0)
                 controllerPossessionQueue.Dequeue().Possess(pawnFreeQueue.Dequeue());
+            #endregion
         }
 
 
-#region Game Type Overrides
+        #region Game Type Overrides
         /**<summary>Override to add extra Initialization functionality.</summary>**/
         public virtual void Init()
         {
@@ -253,7 +260,8 @@ namespace CCDKGame
             }
             return null;
         }
-#endregion
+
+        #endregion
 
         /**<summary>Spawns the default pawn into the game and returns it's Game Object</summary>**/
         //Add For Multiplayer: GameObject.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
@@ -362,6 +370,49 @@ namespace CCDKGame
         public virtual Team CheckWin()
         {
             return null;
+        }
+
+        /**When the State has changed, **/
+        public override void StateChanged(string prevState)
+        {
+            if (stateObjectPairingEnabled)
+            {
+                /**Destroy/Deactivate Objects used for the previous state.**/
+                foreach(CCDKEngine.Object stateObject in stateObjectPairs.Get(prevState))
+                {
+                    Pawn asPawn = stateObject as Pawn;
+                    if (asPawn != null)
+                    {
+                        if (asPawn.controller != null)
+                        {
+                            controllerPossessionQueue.Enqueue(asPawn.controller);
+                            GameObject.Destroy(asPawn.gameObject);
+                        }
+                        else
+                            GameObject.Destroy(asPawn.gameObject);
+                    }
+                    else
+                        stateObject.gameObject.SetActive(false);
+                }
+
+                /**Destroy/Deactivate Objects used for the previous state.**/
+                foreach (CCDKEngine.Object stateObject in stateObjectPairs.Get(prevState))
+                {
+                    Pawn asPawn = stateObject as Pawn;
+                    if (asPawn != null)
+                    {
+                        if (asPawn.controller != null)
+                        {
+                            controllerPossessionQueue.Enqueue(asPawn.controller);
+                            GameObject.Destroy(asPawn.gameObject);
+                        }
+                        else
+                            GameObject.Destroy(asPawn.gameObject);
+                    }
+                    else
+                        stateObject.gameObject.SetActive(false);
+                }
+            }
         }
 
     } //</Class>
