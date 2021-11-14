@@ -33,16 +33,25 @@ namespace FSM
             enabled = false;
         }
 
+        /**<summary>Event called when the State is Entered</summary>**/
         public virtual void Enter()
         {
 
         }
 
+        /**<summary>Event called when the State is Updating</summary>**/
         public virtual void Update()
         {
 
         }
 
+        /**<summary>Event called when the State is Updating, only on the Owner's side.</summary>**/
+        public virtual void NetworkUpdate()
+        {
+
+        }
+
+        /**<summary>Event called when the State is exitted.</summary>**/
         public virtual void Exit()
         {
 

@@ -77,9 +77,21 @@ namespace CCDKGame
             spawnPoints.Add(spawnPointObject);
         }
 
-        public Transform FindSpawn()
+        public Transform FindSpawn(int team)
         {
-            return spawnPoints[0].transform;
+            int teamSpawnCount = 0;
+            List<GameObject> spawns = new List<GameObject>();
+
+            foreach(GameObject spawn in spawnPoints)
+            {
+                if (spawn.GetComponent<SpawnPoint>().team == team)
+                {
+                    teamSpawnCount++;
+                    spawns.Add(spawn);
+                }
+            }
+
+            return spawns[(int)UnityEngine.Random.Range(0,teamSpawnCount)].transform;
         }
     }
 }

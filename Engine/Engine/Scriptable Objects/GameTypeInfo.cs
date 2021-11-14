@@ -14,10 +14,16 @@ namespace CCDKObjects
         [Header(" - Defaults - ")]
         [Tooltip("Game Type's default objects.")]
         public Controller defaultPlayerController;
+        [Tooltip("Controller's State will be changed when the Game Type's State Changes.")]
+        public bool tieControllerStateToGameType = true;
+
         public Controller defualtAIController;
         public Pawn defaultPawn;
         [Tooltip("Each posible Game Type state, paired with a List of Types that belong solely to that State. Used to Create/Destroy the correct objects for the current Game State.")]
-        public Dictionary<List<ObjectType>> stateObjectPairTypes;
+        public Dictionary<List<ObjectType>> stateObjectPairTypes = new Dictionary<List<ObjectType>>();
+        [Tooltip("Pawns should be handled differently than other Objects in the game. A State Enabled Pawn for each State should be created for each Player Controller in the game.")]
+        public Dictionary<Pawn> statePawnPairs = new Dictionary<Pawn>();
+        public bool stateObjectPairing = true;
 
         public HUD defaultHUD;
 
@@ -38,7 +44,9 @@ namespace CCDKObjects
         public bool startInMultiplayer = false;
         [Tooltip("The Network Manager to spawn to use Multiplayer.")]
         public GameObject networkManager;
-      
+
+
+        public Dictionary<AudioClip> music = new Dictionary<AudioClip>();
     }
 
     [System.Serializable]

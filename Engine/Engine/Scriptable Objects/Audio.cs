@@ -7,5 +7,7 @@ namespace CCDKObjects
     public class Audio : ScriptableObject
     {
         public AudioClip beep;
+
+        public Dictionary<AudioClip> Music = new Dictionary<AudioClip>();
     }
 }

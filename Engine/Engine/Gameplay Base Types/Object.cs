@@ -34,7 +34,7 @@ namespace CCDKEngine
         [Tooltip("The Game Type State that this Object was created during.")]
         public string gameTypeState = "";
         [Tooltip("Whether the Game Type State has been set yet or not.")]
-        private bool setGameTypeState = false;
+        public bool setGameTypeState = false;
         [Tooltip("The Object does not belong to a Level.")]
         [ReadOnly] public bool Independent = false;
         [Tooltip("Whether this Object should automatically move to the Engine scene if it isn't currently there.")]
@@ -50,6 +50,7 @@ namespace CCDKEngine
         public float health = 100f;
         [Tooltip("The Controller that caused Damage to this Object last.")]
         public Controller lastHitBy;
+        public bool destructible = false;
         [Tooltip("The Controller that destroyed this Object.")]
         public Controller destroyedBy;
         [Tooltip("The amount of damage this Object should deal when colliding with another Object.")]
@@ -122,27 +123,47 @@ namespace CCDKEngine
 
         }
 
-        /**<summary>Try not to use the built in Update method for most things.</summary>**/
+
         public virtual void Update()
         {
             if(!setGameTypeState&&Engine.currentGameType!=null)
             {
-                gameTypeState = Engine.currentGameType.state;
-
+                bool deactivate = false;
+                //If we're using State-Object Pairing
                 if (Engine.currentGameType.stateObjectPairingEnabled)
                 {
-                    if(Engine.currentGameType.gameTypeData.stateObjectPairTypes.length>0)
+                    //If the dictionary is not null
+                    if (Engine.currentGameType.gameTypeData.stateObjectPairTypes.dictionary!=null)
                     {
-                        foreach (CCDKObjects.ObjectType objectType in Engine.currentGameType.gameTypeData.stateObjectPairTypes.Get(gameTypeState))
+                        //Loop through The Dictionary of States to get the Lists of Objects
+                        foreach(DictionaryItem<List<CCDKObjects.ObjectType>> objectList in Engine.currentGameType.gameTypeData.stateObjectPairTypes.dictionary)
                         {
-                            if (objectType.type == this.GetType().FullName)
+                            //If this Object List has been given a value.
+                            if (Engine.currentGameType.gameTypeData.stateObjectPairTypes.Get(objectList.key) != null)
                             {
-                                Engine.currentGameType.stateObjectPairs.Get(gameTypeState).Add(this);
+                                //Loop through all the Objects in the current List
+                                foreach (CCDKObjects.ObjectType objectType in Engine.currentGameType.gameTypeData.stateObjectPairTypes.Get(objectList.key))
+                                {
+                                    //And check if the Object has the same type as this Object.
+                                    if (objectType.type == this.GetType().Name)
+                                    {
+                                        //If it does, set the gameTypeState equal to the selected List's key (Which refers to the State)
+                                        gameTypeState = objectList.key;
+                                        if (gameTypeState != Engine.currentGameType.state)
+                                            deactivate = true;
+                                        //And add this instance to the List in the Game Type associated with that State, to be activated/deactivated based on the current State.
+                                        Engine.currentGameType.stateObjectPairs.Get(gameTypeState).Add(this);
+                                    }
+                                }
+                                //Whether this instance should have been added or not, the Game Type State functionality is completed.
+                                setGameTypeState = true;
+
                             }
                         }
-                        setGameTypeState = true;
                     }
                 }
+                if (deactivate)
+                    gameObject.SetActive(false);
             }
 
 #if USING_NETCODE
@@ -151,11 +172,12 @@ namespace CCDKEngine
                 if (net.IsOwner | !NetworkManager.IsClient)
                 {
                     NetworkUpdate();
-
+                    CallStateMethod(state, "NetworkUpdate");
                 }
             }
 #else
             NetworkUpdate();
+            CallStateMethod(state, "NetworkUpdate");
 #endif
 
             /**If this is a State Enabled object, add it to the Game Type's State-Object Pairing Dictionary and enable/disable based on the State of the GameType.**/
@@ -358,7 +380,15 @@ namespace CCDKEngine
             lastHitBy = controller;
 
             if (health <= 0)
+            {
                 Destroy(controller);
+                destroyedBy = controller;
+
+#if USING_NETCODE
+                if (NetworkManager.IsHost)
+                    DestroyClientRPC(controller.GetComponent<NetworkObject>().NetworkObjectId);
+#endif
+            }
 
 #if USING_NETCODE
             if(NetworkManager.IsHost)
@@ -369,12 +399,7 @@ namespace CCDKEngine
         /**<summary>Destroy the Object locally.</summary>**/
         public virtual void Destroy(Controller controller = null)
         {
-            destroyedBy = controller;
 
-            if (NetworkManager.IsHost)
-                DestroyClientRPC(controller.GetComponent<NetworkObject>().NetworkObjectId);
-
-            GameObject.Destroy(gameObject);
         }
 
 #if USING_NETCODE
@@ -390,7 +415,11 @@ namespace CCDKEngine
         public void DestroyClientRPC(ulong IDOfDestroyer)
         {
             if (!NetworkManager.Singleton.IsHost)
-                Destroy(NetworkManager.SpawnManager.SpawnedObjects[IDOfDestroyer].GetComponent<Controller>());
+            {
+                Controller controller = NetworkManager.SpawnManager.SpawnedObjects[IDOfDestroyer].GetComponent<Controller>();
+                Destroy(controller);
+                destroyedBy = controller;
+            }
         }
 #endif
     }

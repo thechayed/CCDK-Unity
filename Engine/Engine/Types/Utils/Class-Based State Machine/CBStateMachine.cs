@@ -40,7 +40,6 @@ namespace FSM
             stateInstances = new Dictionary<object>();
 
 
-            Debug.Log(parent.GetType().Name + ": " + parent.GetType().GetNestedTypes().Length);
             /** Loop through all the Types in our given SEMB, and add it to our State Type List **/
             foreach (Type type in parent.GetType().GetNestedTypes())
             {
@@ -71,18 +70,23 @@ namespace FSM
                 string s = item.key;
                 if (s == name)
                 {
+                    /**Exit and disable state**/
                     CallMethod(curState, "Exit");
                     CallMethod(curState, "Disable");
+
+                    /**Change current state**/
                     prevState = curState;
                     curState = name;
+
+                    /**Tell the component that the State has finished changing.**/
+                    component.state = curState;
+                    component.StateChanged(prevState);
+
+                    /**Enable and enter state**/
                     CallMethod(curState, "Enable");
                     CallMethod(curState, "Enter");
                 }
             }
-
-            /**Tell the component that the State has finished changing.**/
-            component.StateChanged(prevState);
-            component.state = curState;
         }
 
         /* Reflection */
@@ -100,7 +104,7 @@ namespace FSM
         public int GetMethodIndex(string typeName, string methodName)
         {
             int index = 0;
-            if(typeName != null || typeName == "")
+            if(typeName != null | typeName == "")
             {
                 foreach (MethodInfo method in stateMethods.Get(typeName))
                 {

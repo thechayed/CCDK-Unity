@@ -292,11 +292,11 @@ namespace CCDKEngine
         }
 
         /**<summary>Get a Spawn Point from the current level.</summary>**/
-        public static Transform FindSpawn()
+        public static Transform FindSpawn(int team)
         {
             Level curLevel = GetLevelByName(currentLevelName);
             if (curLevel != null)
-                return curLevel.FindSpawn();
+                return curLevel.FindSpawn(team);
             else
                 return null;
         }

@@ -7,7 +7,7 @@ namespace CCDKGame
     public class SpawnPoint : CCDKEngine.Object
     {
         bool init = false;
-        int team = 0;
+        public int team = 0;
 
 
         // Update is called once per frame

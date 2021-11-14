@@ -20,6 +20,8 @@ namespace CCDKObjects
         /**<summary>The Type of the Objective can automatically determine some functionality inside the Objective class.</summary>**/
         public ObjectiveType objectiveType = 0;
 
+        public bool destructible = false;
+
         /**<summary>Setting this number will tell the Game Type that this Objective belongs to a team at the start of Play.</summary>**/
         public int startingTeam = -1;
 

@@ -43,9 +43,9 @@ namespace FSM
 
             /**Add the names of the States in the Class to the StateList**/
             var stateMachineAsMachine = (FSM.Machine)stateMachine;
-            foreach(object state in stateMachineAsMachine.stateInstances.dictionary)
+            foreach(DictionaryItem<object> state in stateMachineAsMachine.stateInstances.dictionary)
             {
-                stateList.Add(state.GetType().Name);
+                stateList.Add(state.value.GetType().Name);
             }
         }
 
@@ -58,7 +58,7 @@ namespace FSM
             {
                 if (initialized)
                 {
-                    CallMethod(GetState(), "Update"); ;
+                    CallStateMethod(GetState(), "Update");
                 }
             }
         }
@@ -76,9 +76,9 @@ namespace FSM
         }
 
         /** Make the object go to the specified state **/
-        public void GoToState(string state)
+        public void GoToState(string stateTo)
         {
-            stateMachine.GetType().GetMethod("GoToState").Invoke(stateMachine, new object[]{state});
+            stateMachine.GetType().GetMethod("GotoState").Invoke(stateMachine, new object[]{ stateTo });
         }
 
         /** Get this Component's current State **/
@@ -96,7 +96,7 @@ namespace FSM
             return (Dictionary<MethodInfo[]>)stateMachine.GetType().GetField("stateMethods").GetValue(stateMachine);
         }
 
-        public void CallMethod(string state, string name, object[] parameters = null)
+        public void CallStateMethod(string state, string name, object[] parameters = null)
         {
             stateMachine.GetType().GetMethod("CallMethod").Invoke(stateMachine,new object[] { state , name, parameters});
         }

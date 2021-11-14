@@ -18,8 +18,9 @@
         "GUID:1491147abca9d7d4bb7105af628b223e",
         "GUID:894a6cc6ed5cd2645bb542978cbed6a9",
         "GUID:3b8ed52f1b5c64994af4c4e0aa4b6c4b",
-        "GUID:b5f3d83bdf777dc4981d914ccfe931a9",
-        "GUID:85179bbe79433b845b29975bda38e6a6"
+        "GUID:85179bbe79433b845b29975bda38e6a6",
+        "GUID:deadb68d17055254e911dfa18d153748",
+        "GUID:1ff874e170fe5f94eaf8f0a3ea344e83"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -38,6 +39,11 @@
             "name": "com.unity.netcode.gameobjects",
             "expression": "",
             "define": "USING_NETCODE"
+        },
+        {
+            "name": "com.amazonaws.gamelift",
+            "expression": "",
+            "define": "USING_GAMELIFT"
         }
     ],
     "noEngineReferences": false

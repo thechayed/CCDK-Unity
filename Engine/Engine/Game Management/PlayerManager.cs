@@ -121,6 +121,7 @@ namespace CCDKEngine
             pool.players[ID].assignedController.Destroy();
             GameObject.Destroy(pool.players[ID].assignedController);
             pool.players[ID].assignedController = newController;
+            pool.players[ID].assignedController.player = pool.players[ID];
 
             return newController;
         }

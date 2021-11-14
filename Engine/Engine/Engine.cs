@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System;
 
+#if !UNITY_SERVER
+using System.Threading;
+using System.Threading.Tasks;
+#endif
+
 #if USING_NETCODE
 using Unity.Netcode;
 #endif
@@ -79,6 +84,8 @@ namespace CCDKEngine
         public static bool engineEditorsEnabled = false;
 
         public static Camera activeCamera;
+
+        public static string inputDevice = "Gamepad";
 
 #if USING_NETCODE
         public static NetworkManager networkManager;

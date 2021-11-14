@@ -17,6 +17,7 @@ namespace CCDKGame
         [Header(" - Player Input - ")]
         public Vector3 clickPosition = default;
         public Transform clickedTransform = default;
+        public Vector2 mousePosition = default;
 #if USING_NETCODE
         
         public NetworkVariable<Vector3> networkClickPosition = default;
@@ -24,6 +25,12 @@ namespace CCDKGame
 #endif
         public int lastMouseButton = 0;
 
+        public override void Start()
+        {
+            base.Start();
+
+            GoToState(Engine.currentGameType.state);
+        }
 
         public override void OnDestroy()
         {
@@ -40,6 +47,8 @@ namespace CCDKGame
 
         public override void NetworkUpdate()
         {
+            mousePosition = Mouse.current.position.ReadValue();
+
             if (Mouse.current.leftButton.IsPressed())
             {
                 lastMouseButton = 0;

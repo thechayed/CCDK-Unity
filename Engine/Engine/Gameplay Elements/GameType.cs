@@ -22,10 +22,14 @@ namespace CCDKGame
         public bool gameplayStarted;
         public CCDKObjects.GameTypeInfo gameTypeData;
 
+        public List<Controller> controllers = new List<Controller>();
         public Queue<Controller> controllerInitQueue = new Queue<Controller>();
         public Queue<Controller> controllerPossessionQueue = new Queue<Controller>();
-        public Queue<Pawn> pawnInitQueue = new Queue<Pawn>();
-        public Queue<Pawn> pawnFreeQueue = new Queue<Pawn>();
+        public Queue<Controller> spawnForController = new Queue<Controller>();
+        public Dictionary<Queue<Pawn>> pawnInitQueue = new Dictionary<Queue<Pawn>>();
+        public Dictionary<Queue<Pawn>> pawnFreeQueue = new Dictionary<Queue<Pawn>>();
+
+        public List<Controller> activeControllers = new List<Controller>();
 
         /**The amount of Teams in the game.**/
         public int teamCount;
@@ -75,18 +79,27 @@ namespace CCDKGame
                     if (controllerInitQueue.Peek().GetComponent<NetworkObject>().IsSpawned)
                         SetUpPlayer(controllerInitQueue.Dequeue());
 
+                foreach(DictionaryItem<Queue<Pawn>> queue in pawnInitQueue.dictionary)
+                {
+                    Queue<Pawn> pawnInitQueue = queue.value;
 
-                if (pawnInitQueue.Count > 0)
-                    /**Once the Pawn is ready, pass it to the Free Queue to be possessed later.**/
-                    if (pawnInitQueue.Peek().GetComponent<NetworkObject>().IsSpawned)
-                        pawnFreeQueue.Enqueue(pawnInitQueue.Dequeue());
+                    if (pawnInitQueue.Count > 0)
+                        /**Once the Pawn is ready, pass it to the Free Queue to be possessed later.**/
+                        if (pawnInitQueue.Peek().GetComponent<NetworkObject>().IsSpawned)
+                            pawnFreeQueue.Get(queue.key).Enqueue(pawnInitQueue.Dequeue());
+                }
             }
             else
             {
                 if (controllerInitQueue.Count > 0)
                     SetUpPlayer(controllerInitQueue.Dequeue());
-                if(pawnInitQueue.Count>0)
-                    pawnFreeQueue.Enqueue(pawnInitQueue.Dequeue());
+                foreach (DictionaryItem<Queue<Pawn>> queue in pawnInitQueue.dictionary)
+                {
+                    Queue<Pawn> pawnInitQueue = queue.value;
+
+                    if (pawnInitQueue.Count > 0)
+                        pawnFreeQueue.Get(queue.key).Enqueue(pawnInitQueue.Dequeue());
+                }
             }
 #else
                 if (controllerInitQueue.Count > 0)
@@ -94,10 +107,39 @@ namespace CCDKGame
                 if(pawnInitQueue.Count>0)
                     pawnFreeQueue.Enqueue(pawnInitQueue.Dequeue());
 #endif
+            if(controllerPossessionQueue.Count > 0)
+            {
+                bool found = false;
+                foreach (DictionaryItem<Queue<Pawn>> queue in pawnFreeQueue.dictionary)
+                {
+                    Queue<Pawn> pawnFreeQueue = queue.value;
 
-            /**If there is a Controller wait for a Pawn to Possess and there is a Pawn Free to Possess.**/
-            if (controllerPossessionQueue.Count > 0 && pawnFreeQueue.Count > 0)
-                controllerPossessionQueue.Dequeue().Possess(pawnFreeQueue.Dequeue());
+                    /**If there is a Controller waiting for a Pawn to Possess and there is a Pawn Free to Possess.**/
+                    if (pawnFreeQueue.Count > 0)
+                    {
+                        controllerPossessionQueue.Peek().Possess(pawnFreeQueue.Dequeue());
+                        found = true;
+                    }
+                }
+                if(found)  
+                    controllerPossessionQueue.Dequeue();
+            }
+
+            if(init)
+                    if (spawnForController.Count > 0)
+                    {
+                        spawnForController.Dequeue();
+
+                        if (gameTypeData.stateObjectPairing)
+                            foreach (string state in stateList)
+                            {
+                                if (gameTypeData.statePawnPairs.Get(state) != null)
+                                    Spawn(state);
+                            }
+                        else
+                            Spawn();
+                    }
+
             #endregion
         }
 
@@ -142,6 +184,32 @@ namespace CCDKGame
         }
 
         /**<summary>Controls what happens to a Player when they join the Game.</summary>**/
+        public virtual void LogController(PlayerController controller)
+        {
+            CallStateMethod(state,"SetUpPlayer",new object[] {controller});
+            controllers.Add(controller);
+
+            if (teams.Count < 2)
+            {
+                teams.Add(new Team());
+
+                Team lastTeam = null;
+                int lastTeamLength=0;
+                foreach(Team team in teams)
+                {
+                    if (team.playersOnTeam.Count <= lastTeamLength)
+                    {
+                        lastTeam = team;
+                        lastTeamLength = team.playersOnTeam.Count;
+                    }
+                }
+
+                if(lastTeam!=null)
+                    lastTeam.playersOnTeam.Add(controller.player);
+            }
+        }
+
+        /**<summary>Controls what happens to a Player when they join the Game.</summary>**/
         public virtual void SetUpPlayer(Controller controller)
         {
 
@@ -152,7 +220,7 @@ namespace CCDKGame
         public void QueueControllerAndSpawn(Controller controller)
         {
             controllerPossessionQueue.Enqueue(controller);
-            Spawn();
+            spawnForController.Enqueue(controller);
         }
 
         /**<summary>Undo any SetUp modifications when the Player leaves the game.</summary>**/
@@ -228,6 +296,7 @@ namespace CCDKGame
                 foreach (Player player in PlayerManager.managers[0].pool.players.ToArray())
                 {
                     PlayerController playerController = PlayerManager.managers[0].SetPlayerController(0, gameTypeData.defaultPlayerController);
+                    LogController(player.assignedController);
                     SetUpPlayer(player.assignedController);
                 }
             }
@@ -243,9 +312,13 @@ namespace CCDKGame
             foreach(string stateName in stateList)
             {
                 stateObjectPairs.Set(stateName, new List<CCDKEngine.Object>());
+                pawnFreeQueue.Set(stateName, new Queue<Pawn>());
+                pawnInitQueue.Set(stateName, new Queue<Pawn>());
             }
             stateObjectPairingEnabled = true;
 
+
+            stateObjectPairingEnabled = gameTypeData.stateObjectPairing;
         }//</LocalInitialization>
 
         /**<summary>Return an unpossessed Pawn in the game that is paired with the passed data type.</summary>**/
@@ -265,43 +338,37 @@ namespace CCDKGame
 
         /**<summary>Spawns the default pawn into the game and returns it's Game Object</summary>**/
         //Add For Multiplayer: GameObject.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-        public Pawn Spawn(Transform spawnTransform = null)
+        public Pawn Spawn(string state = null, Transform spawnTransform = null, int team = 0)
         {
             if (!isHost)
                 return null;
 
-                if (spawnTransform == null)
+            Transform spawnerTransform = LevelManager.FindSpawn(team);
+
+
+            if (spawnTransform == null)
             {
-                Transform spawnerTransform = LevelManager.FindSpawn();
-                if(spawnerTransform == null)
+
+                if (spawnerTransform == null)
                 {
                     Debug.LogError("No spawn point or Spawn Position was given in GameType.Spawn(), please make a Spawn Point!");
-                    pawnInitQueue.Enqueue(PawnManager.CreatePawn(gameTypeData.defaultPawn, default));
-                    return pawnInitQueue.Peek();
+                    pawnInitQueue.Get(state).Enqueue(PawnManager.CreatePawn(gameTypeData.statePawnPairs.Get(state) ?? gameTypeData.defaultPawn, default));
+                    Pawn createdPawn = pawnInitQueue.Get(state).Peek();
+                    return createdPawn;
                 }
+                else
+                {
+                    pawnInitQueue.Get(state).Enqueue(PawnManager.CreatePawn(gameTypeData.statePawnPairs.Get(state) ?? gameTypeData.defaultPawn, spawnerTransform));
+                    Pawn createdPawn = pawnInitQueue.Get(state).Peek();
 
-                pawnInitQueue.Enqueue(PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnerTransform));
-                return pawnInitQueue.Peek();
+                    return createdPawn;
+                }
             }
-            pawnInitQueue.Enqueue(PawnManager.CreatePawn(gameTypeData.defaultPawn, spawnTransform));
-            return pawnInitQueue.Peek();
-        }
-
-        public void SpawnForController(Controller controller, Pawn pawn = null, Transform spawnTransform = null)
-        {
-            if (!isHost)
-                return;
-
-            if (controller == null)
-                return;
-
-            if (pawn == null)
+            else
             {
-                Pawn newPawn = Spawn(spawnTransform);
-                newPawn.spawnAsClientObject = true;
-                newPawn.clientID = controller.clientID;
-
-                controller.Possess(newPawn);
+                pawnInitQueue.Get(state).Enqueue(PawnManager.CreatePawn(gameTypeData.statePawnPairs.Get(state) ?? gameTypeData.defaultPawn, spawnTransform));
+                Pawn createdPawn = pawnInitQueue.Get(state).Peek();
+                return createdPawn;
             }
         }
 
@@ -375,42 +442,24 @@ namespace CCDKGame
         /**When the State has changed, **/
         public override void StateChanged(string prevState)
         {
+            if(gameTypeData.tieControllerStateToGameType)
+                foreach(Controller controller in controllers)
+                {
+                    controller.GoToState(state);
+                }
+
             if (stateObjectPairingEnabled)
             {
-                /**Destroy/Deactivate Objects used for the previous state.**/
+                /**Deactivate Objects used for the previous state.**/
                 foreach(CCDKEngine.Object stateObject in stateObjectPairs.Get(prevState))
                 {
-                    Pawn asPawn = stateObject as Pawn;
-                    if (asPawn != null)
-                    {
-                        if (asPawn.controller != null)
-                        {
-                            controllerPossessionQueue.Enqueue(asPawn.controller);
-                            GameObject.Destroy(asPawn.gameObject);
-                        }
-                        else
-                            GameObject.Destroy(asPawn.gameObject);
-                    }
-                    else
                         stateObject.gameObject.SetActive(false);
                 }
 
-                /**Destroy/Deactivate Objects used for the previous state.**/
-                foreach (CCDKEngine.Object stateObject in stateObjectPairs.Get(prevState))
+                /**Activate Objects used for the current state.**/
+                foreach (CCDKEngine.Object stateObject in stateObjectPairs.Get(state))
                 {
-                    Pawn asPawn = stateObject as Pawn;
-                    if (asPawn != null)
-                    {
-                        if (asPawn.controller != null)
-                        {
-                            controllerPossessionQueue.Enqueue(asPawn.controller);
-                            GameObject.Destroy(asPawn.gameObject);
-                        }
-                        else
-                            GameObject.Destroy(asPawn.gameObject);
-                    }
-                    else
-                        stateObject.gameObject.SetActive(false);
+                        stateObject.gameObject.SetActive(true);
                 }
             }
         }

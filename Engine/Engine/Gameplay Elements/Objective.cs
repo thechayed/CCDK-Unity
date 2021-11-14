@@ -20,6 +20,7 @@ namespace CCDKGame
             base.Start();
             objectiveData = (CCDKObjects.Objective)data;
             health = objectiveData.health;
+            
         }
 
         public override void Update()

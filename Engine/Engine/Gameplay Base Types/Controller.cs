@@ -25,6 +25,7 @@ namespace CCDKEngine
         [Header(" - Possession Properties - ")]
         /** The Pawn that the controller has possessed **/
         public Pawn possessedPawn;
+
         [Tooltip("The Camera that this Player Controller is using. Unity Cameras are not CCDKEngine Possessable objects, so they must be treated differently.")]
         public Camera possessedCamera;
         [Tooltip("List of the Possessable Objects the Controller has possessed and can communicate with.")]
@@ -69,15 +70,15 @@ namespace CCDKEngine
 
         public bool Possess(PossessableObject possessableObject, bool calledFromRPC = false)
         {
-            /**If we're forcing one Pawn for the Controller, Remove the previously possessed Pawn.**/
-            if(controllerData.forceOnePawn)
-                foreach(PossessableObject possessable in possessedObjects.ToArray())
-                {
-                    if(possessable.gameTypeState == possessableObject.gameTypeState)
-                    {
-                        possessedObjects.Remove(possessable);
-                    }
-                }
+            ///**If we're forcing one Pawn for the Controller, Remove the previously possessed Pawn.**/
+            //if(controllerData.forceOnePawn)
+            //    foreach(PossessableObject possessable in possessedObjects.ToArray())
+            //    {
+            //        if(possessable.gameTypeState == possessableObject.gameTypeState)
+            //        {
+            //            possessedObjects.Remove(possessable);
+            //        }
+            //    }
 
 
             /** If the Pawn can set this Controller as it's Controller, update this Controller's Pawn value **/
@@ -163,18 +164,19 @@ namespace CCDKEngine
         /**<summary>Gets the Player that this Controller belongs to.</summary>**/
         public Player GetPlayer()
         {
-
             return null;
         }
 
         public Pawn GetPawn()
         {
+            Debug.Log(possessedObjects.Count);
             foreach (PossessableObject possessable in possessedObjects.ToArray())
             {
+                Debug.Log(possessable.name);
                 if (possessable.gameTypeState == Engine.currentGameType.state)
                 {
                     Pawn getPawn = (Pawn)possessable;
-
+                    Debug.Log(getPawn);
                     if(getPawn != null)
                         return getPawn;
                 }
