@@ -5,6 +5,7 @@ using UnityEngine;
 using CCDKEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using ToolBox.Serialization;
 
 namespace CCDKGame
 {
@@ -119,6 +120,51 @@ namespace CCDKGame
         }
 #endif
 
+        /**<summary>Adds replicated Player properties to the Player that owns this Controller.</summary>**/
+        public void SetPlayerProp(string name, object value)
+        {
+#if USING_NETCODE
+            if (NetworkManager.Singleton.IsClient)
+            {
+                if (net.IsOwner)
+                {
+                    player.playerProperties.Set(name, value);
+                    SetPropertyServerRPC(name, DataSerializer.Serialize<object>(value));
+                }
+            }
+            else
+            {
+                player.playerProperties.Set(name, value);
+            }
+            PropertyUpdate(name, value);
+#endif
+        }
+
+        [ServerRpc]
+        public void SetPropertyServerRPC(string name, byte[] value)
+        {
+            player.playerProperties.Set(name, DataSerializer.Deserialize<object>(value));
+
+            SetPropertyClientRPC(name, value);
+            PropertyUpdate(name, DataSerializer.Deserialize<object>(value));
+        }
+
+        [ClientRpc]
+        public void SetPropertyClientRPC(string name, byte[] value)
+        {
+            player.playerProperties.Set(name, DataSerializer.Deserialize<object>(value));
+            PropertyUpdate(name, DataSerializer.Deserialize<object>(value));
+        }
+
+        public virtual void PropertyUpdate(string name, object value)
+        {
+
+        }
+
+        public object GetProperty(string name)
+        {
+            return player.playerProperties.Get(name);
+        }
     }
 
 }

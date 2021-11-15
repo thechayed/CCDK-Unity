@@ -154,7 +154,7 @@ namespace CCDKGame
                         MovePlayerClientRPC(velocityTo);
                     }
                     else
-                        if (net.IsOwner)
+                        if (net.IsOwner&&!NetworkManager.Singleton.IsHost)
                             MovePlayerServerRPC(velocityTo);
                 }
 #endif
@@ -297,7 +297,7 @@ namespace CCDKGame
         public void MovePlayerClientRPC(Vector3 velocity)
         {
             if(characterController != null)
-                characterController.SimpleMove(velocity*Time.deltaTime);
+                characterController.Move(velocity*Time.deltaTime);
             else
                 characterController = gameObject.GetComponent<CharacterController>();
         }
@@ -306,7 +306,7 @@ namespace CCDKGame
         public void MovePlayerServerRPC(Vector3 velocity)
         {
             if (characterController != null)
-                characterController.SimpleMove(velocity * Time.deltaTime);
+                characterController.Move(velocity * Time.deltaTime);
             else
                 characterController = gameObject.GetComponent<CharacterController>();
             

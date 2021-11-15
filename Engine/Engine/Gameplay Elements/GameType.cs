@@ -34,6 +34,7 @@ namespace CCDKGame
         /**The amount of Teams in the game.**/
         public int teamCount;
         public List<Team> teams = new List<Team>();
+        public Team winningTeam;
 
         /**<summary>When Objects are added to the game, they are referenced in this list to be enabled/disabled depending on the State the Game Type was in at the time of their creation.</summary>**/
         public Dictionary<List<CCDKEngine.Object>> stateObjectPairs = new Dictionary<List<CCDKEngine.Object>>();
@@ -41,6 +42,8 @@ namespace CCDKGame
 
         /**The size of an individual team.**/
         public int maxTeamSize = 1;
+
+        public List<Objective> objectives = new List<Objective>();
 
 
         /**<summary>When the Game Type is starting, initialize it.</summary>**/
@@ -66,7 +69,7 @@ namespace CCDKGame
 
            /**Always check if Win conditions have been met.**/
            /**Check if a team won, yo**/
-            CheckWin();
+            winningTeam = CheckWin();
             #endregion
 
             #region Possession
@@ -128,13 +131,13 @@ namespace CCDKGame
             if(init)
                     if (spawnForController.Count > 0)
                     {
-                        spawnForController.Dequeue();
+                        PlayerController controller = (PlayerController) spawnForController.Dequeue();
 
                         if (gameTypeData.stateObjectPairing)
                             foreach (string state in stateList)
                             {
                                 if (gameTypeData.statePawnPairs.Get(state) != null)
-                                    Spawn(state);
+                                    Spawn(state, team: controller.player.team.index);
                             }
                         else
                             Spawn();
@@ -191,7 +194,7 @@ namespace CCDKGame
 
             if (teams.Count < 2)
             {
-                teams.Add(new Team());
+                teams.Add(new Team(teams.Count));
 
                 Team lastTeam = null;
                 int lastTeamLength=0;
@@ -204,8 +207,11 @@ namespace CCDKGame
                     }
                 }
 
-                if(lastTeam!=null)
+                if (lastTeam != null)
+                {
                     lastTeam.playersOnTeam.Add(controller.player);
+                    controller.player.team = lastTeam;
+                }
             }
         }
 

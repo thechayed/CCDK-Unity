@@ -14,6 +14,8 @@ namespace CCDKEngine
         /**<summary>The team the player is on.</summary>**/
         public Team team;
 
+        public Dictionary<object> playerProperties = new Dictionary<object>();
+
         public Player(PlayerController assignedController = null)
         {
             this.assignedController = assignedController;

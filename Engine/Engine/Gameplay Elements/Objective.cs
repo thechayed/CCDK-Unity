@@ -15,6 +15,10 @@ namespace CCDKGame
         [Tooltip("The time that has been given to Acquiring this Objective. Each index is that of each active Team in the Game Type.")]
         public List<float> timeGiven = new List<float>();
 
+        public bool loggedInGameType = false;
+
+        public bool completed = false;
+
         public override void Start()
         {
             base.Start();
@@ -26,6 +30,15 @@ namespace CCDKGame
         public override void Update()
         {
             base.Update();
+
+            if (Engine.currentGameType != null)
+            {
+                if(!loggedInGameType)
+                {
+                    Engine.currentGameType.objectives.Add(this);
+                    loggedInGameType = true;
+                }
+            }
 
             switch (objectiveData.objectiveType.ToString())
             {
@@ -61,5 +74,6 @@ namespace CCDKGame
                 pawn.inventory.Add(objectiveData.itemToCollect);
             }
         }
+
     }
 }

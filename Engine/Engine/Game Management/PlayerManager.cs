@@ -163,7 +163,7 @@ namespace CCDKEngine
             }
             if(!NetworkManager.Singleton.IsHost&net.IsLocalPlayer)
             {
-                LogClientPlayersServerRPC(pool.players.Count);
+                LogClientPlayersServerRPC(pool.players.Count, DataSerializer.Serialize<PlayerPool>(pool));
             }
 
 
@@ -186,7 +186,7 @@ namespace CCDKEngine
 
         }
 
-        /**<summary>When the Player joins a game as a client, it is commanded to log it's Local Players as the client.</summary>**/
+        /**<summary>When the Player joins a game as the Host, it logs it's Local Players as with it's Client ID.</summary>**/
         public void LogLocalPlayersAsClient()
         {
 
@@ -198,13 +198,20 @@ namespace CCDKEngine
                 newController.SetOrigin();
                 newController.GetComponent<NetworkObject>().SpawnAsPlayerObject(NetworkManager.Singleton.LocalClientId);
                 Engine.currentGameType.PrepController(newController);
+
+                foreach(DictionaryItem<object> item in player.playerProperties.dictionary)
+                {
+                    newController.SetPlayerProp(item.key, item.value);
+                }
             }
         }
 
         /**When a client connects, add the Client's Players as Server-Side Players, with their Player Controllers, and assign those Controllers to that client. **/
         [ServerRpc]
-        public void LogClientPlayersServerRPC(int playerCount)
+        public void LogClientPlayersServerRPC(int playerCount, byte[] ogPoolSerialized)
         {
+            PlayerPool ogPool = DataSerializer.Deserialize<PlayerPool>(ogPoolSerialized);
+
             Debug.Log("Recieved Client Message! Client has this players: "+playerCount);
             for(var i = 0; i<playerCount; i++)
             {
@@ -212,6 +219,13 @@ namespace CCDKEngine
                 newPlayer.assignedController.clientID = net.OwnerClientId;
                 newPlayer.assignedController.spawnAsClientObject = true;
                 newPlayer.assignedController.player = newPlayer;
+                newPlayer.playerProperties = ogPool.players[i].playerProperties;
+
+                foreach (DictionaryItem<object> item in newPlayer.playerProperties.dictionary)
+                {
+                    newPlayer.assignedController.SetPropertyClientRPC(item.key, DataSerializer.Serialize<object>(item.value));
+                }
+
                 pool.players.Add(newPlayer);
                 Engine.currentGameType.SetUpPlayer(newPlayer.assignedController);
             }

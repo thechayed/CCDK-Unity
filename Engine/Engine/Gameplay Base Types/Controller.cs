@@ -111,7 +111,8 @@ namespace CCDKEngine
             foreach(PossessableObject possessable in possessedObjects)
             {
                 if(possessable.ccdkEnabled)
-                    possessable.BroadcastMessage(commandName, parameters);
+                    if (possessable.GetType().GetMethod(commandName) != null)
+                        possessable.GetType().GetMethod(commandName).Invoke(possessable, parameters);
             }
 
 #if USING_NETCODE
@@ -126,8 +127,10 @@ namespace CCDKEngine
         {
             foreach (PossessableObject possessable in possessedObjects)
             {
+                
                 if (possessable.ccdkEnabled)
-                    possessable.BroadcastMessage(commandName, parameter);
+                    if(possessable.GetType().GetMethod(commandName)!=null)
+                        possessable.GetType().GetMethod(commandName).Invoke(possessable, new object[] { parameter });
             }
 
 #if USING_NETCODE

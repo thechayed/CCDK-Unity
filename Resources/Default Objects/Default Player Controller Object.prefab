@@ -122,6 +122,10 @@ MonoBehaviour:
   navMeshAgentDestionationTransform: {fileID: 0}
   player:
     assignedController: {fileID: 0}
+    playerProperties:
+      dictionary: []
+      length: 0
+      lockKey: 0
   clickPosition: {x: 0, y: 0, z: 0}
   clickedTransform: {fileID: 0}
   mousePosition: {x: 0, y: 0}
